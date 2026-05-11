@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'docs/**' # Só roda se algo na pasta docs for alterado
+      - 'Docs/**' # Só roda se algo na pasta docs for alterado
       - 'mkdocs.yml'
 
 permissions:
