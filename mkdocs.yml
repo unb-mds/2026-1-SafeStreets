@@ -32,7 +32,7 @@ theme:
         icon: material/weather-sunny
         name: Mudar para modo claro
 
-docs_dir: 'Docs'
+docs_dir: 'docs'
 
 # Aqui você define o que aparece nas abas superiores
 #Sem o nav o MkDocs pega os arquivos automaticamente em ordem alfabética (Plugin Awesome Pages traz mais opcoes).
