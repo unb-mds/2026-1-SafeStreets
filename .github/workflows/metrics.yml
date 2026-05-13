@@ -1,0 +1,29 @@
+name: Gerar Metricas de Produtividade
+on:
+  schedule:
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Instalar dependencias
+        run: pip install PyGithub requests
+      - name: Coletar Metricas
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python docs/productivity/collect_metrics.py
+      - name: Commit e Push
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
+          git add docs/productivity/metrics.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "[bot] atualiza métricas de produtividade" && git push)
