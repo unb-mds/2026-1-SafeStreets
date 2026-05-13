@@ -1,7 +1,11 @@
 name: Gerar Metricas de Produtividade
 on:
+  push:
+    branches:
+      - main  # Toda vez que entrar código novo na main, ele atualiza o gráfico
+  workflow_dispatch: # Mantém o botão manual que você usou
   schedule:
-    - cron: '0 3 * * 0'
+    - cron: '0 0 * * *' # Roda também todo dia à meia-noite por segurança
   workflow_dispatch:
 permissions:
   contents: write
