@@ -1,5 +1,5 @@
 name: Gerar Metricas de Produtividade
-urançaon:
+on:
   push:
     branches:
       - main  # Toda vez que entrar código novo na main, ele atualiza o gráfico
