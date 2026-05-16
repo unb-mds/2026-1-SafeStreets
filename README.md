@@ -24,23 +24,24 @@ Auxiliar na compreensão do cenário de segurança urbana, promovendo acesso a i
 * 🏗️[Arquitetura](https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/Milestone/Sprint-3/documento-c4.md)
 
 ## 👥 Equipe
+Squad 01 MDS-01/2026
 <table>
   <tr>
     <td align="center">
       <a href="LINK_DO_GITHUB_1">
-        <img src="" width="150px;" alt="Arthur Feitosa"/><br>
+        <img src="https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/imagens/foto-arthur.jpeg" width="150px;" alt="Arthur Feitosa"/><br>
         <sub><b>Arthur Feitosa</b></sub>
       </a>
     </td>
     <td align="center">
       <a href="LINK_DO_GITHUB_2">
-        <img src="LINK_DA_FOTO_2" width="150px;" alt="Edson Gabriel"/><br>
+        <img src="https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/imagens/foto-edson.jpeg" width="150px;" alt="Edson Gabriel"/><br>
         <sub><b>Edson Gabriel</b></sub>
       </a>
     </td>
     <td align="center">
       <a href="LINK_DO_GITHUB_3">
-        <img src="LINK_DA_FOTO_3" width="150px;" alt="Israel Soarez"/><br>
+        <img src="https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/imagens/foto-israel.jpeg" width="150px;" alt="Israel Soarez"/><br>
         <sub><b>Israel Soarez</b></sub>
       </a>
     </td>
@@ -54,7 +55,7 @@ Auxiliar na compreensão do cenário de segurança urbana, promovendo acesso a i
   <tr>
     <td align="center">
       <a href="LINK_DO_GITHUB_5">
-        <img src="LINK_DA_FOTO_5" width="150px;" alt="Matheus Queiroz"/><br>
+        <img src="https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/imagens/foto-queiroz.jpeg" width="150px;" alt="Matheus Queiroz"/><br>
         <sub><b>Matheus Queiroz</b></sub>
       </a>
     </td>
