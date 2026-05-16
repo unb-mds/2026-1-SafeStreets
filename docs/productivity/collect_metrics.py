@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import Counter
 from github import Github
 
@@ -9,13 +9,17 @@ def get_week_string(date_obj):
     return f"{year}-W{week:02d}"
 
 def main():
+    # Tenta pegar o token do ambiente (funciona na Action e se você exportar local)
     token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        print("⚠️ Aviso: GITHUB_TOKEN não encontrado no ambiente. Rodando como anônimo.")
+        
     g = Github(token)
     repo_name = "unb-mds/2026-1-SafeStreets"
     repo = g.get_repo(repo_name)
 
     data = {
-        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "repository": repo_name,
         "issues_per_week": [],
         "commit_message_histogram": [],
@@ -26,17 +30,18 @@ def main():
         "label_distribution": []
     }
 
-    print("🛰️ Coletando Issues e PRs...")
+    print("🛰️ Coletando Issues e PRs (Otimizado)...")
     issues_weeks = {}
     label_counter = Counter()
     pr_authors = Counter()
     issue_authors = Counter()
 
+    # Busca os itens recentes - o GitHub já traz as labels aqui dentro!
     recent_items = repo.get_issues(state="all", sort="created", direction="desc")[:300]
     
     for item in recent_items:
-        labels = item.get_labels()
-        for l in labels:
+        # CORREÇÃO CRUCIAL: Lendo a propriedade local .labels em vez de forçar um GET request
+        for l in item.labels:
             label_counter[l.name] += 1
             
         if item.pull_request:
@@ -45,12 +50,14 @@ def main():
             issue_authors[item.user.login] += 1
 
         week = get_week_string(item.created_at)
-        if week not in issues_weeks: issues_weeks[week] = {"opened": 0, "closed": 0}
+        if week not in issues_weeks: 
+            issues_weeks[week] = {"opened": 0, "closed": 0}
         issues_weeks[week]["opened"] += 1
 
         if item.closed_at:
             c_week = get_week_string(item.closed_at)
-            if c_week not in issues_weeks: issues_weeks[c_week] = {"opened": 0, "closed": 0}
+            if c_week not in issues_weeks: 
+                issues_weeks[c_week] = {"opened": 0, "closed": 0}
             issues_weeks[c_week]["closed"] += 1
 
     for week, counts in issues_weeks.items():
@@ -65,7 +72,8 @@ def main():
     heatmap_counter = Counter()
 
     for commit in repo.get_commits()[:300]:
-        if commit.author: commit_authors[commit.author.login] += 1
+        if commit.author: 
+            commit_authors[commit.author.login] += 1
         
         msg_len = len(commit.commit.message)
         if msg_len <= 20: hist_bins["0-20"] += 1
@@ -77,13 +85,17 @@ def main():
         dt = commit.commit.author.date
         heatmap_counter[(dt.isoweekday() % 7, dt.hour)] += 1
 
-    for r, c in hist_bins.items(): data["commit_message_histogram"].append({"range": r, "count": c})
-    for (d, h), c in heatmap_counter.items(): data["commit_heatmap"].append({"day": d, "hour": h, "count": c})
+    for r, c in hist_bins.items(): 
+        data["commit_message_histogram"].append({"range": r, "count": c})
+    for (d, h), c in heatmap_counter.items(): 
+        data["commit_heatmap"].append({"day": d, "hour": h, "count": c})
 
-    # AQUI ESTÁ A MÁGICA: Mudei para pegar até 6 pessoas nos rankings
-    for user, count in commit_authors.most_common(6): data["top_committers"].append({"username": user, "commits": count})
-    for user, count in pr_authors.most_common(6): data["top_pr_authors"].append({"username": user, "prs_opened": count})
-    for user, count in issue_authors.most_common(6): data["top_issue_contributors"].append({"username": user, "total": count})
+    for user, count in commit_authors.most_common(6): 
+        data["top_committers"].append({"username": user, "commits": count})
+    for user, count in pr_authors.most_common(6): 
+        data["top_pr_authors"].append({"username": user, "prs_opened": count})
+    for user, count in issue_authors.most_common(6): 
+        data["top_issue_contributors"].append({"username": user, "total": count})
 
     os.makedirs("docs/productivity", exist_ok=True)
     with open("docs/productivity/metrics.json", "w", encoding="utf-8") as f:
