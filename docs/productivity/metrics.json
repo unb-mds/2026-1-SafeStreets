@@ -1,0 +1,355 @@
+{
+  "generated_at": "2026-05-13T05:30:03Z",
+  "repository": "unb-mds/2026-1-SafeStreets",
+  "issues_per_week": [
+    {
+      "week": "2026-W20",
+      "opened": 3,
+      "closed": 1
+    },
+    {
+      "week": "2026-W19",
+      "opened": 1,
+      "closed": 4
+    },
+    {
+      "week": "2026-W18",
+      "opened": 0,
+      "closed": 6
+    },
+    {
+      "week": "2026-W17",
+      "opened": 0,
+      "closed": 6
+    },
+    {
+      "week": "2026-W16",
+      "opened": 0,
+      "closed": 5
+    },
+    {
+      "week": "2026-W15",
+      "opened": 0,
+      "closed": 6
+    },
+    {
+      "week": "2026-W14",
+      "opened": 0,
+      "closed": 5
+    },
+    {
+      "week": "2026-W13",
+      "opened": 0,
+      "closed": 5
+    }
+  ],
+  "commit_message_histogram": [
+    {
+      "range": "0-20",
+      "count": 11
+    },
+    {
+      "range": "21-50",
+      "count": 31
+    },
+    {
+      "range": "51-100",
+      "count": 11
+    },
+    {
+      "range": "101-200",
+      "count": 5
+    },
+    {
+      "range": "200+",
+      "count": 7
+    }
+  ],
+  "coauthors_per_week": [
+    {
+      "week": "2026-W20",
+      "count": 0
+    },
+    {
+      "week": "2026-W19",
+      "count": 0
+    },
+    {
+      "week": "2026-W18",
+      "count": 0
+    },
+    {
+      "week": "2026-W17",
+      "count": 0
+    },
+    {
+      "week": "2026-W16",
+      "count": 0
+    },
+    {
+      "week": "2026-W15",
+      "count": 0
+    },
+    {
+      "week": "2026-W12",
+      "count": 0
+    }
+  ],
+  "commit_heatmap": [
+    {
+      "day": 2,
+      "hour": 5,
+      "count": 2
+    },
+    {
+      "day": 2,
+      "hour": 4,
+      "count": 2
+    },
+    {
+      "day": 5,
+      "hour": 16,
+      "count": 4
+    },
+    {
+      "day": 5,
+      "hour": 17,
+      "count": 3
+    },
+    {
+      "day": 2,
+      "hour": 1,
+      "count": 4
+    },
+    {
+      "day": 0,
+      "hour": 23,
+      "count": 1
+    },
+    {
+      "day": 2,
+      "hour": 0,
+      "count": 8
+    },
+    {
+      "day": 6,
+      "hour": 23,
+      "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 13,
+      "count": 1
+    },
+    {
+      "day": 5,
+      "hour": 20,
+      "count": 2
+    },
+    {
+      "day": 5,
+      "hour": 19,
+      "count": 5
+    },
+    {
+      "day": 0,
+      "hour": 12,
+      "count": 1
+    },
+    {
+      "day": 5,
+      "hour": 15,
+      "count": 1
+    },
+    {
+      "day": 5,
+      "hour": 5,
+      "count": 1
+    },
+    {
+      "day": 4,
+      "hour": 22,
+      "count": 3
+    },
+    {
+      "day": 4,
+      "hour": 20,
+      "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 1,
+      "count": 1
+    },
+    {
+      "day": 5,
+      "hour": 23,
+      "count": 3
+    },
+    {
+      "day": 5,
+      "hour": 22,
+      "count": 1
+    },
+    {
+      "day": 5,
+      "hour": 13,
+      "count": 2
+    },
+    {
+      "day": 5,
+      "hour": 1,
+      "count": 3
+    },
+    {
+      "day": 6,
+      "hour": 3,
+      "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 2,
+      "count": 1
+    },
+    {
+      "day": 5,
+      "hour": 18,
+      "count": 1
+    },
+    {
+      "day": 4,
+      "hour": 23,
+      "count": 1
+    },
+    {
+      "day": 4,
+      "hour": 21,
+      "count": 2
+    },
+    {
+      "day": 4,
+      "hour": 18,
+      "count": 1
+    },
+    {
+      "day": 3,
+      "hour": 23,
+      "count": 1
+    },
+    {
+      "day": 2,
+      "hour": 18,
+      "count": 7
+    }
+  ],
+  "top_committers": [
+    {
+      "username": "IsraelSoares-25",
+      "name": "IsraelSoares-25",
+      "commits": 19
+    },
+    {
+      "username": "Nic0laslc",
+      "name": "Nic0laslc",
+      "commits": 14
+    },
+    {
+      "username": "EdsonToppzera",
+      "name": "EdsonToppzera",
+      "commits": 10
+    },
+    {
+      "username": "jorgevasquez25",
+      "name": "jorgevasquez25",
+      "commits": 9
+    },
+    {
+      "username": "matheusqsa",
+      "name": "matheusqsa",
+      "commits": 8
+    },
+    {
+      "username": "ArthurFeitosa05",
+      "name": "ArthurFeitosa05",
+      "commits": 3
+    },
+    {
+      "username": "actions-user",
+      "name": "actions-user",
+      "commits": 1
+    },
+    {
+      "username": "RochaCarla",
+      "name": "RochaCarla",
+      "commits": 1
+    }
+  ],
+  "top_pr_authors": [
+    {
+      "username": "matheusqsa",
+      "name": "matheusqsa",
+      "prs_opened": 2
+    },
+    {
+      "username": "EdsonToppzera",
+      "name": "EdsonToppzera",
+      "prs_opened": 2
+    },
+    {
+      "username": "IsraelSoares-25",
+      "name": "IsraelSoares-25",
+      "prs_opened": 1
+    }
+  ],
+  "top_issue_contributors": [
+    {
+      "username": "IsraelSoares-25",
+      "name": "IsraelSoares-25",
+      "opened": 0,
+      "closed": 10,
+      "total": 10
+    },
+    {
+      "username": "Nic0laslc",
+      "name": "Nic0laslc",
+      "opened": 0,
+      "closed": 8,
+      "total": 8
+    },
+    {
+      "username": "jorgevasquez25",
+      "name": "jorgevasquez25",
+      "opened": 1,
+      "closed": 5,
+      "total": 6
+    },
+    {
+      "username": "matheusqsa",
+      "name": "matheusqsa",
+      "opened": 1,
+      "closed": 4,
+      "total": 5
+    },
+    {
+      "username": "EdsonToppzera",
+      "name": "EdsonToppzera",
+      "opened": 0,
+      "closed": 4,
+      "total": 4
+    },
+    {
+      "username": "ArthurFeitosa05",
+      "name": "ArthurFeitosa05",
+      "opened": 0,
+      "closed": 3,
+      "total": 3
+    },
+    {
+      "username": "RochaCarla",
+      "name": "RochaCarla",
+      "opened": 0,
+      "closed": 1,
+      "total": 1
+    }
+  ]
+}

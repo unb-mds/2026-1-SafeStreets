@@ -1,0 +1,45 @@
+# rodar: mkdocs serve OU python -m mkdocs serve
+
+site_name: SafeStreets
+site_description: Documentação oficial do projeto
+site_author: Equipe Safe Streets
+repo_url: https://github.com/unb-mds/2026-1-SafeStreets
+repo_name: safestreets
+
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.tabs          # CRIA AS ABAS SUPERIORES (Home, Arquitetura, etc)
+    - navigation.sections      # Melhora a organização lateral
+    - toc.follow               # Faz o índice lateral rolar junto com a tela
+    - search.suggest           # Sugestões ao digitar na barra de busca
+  
+  palette:
+    # Configuração do Modo Claro / Escuro (com o ícone de Sol/Lua no topo)
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Mudar para modo escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Mudar para modo claro
+
+docs_dir: 'docs'
+
+# Aqui você define o que aparece nas abas superiores
+#Sem o nav o MkDocs pega os arquivos automaticamente em ordem alfabética (Plugin Awesome Pages traz mais opcoes).
+# nav:
+  # Adicione as páginas conforme for criando na pasta docs/:
+  # - Home: index.md
+  # - Planejamento e Gestão: planejamento.md
+  # - Requisitos: requisitos.md
+  # - Arquitetura: arquitetura.md
+  # - Execução (Sprints): sprints.md

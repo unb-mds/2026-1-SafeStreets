@@ -1,0 +1,31 @@
+name: Deploy Docs
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**' # Só roda se algo na pasta docs for alterado
+      - 'mkdocs.yml'
+
+permissions:
+  contents: write
+
+# por meio do github actions, criar uma maquina virtual na nuvem com os requisitos, altera o html com o mkdocs
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+          
+      - name: Install MkDocs
+        # Instalamos o mkdocs e o tema material
+        run: pip install mkdocs-material
+        
+      - name: Deploy to GitHub Pages
+        # Esse comando constrói os arquivos e joga para a branch gh-pages automaticamente
+        run: mkdocs gh-deploy --force
