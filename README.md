@@ -17,3 +17,7 @@ Além disso, o SafeNight busca transformar dados em informação útil, possibil
 ## 🎯 Objetivo
 
 Auxiliar na compreensão do cenário de segurança urbana, promovendo acesso a informações relevantes e apoiando decisões mais conscientes no dia a dia.
+
+## 🧩Principais Links: 
+
+[Protótipo de alta fidelidade e Story Map](https://www.figma.com/board/13SnyvGleeaYsubnOhMeYk/Template-MDS-Squad-1?t=RpJETIb0Vk6BLL3d-0)
