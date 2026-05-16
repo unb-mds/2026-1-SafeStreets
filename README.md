@@ -20,4 +20,49 @@ Auxiliar na compreensão do cenário de segurança urbana, promovendo acesso a i
 
 ## 🧩Principais Links: 
 
-[Protótipo de alta fidelidade e Story Map](https://www.figma.com/board/13SnyvGleeaYsubnOhMeYk/Template-MDS-Squad-1?t=RpJETIb0Vk6BLL3d-0)
+* 🗺️[Protótipo de alta fidelidade e Story Map](https://www.figma.com/board/13SnyvGleeaYsubnOhMeYk/Template-MDS-Squad-1?t=RpJETIb0Vk6BLL3d-0)
+* 🏗️[Arquitetura](https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/Milestone/Sprint-3/documento-c4.md)
+
+## 👥 Equipe
+<table>
+  <tr>
+    <td align="center">
+      <a href="LINK_DO_GITHUB_1">
+        <img src="" width="150px;" alt="Arthur Feitosa"/><br>
+        <sub><b>Arthur Feitosa</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="LINK_DO_GITHUB_2">
+        <img src="LINK_DA_FOTO_2" width="150px;" alt="Edson Gabriel"/><br>
+        <sub><b>Edson Gabriel</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="LINK_DO_GITHUB_3">
+        <img src="LINK_DA_FOTO_3" width="150px;" alt="Israel Soarez"/><br>
+        <sub><b>Israel Soarez</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="LINK_DO_GITHUB_4">
+        <img src="LINK_DA_FOTO_4" width="150px;" alt="Jorge"/><br>
+        <sub><b>Jorge</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="LINK_DO_GITHUB_5">
+        <img src="LINK_DA_FOTO_5" width="150px;" alt="Matheus Queiroz"/><br>
+        <sub><b>Matheus Queiroz</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="LINK_DO_GITHUB_6">
+        <img src="LINK_DA_FOTO_6" width="150px;" alt="Nicolas Lopes"/><br>
+        <sub><b>Nicolas Lopes</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
