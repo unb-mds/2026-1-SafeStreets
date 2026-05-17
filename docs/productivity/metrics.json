@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-05-16T19:42:21.887975Z",
+  "generated_at": "2026-05-17T04:07:37.587560Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W20",
-      "opened": 15,
+      "opened": 16,
       "closed": 13
     },
     {
@@ -50,7 +50,7 @@
     },
     {
       "range": "21-40",
-      "count": 38
+      "count": 39
     },
     {
       "range": "41-60",
@@ -69,7 +69,7 @@
     {
       "day": 6,
       "hour": 19,
-      "count": 13
+      "count": 14
     },
     {
       "day": 6,
@@ -261,7 +261,7 @@
     },
     {
       "username": "actions-user",
-      "commits": 11
+      "commits": 12
     },
     {
       "username": "jorgevasquez25",
@@ -274,15 +274,15 @@
       "prs_opened": 5
     },
     {
+      "username": "IsraelSoares-25",
+      "prs_opened": 2
+    },
+    {
       "username": "EdsonToppzera",
       "prs_opened": 2
     },
     {
       "username": "Nic0laslc",
-      "prs_opened": 1
-    },
-    {
-      "username": "IsraelSoares-25",
       "prs_opened": 1
     }
   ],
@@ -315,7 +315,7 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 25
+      "count": 26
     },
     {
       "label": "estudar",
@@ -323,11 +323,11 @@
     },
     {
       "label": "arquitetura",
-      "count": 15
+      "count": 16
     },
     {
       "label": "organização",
-      "count": 14
+      "count": 15
     },
     {
       "label": "front-end",
