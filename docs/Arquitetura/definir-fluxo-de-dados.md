@@ -1,78 +1,100 @@
-##  Fluxo de Dados: Proposições (Ingestão e Processamento)
+# Fluxo de Dados: SafeStreets (Ingestão e Processamento)
 
-Conforme definido na decisão de arquitetura, o sistema adota um pipeline estruturado de ETL (Extração, Tratamento e Transformação) acoplado a uma IA de classificação.
+Conforme definido na decisão de arquitetura, o sistema adota um pipeline estruturado de **ETL (Extração, Tratamento e Transformação)** focado especificamente em dados de segurança pública, acoplado a uma IA dedicada exclusivamente à sumarização dos relatos.
 
-### O Pipeline de Entrada (Backend e Ingestão)
+---
 
-O FastAPI gerencia o ciclo de vida da ingestão de dados em segundo plano, utilizando `BackgroundTasks` ou tarefas agendadas para não bloquear as requisições dos usuários.
+# Pipeline de Entrada (Backend e Ingestão)
 
-```
-[API Dados Abertos]
+O **FastAPI** gerencia o ciclo de vida da ingestão de dados de forma assíncrona, garantindo que a comunicação com serviços externos não bloqueie a experiência do usuário ao navegar pelo mapa de criminalidade.
+
+```plaintext
+[API Aberta - dados.df.gov.br]
            │
-           ▼ (HTTPX / Requests Assíncronos)
+           ▼ (HTTPX / Requests Assíncronos por Lat/Long)
 [Camada de Ingestão (Python)] ──► Validação Inicial (Pydantic)
            │
            ▼
-[Pipeline de Processamento (ETL)] ──► Normalização (Tipo, Data, Tema)
+[Pipeline de Processamento (ETL)] ──► Enriquecimento (Busca do histórico/relato completo do crime)
            │
            ▼
-[Módulo de Inteligência Artificial] ──► Classificação Temática Fina (ex: "Proteção de Crianças")
+[Módulo de Inteligência Artificial] ──► Gemini (Geração de Resumos Concisos)
            │
            ▼
-[Camada de Persistência] ──► Banco de Dados Relacional (Dados Estruturados + JSON Original)
+[Camada de Persistência] ──► Banco de Dados Relacional (PostgreSQL com histórico cacheado)
+```
+## **Passo a Passo do Fluxo de Ingestão** 
+
+## **1. Extração Georreferenciada** 
+
+A partir das coordenadas clicadas no mapa, o backend realiza uma chamada assíncrona para a API do governo do DF, filtrando ocorrências criminais registradas naquela região. 
+
+## **2. Enriquecimento** 
+
+Para cada crime retornado (muitas vezes com descrições longas ou jargões policiais), o sistema busca o conteúdo textual completo do boletim ou relato associado. 
+
+## **3. Tratamento e Validação (Pydantic)** 
+
+O JSON bruto é parseado e limpo. O Pydantic garante a tipagem forte, padronizando formatos de datas das ocorrências e lidando com campos nulos. 
+
+## **4. Processamento por IA** 
+
+O texto validado é enviado via API para o Google Gemini. O modelo executa uma única ação: condensar o relato do crime em um resumo ágil e direto, facilitando a leitura rápida pelo usuário final. 
+
+## **5. Persistência Dupla (Cache)** 
+
+A ocorrência, agora com seu resumo gerado pela IA e suas coordenadas exatas, é salva no PostgreSQL. Isso evita chamadas redundantes à API de segurança e ao Gemini caso outro usuário clique na mesma área. 
+
+## **Pipeline de Saída (Do Banco à Tela do Usuário)** 
+
+O consumo de dados é otimizado para que a interface cartográfica responda de forma fluida e instantânea aos cliques do usuário, focando na exibição clara dos incidentes. 
+
+|**Etapa**|**Responsável**|**Descrição Técnica**||
+|---|---|---|---|
+|1. Disparo|Frontend (Next.js / Leaflet)|O usuário clica em um ponto do mapa interativo. O Next.js captura Latitude/Longitude e dispara um GET tipado em TypeScript.||
+|2. Recepção|Backend (FastAPI)|O backend recebe a requisição. O Pydantic valida o formato numérico das coordenadas.||
+|3. Consulta|Banco (PostgreSQL)|O backend verifica se há dados de crimes cacheados para aquele raio espacial.||
+|4. Resposta|Backend (FastAPI)|O FastAPI consolida os crimes da região em um OcorrenciasLocalResponse.||
+|5. Exibição|Frontend (Next.js)|O Next.js recebe o JSON e o Leaflet renderiza um PIN interativo no mapa.||
+
+
+
+## **Estrutura de Dados Espaciais e Conteúdo (Modelo Relacional)** 
+
+O sistema adota um modelo relacional simplificado no PostgreSQL, focado na ligação direta entre coordenadas geográficas e ocorrências criminais resumidas, eliminando a necessidade de tabelas complexas de categorização por IA. 
+
+## **Modelagem de Dados no Backend (FastAPI + Pydantic/ORM)** 
+
+As relações são mapeadas conectando os locais físicos diretamente às ocorrências criminais já processadas. 
+
+```plaintext
+[locais_pin] 1 ──── 0..* [ocorrencias_criminais]
+      │                                                   
+      │ 1                                               
+      └──────── 0..* [historico_consultas]
 ```
 
-#### Passo a Passo do Fluxo de Ingestão:
+## **Detalhes das Interações de Fluxo** 
 
-1. **Extração Otimizada (Proxy de Mudança):** O backend consulta periodicamente o endpoint `listarProposicoesTramitadasNoPeriodo` utilizando um intervalo baseado no timestamp da *última verificação bem-sucedida*.
-2. **Enriquecimento:** Para cada ID de proposição modificado, o sistema realiza uma chamada assíncrona para `ObterProposicaoPorID`.
-3. **Tratamento e Validação (Pydantic):** O JSON bruto é parseado por um Schema do Pydantic. Os dados são limpos e normalizados (conversão de strings de data para objetos `datetime`, padronização de siglas como PL, PEC).
-4. **Classificação por IA:** O texto da proposição (ementa/explicação) é enviado para um modelo de classificação (LLM ou classificador NLP em Python) que categoriza o projeto em temas específicos e refinados.
-5. **Persistência Dupla:** O dado tratado é salvo de forma estruturada nas tabelas relacionais, e o JSON original é armazenado em uma coluna do tipo `JSONB` (ou equivalente) para fins de auditoria e reprocessamento futuro.
+## **Associação Crime-Local** 
 
----
+O FastAPI garante que toda nova ocorrência criminal obtida da API externa seja vinculada ao id da tabela locais_pin. Um mesmo local perigoso pode concentrar múltiplos registros de crimes ao longo do tempo. 
 
-### O Pipeline de Saída (Do Banco à Tela do Usuário)
+## **Geração de Cache Espacial** 
 
-O consumo de dados é otimizado para que o Next.js exiba dashboards e filtros instantâneos.
+A tabela historico_consultas registra os timestamps da última atualização daquele raio geográfico. O FastAPI utiliza essas informações para decidir se busca os dados diretamente no banco ou realiza um novo fetch na API governamental. 
 
-| Etapa | Responsável | Descrição Técnica |
-| :--- | :--- | :--- |
-| **1. Disparo** | Frontend (Next.js) | O usuário interage com os filtros do dashboard (ex: Ano ou Tema). O Next.js dispara uma requisição HTTP `GET` tipada em TypeScript para o backend: `/api/v1/proposicoes?tema=infancia&ano=2026`. |
-| **2. Recepção** | Backend (FastAPI) | O FastAPI recebe os parâmetros da query string. O **Pydantic** valida os tipos de dados em tempo de execução. Se os parâmetros forem válidos, a requisição é repassada para a camada de serviço. |
-| **3. Consulta** | Banco (SQLAlchemy) | A camada de negócio executa uma query SQL otimizada no banco relacional. Como os dados já foram normalizados e indexados no momento da ingestão, o banco responde de forma ágil, agregando os dados para os gráficos. |
-| **4. Resposta** | Backend (FastAPI) | O backend converte o resultado do banco para um schema de saída (`ProposicaoResponse`), mascarando dados desnecessários e garantindo um JSON limpo de resposta. |
-| **5. Exibição** | Frontend (Next.js) | O Next.js recebe o JSON. O **TypeScript** garante a integridade da tipagem da resposta. Os dados populam os componentes JSX, e os gráficos e listas são estilizados via **CSS**. |
+## **Benefícios Arquiteturais da Stack Selecionada** 
 
----
+## **Casamento de Tipos (Pydantic** → **TypeScript)** 
 
-## Dados dos Usuários (Modelo Relacional)
+A definição do retorno das ocorrências no FastAPI garante um contrato OpenAPI previsível. O frontend em Next.js gera interfaces TypeScript automaticamente, reduzindo bugs de integração. 
 
-Conforme a conclusão do estudo, o sistema rejeita o armazenamento de listas brutas dentro do objeto do usuário e adota o modelo puramente relacional. Isso garante integridade referencial, consultas rápidas através de *JOINs* e facilidade de indexação.
+## **Otimização Extrema de Custos** 
 
-### Modelagem de Dados no Backend (FastAPI + Pydantic/ORM)
+Ao delegar ao Gemini apenas a função de resumo, o sistema reduz drasticamente o tamanho dos prompts e o consumo de tokens. O PostgreSQL atua como camada de cache para evitar reprocessamentos. 
 
-As relações entre os usuários e as propriedades/proposições são mapeadas por tabelas associativas clássicas, estruturadas através de entidades do ORM em Python.
+## **Confiabilidade e Testabilidade Rigorosa** 
 
-```
-   [users] 1 ──── 0..* [favoritos] 0..* ──── 1 [proposicoes]
-      │                     │                       │
-      │ 1                   │                       │ 1
-      ├──────── 0..* [historico] 0..* ──────────────┤
-      │                                             │
-      └──────── 0..* [notificacoes] 0..* ───────────┘
-```
+A arquitetura modular do FastAPI facilita testes automatizados utilizando Pytest, garantindo validação contínua dos endpoints e funcionamento correto da rota /health. 
 
-#### Detalhes das Interações de Fluxo:
-
-* **Adicionar aos Favoritos:** O Next.js envia um `POST /api/v1/favoritos` contendo `{ "proposicao_id": 123 }`. O FastAPI intercepta, valida o token do usuário (Autenticação), e insere um registro simples na tabela `favoritos` mapeando `user_id` e `proposicao_id`.
-* **Geração de Histórico:** Toda vez que um usuário abre os detalhes de uma proposição no Next.js, uma requisição em segundo plano é enviada para registrar o acesso na tabela `historico`, permitindo futuras análises de relevância e recomendação.
-* **Disparo de Notificações:** Quando o Job de Ingestão de Proposições detecta uma nova tramitação, a camada de negócio verifica na tabela `favoritos` quais usuários assinam aquela proposição e insere registros em massa na tabela `notificacoes`.
-
----
-
-##  Benefícios Arquiteturais da Stack Selecionada
-
-1. **Casamento de Tipos (Pydantic ──► TypeScript):** A definição das tabelas de Proposições e Usuários no FastAPI pode ser exportada automaticamente como documentação OpenAPI. O time de Frontend pode gerar as interfaces TypeScript a partir do Schema do backend, zerando erros de digitação de propriedades no JSX.
-2. **Performance em Dashboards:** Com as tabelas de `proposicoes` e `favoritos` estruturadas e indexadas no modelo relacional, operações como "contar quantas pessoas favoritaram a proposição X por ano" tornam-se operações nativas e extremamente rápidas no banco de dados.
-3. **Modularidade para Evolução Futura:** Se no futuro o time decidir evoluir para uma abordagem híbrida (adicionar cache com Redis), a Camada de Aplicação do FastAPI está totalmente isolada, bastando interceptar as chamadas de banco na camada de serviço, sem necessidade de alterar uma única linha de código do Frontend Next.js.
