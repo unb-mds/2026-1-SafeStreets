@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-05-20T15:50:09.992645Z",
+  "generated_at": "2026-05-21T00:01:46.123877Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
+    {
+      "week": "2026-W21",
+      "opened": 2,
+      "closed": 3
+    },
     {
       "week": "2026-W20",
       "opened": 16,
       "closed": 13
-    },
-    {
-      "week": "2026-W21",
-      "opened": 0,
-      "closed": 3
     },
     {
       "week": "2026-W19",
@@ -55,7 +55,7 @@
     },
     {
       "range": "21-40",
-      "count": 43
+      "count": 44
     },
     {
       "range": "41-60",
@@ -67,10 +67,20 @@
     },
     {
       "range": "81+",
-      "count": 20
+      "count": 21
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 4,
+      "hour": 0,
+      "count": 1
+    },
+    {
+      "day": 3,
+      "hour": 15,
+      "count": 1
+    },
     {
       "day": 3,
       "hour": 4,
@@ -264,16 +274,16 @@
   ],
   "top_committers": [
     {
+      "username": "matheusqsa",
+      "commits": 22
+    },
+    {
       "username": "IsraelSoares-25",
       "commits": 22
     },
     {
-      "username": "matheusqsa",
-      "commits": 21
-    },
-    {
       "username": "actions-user",
-      "commits": 16
+      "commits": 17
     },
     {
       "username": "Nic0laslc",
@@ -309,19 +319,19 @@
   "top_issue_contributors": [
     {
       "username": "IsraelSoares-25",
-      "total": 12
+      "total": 13
     },
     {
       "username": "Nic0laslc",
       "total": 10
     },
     {
-      "username": "matheusqsa",
+      "username": "jorgevasquez25",
       "total": 7
     },
     {
-      "username": "jorgevasquez25",
-      "total": 6
+      "username": "matheusqsa",
+      "total": 7
     },
     {
       "username": "EdsonToppzera",
@@ -335,26 +345,26 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 26
+      "count": 28
+    },
+    {
+      "label": "arquitetura",
+      "count": 17
     },
     {
       "label": "estudar",
       "count": 17
     },
     {
-      "label": "arquitetura",
+      "label": "organização",
       "count": 16
     },
     {
-      "label": "organização",
-      "count": 15
+      "label": "back-end",
+      "count": 14
     },
     {
       "label": "front-end",
-      "count": 13
-    },
-    {
-      "label": "back-end",
       "count": 13
     },
     {
@@ -383,7 +393,7 @@
     },
     {
       "label": "requisitos",
-      "count": 2
+      "count": 3
     },
     {
       "label": "bug",
