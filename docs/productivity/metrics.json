@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-21T16:33:10.619652Z",
+  "generated_at": "2026-05-21T18:18:47.321233Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W21",
-      "opened": 5,
-      "closed": 5
+      "opened": 7,
+      "closed": 6
     },
     {
       "week": "2026-W20",
@@ -55,11 +55,11 @@
     },
     {
       "range": "21-40",
-      "count": 47
+      "count": 49
     },
     {
       "range": "41-60",
-      "count": 19
+      "count": 20
     },
     {
       "range": "61-80",
@@ -73,8 +73,13 @@
   "commit_heatmap": [
     {
       "day": 4,
+      "hour": 18,
+      "count": 2
+    },
+    {
+      "day": 4,
       "hour": 16,
-      "count": 1
+      "count": 2
     },
     {
       "day": 4,
@@ -285,7 +290,7 @@
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 25
+      "commits": 27
     },
     {
       "username": "matheusqsa",
@@ -293,7 +298,7 @@
     },
     {
       "username": "actions-user",
-      "commits": 20
+      "commits": 21
     },
     {
       "username": "Nic0laslc",
@@ -329,7 +334,7 @@
   "top_issue_contributors": [
     {
       "username": "IsraelSoares-25",
-      "total": 13
+      "total": 15
     },
     {
       "username": "Nic0laslc",
@@ -355,14 +360,14 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 31
-    },
-    {
-      "label": "organização",
-      "count": 18
+      "count": 33
     },
     {
       "label": "arquitetura",
+      "count": 20
+    },
+    {
+      "label": "organização",
       "count": 18
     },
     {
@@ -371,11 +376,11 @@
     },
     {
       "label": "front-end",
-      "count": 15
+      "count": 16
     },
     {
       "label": "back-end",
-      "count": 15
+      "count": 16
     },
     {
       "label": "implementação",
@@ -386,15 +391,15 @@
       "count": 8
     },
     {
+      "label": "banco de dados",
+      "count": 7
+    },
+    {
       "label": "feat/api🔌",
       "count": 7
     },
     {
       "label": "docker",
-      "count": 6
-    },
-    {
-      "label": "banco de dados",
       "count": 6
     },
     {
