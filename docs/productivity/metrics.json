@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-21T04:24:21.822486Z",
+  "generated_at": "2026-05-21T16:33:10.619652Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W21",
-      "opened": 4,
-      "closed": 3
+      "opened": 5,
+      "closed": 5
     },
     {
       "week": "2026-W20",
@@ -55,11 +55,11 @@
     },
     {
       "range": "21-40",
-      "count": 46
+      "count": 47
     },
     {
       "range": "41-60",
-      "count": 18
+      "count": 19
     },
     {
       "range": "61-80",
@@ -67,10 +67,20 @@
     },
     {
       "range": "81+",
-      "count": 22
+      "count": 23
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 4,
+      "hour": 16,
+      "count": 1
+    },
+    {
+      "day": 4,
+      "hour": 4,
+      "count": 1
+    },
     {
       "day": 4,
       "hour": 0,
@@ -100,6 +110,11 @@
       "day": 0,
       "hour": 4,
       "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 22,
+      "count": 2
     },
     {
       "day": 6,
@@ -247,11 +262,6 @@
       "count": 3
     },
     {
-      "day": 6,
-      "hour": 22,
-      "count": 1
-    },
-    {
       "day": 0,
       "hour": 3,
       "count": 1
@@ -275,7 +285,7 @@
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 23
+      "commits": 25
     },
     {
       "username": "matheusqsa",
@@ -283,7 +293,7 @@
     },
     {
       "username": "actions-user",
-      "commits": 19
+      "commits": 20
     },
     {
       "username": "Nic0laslc",
@@ -335,7 +345,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "total": 5
+      "total": 6
     },
     {
       "username": "ArthurFeitosa05",
@@ -345,27 +355,27 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 30
+      "count": 31
+    },
+    {
+      "label": "organização",
+      "count": 18
     },
     {
       "label": "arquitetura",
       "count": 18
     },
     {
-      "label": "organização",
-      "count": 17
-    },
-    {
       "label": "estudar",
       "count": 17
     },
     {
-      "label": "back-end",
+      "label": "front-end",
       "count": 15
     },
     {
-      "label": "front-end",
-      "count": 14
+      "label": "back-end",
+      "count": 15
     },
     {
       "label": "implementação",
@@ -396,11 +406,11 @@
       "count": 3
     },
     {
-      "label": "bug",
-      "count": 1
+      "label": "enhancement",
+      "count": 2
     },
     {
-      "label": "enhancement",
+      "label": "bug",
       "count": 1
     }
   ]
