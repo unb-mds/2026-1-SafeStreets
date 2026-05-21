@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-05-21T19:09:56.590904Z",
+  "generated_at": "2026-05-21T21:39:56.548263Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W21",
-      "opened": 7,
+      "opened": 8,
       "closed": 6
     },
     {
@@ -55,11 +55,11 @@
     },
     {
       "range": "21-40",
-      "count": 52
+      "count": 53
     },
     {
       "range": "41-60",
-      "count": 21
+      "count": 22
     },
     {
       "range": "61-80",
@@ -73,8 +73,13 @@
   "commit_heatmap": [
     {
       "day": 4,
+      "hour": 21,
+      "count": 1
+    },
+    {
+      "day": 4,
       "hour": 19,
-      "count": 2
+      "count": 3
     },
     {
       "day": 4,
@@ -290,11 +295,11 @@
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 29
+      "commits": 30
     },
     {
       "username": "actions-user",
-      "commits": 23
+      "commits": 24
     },
     {
       "username": "matheusqsa",
@@ -342,7 +347,7 @@
     },
     {
       "username": "jorgevasquez25",
-      "total": 7
+      "total": 8
     },
     {
       "username": "matheusqsa",
@@ -360,7 +365,7 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 33
+      "count": 34
     },
     {
       "label": "arquitetura",
@@ -368,7 +373,7 @@
     },
     {
       "label": "organização",
-      "count": 18
+      "count": 19
     },
     {
       "label": "estudar",
@@ -403,12 +408,12 @@
       "count": 6
     },
     {
-      "label": "prototipação",
+      "label": "requisitos",
       "count": 4
     },
     {
-      "label": "requisitos",
-      "count": 3
+      "label": "prototipação",
+      "count": 4
     },
     {
       "label": "enhancement",
