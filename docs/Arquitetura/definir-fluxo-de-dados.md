@@ -7,7 +7,7 @@ Conforme definido na decisão de arquitetura, o sistema adota um pipeline estrut
 O FastAPI gerencia o ciclo de vida da ingestão de dados em segundo plano, utilizando `BackgroundTasks` ou tarefas agendadas para não bloquear as requisições dos usuários.
 
 ```
-[API Câmara dos Deputados]
+[API Dados Abertos]
            │
            ▼ (HTTPX / Requests Assíncronos)
 [Camada de Ingestão (Python)] ──► Validação Inicial (Pydantic)
