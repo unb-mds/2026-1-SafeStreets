@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-22T18:56:57.625936Z",
+  "generated_at": "2026-05-22T20:07:44.911968Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W21",
-      "opened": 12,
-      "closed": 7
+      "opened": 13,
+      "closed": 8
     },
     {
       "week": "2026-W20",
@@ -55,7 +55,7 @@
     },
     {
       "range": "21-40",
-      "count": 70
+      "count": 71
     },
     {
       "range": "41-60",
@@ -67,14 +67,19 @@
     },
     {
       "range": "81+",
-      "count": 26
+      "count": 27
     }
   ],
   "commit_heatmap": [
     {
       "day": 5,
+      "hour": 20,
+      "count": 2
+    },
+    {
+      "day": 5,
       "hour": 18,
-      "count": 3
+      "count": 4
     },
     {
       "day": 5,
@@ -287,11 +292,6 @@
       "count": 1
     },
     {
-      "day": 5,
-      "hour": 20,
-      "count": 1
-    },
-    {
       "day": 0,
       "hour": 1,
       "count": 1
@@ -320,11 +320,11 @@
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 41
+      "commits": 42
     },
     {
       "username": "actions-user",
-      "commits": 36
+      "commits": 37
     },
     {
       "username": "matheusqsa",
@@ -350,7 +350,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "prs_opened": 3
+      "prs_opened": 4
     },
     {
       "username": "IsraelSoares-25",
@@ -390,11 +390,11 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 38
+      "count": 39
     },
     {
       "label": "organização",
-      "count": 23
+      "count": 24
     },
     {
       "label": "arquitetura",
@@ -402,7 +402,7 @@
     },
     {
       "label": "front-end",
-      "count": 17
+      "count": 18
     },
     {
       "label": "estudar",
@@ -433,16 +433,16 @@
       "count": 6
     },
     {
+      "label": "enhancement",
+      "count": 4
+    },
+    {
       "label": "requisitos",
       "count": 4
     },
     {
       "label": "prototipação",
       "count": 4
-    },
-    {
-      "label": "enhancement",
-      "count": 3
     },
     {
       "label": "bug",
