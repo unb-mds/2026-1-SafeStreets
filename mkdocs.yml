@@ -9,6 +9,8 @@ repo_name: safestreets
 theme:
   name: material
   language: pt-BR
+  logo: imagens/logo_escudo.png
+  favicon: imagens/logo_escudo.png
   features:
     - navigation.tabs          # CRIA AS ABAS SUPERIORES (Home, Arquitetura, etc)
     - navigation.sections      # Melhora a organização lateral
@@ -19,27 +21,81 @@ theme:
     # Configuração do Modo Claro / Escuro (com o ícone de Sol/Lua no topo)
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: deep purple
-      accent: deep purple
+      primary: green
+      accent: yellow
       toggle:
         icon: material/weather-night
         name: Mudar para modo escuro
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep purple
-      accent: deep purple
+      primary: green
+      accent: yellow
       toggle:
         icon: material/weather-sunny
         name: Mudar para modo claro
 
 docs_dir: 'docs'
+site_dir: 'site-mkdocs'
+
+extra_css:
+  - css-mkdocs/custom.css
 
 # Aqui você define o que aparece nas abas superiores
-#Sem o nav o MkDocs pega os arquivos automaticamente em ordem alfabética (Plugin Awesome Pages traz mais opcoes).
-# nav:
-  # Adicione as páginas conforme for criando na pasta docs/:
-  # - Home: index.md
-  # - Planejamento e Gestão: planejamento.md
-  # - Requisitos: requisitos.md
-  # - Arquitetura: arquitetura.md
-  # - Execução (Sprints): sprints.md
+nav:
+  - Início: index.md
+  - Planejamento e Gestão: planejamento.md
+  - Requisitos: requisitos.md
+  - Sprints:
+      - Sprint 0:
+          - Estudo Front-End: Milestone/Sprint-0/Estudo-Front-End.md
+          - Git e GitHub: Milestone/Sprint-0/git-github.md
+      - Sprint 1:
+          - Ciclo de Vida de Software: Milestone/Sprint-1/ciclo-vida-software.md
+          - Docker: Milestone/Sprint-1/docker.md
+          - Estudo Back-End: Milestone/Sprint-1/estudo-back-end.md
+          - Estudo React: Milestone/Sprint-1/estudo-de-react.md
+          - Web Scraping: Milestone/Sprint-1/web-scraping.md
+      - Sprint 2:
+          - Estudo de API: Milestone/Sprint-2/estudo-de-API.md
+          - Organizar Documentação: Milestone/Sprint-2/organizar-Docs.md
+          - Preenchimento do Figma: Milestone/Sprint-2/Preenchimento-Figma.md
+          - Protótipo de Baixa Fidelidade: Milestone/Sprint-2/protótipo-baixa-fidelidade.md
+          - Estudo de Agentes de IA: Milestone/Sprint-2/estudo-de-agentes-de-IA.md
+      - Sprint 3:
+          - Análise de Implementação: Milestone/Sprint-3/analise-de-implementacao.md
+          - Análise de Linguagens: Milestone/Sprint-3/analise-de-linguagens.md
+          - Documento C4: Milestone/Sprint-3/documento-c4.md
+          - Estudo de Banco de Dados: Milestone/Sprint-3/estudo-banco-de-dados.md
+      - Sprint 4:
+          - Estudo de DevOps: Milestone/Sprint-4/estudo-de-devops.md
+          - Story Map: Milestone/Sprint-4/story-map.md
+          - Template de Pull Request: Milestone/Sprint-4/template-pull-request.md
+      - Sprint 5:
+          - Definições de Front-End: Milestone/Sprint-5/definicoes-front-end.md
+          - Estudo de FastAPI: Milestone/Sprint-5/estudo-fastapi.md
+          - Implementação de Banco de Dados: Milestone/Sprint-5/implementacao-banco.md
+          - Revisão de Story Map: Milestone/Sprint-5/revisar-story-map.md
+      - Sprint 6:
+          - Organização do Kanban: Milestone/Sprint-6/organizar_kanban.md
+          - Planejamento do Figma: Milestone/Sprint-6/planejamento_figma.md
+          - Protótipo de Alta Fidelidade: Milestone/Sprint-6/prototipo_alta_fidelidade.md
+          - Template de Issue: Milestone/Sprint-6/template_issue.md
+      - Sprint 7:
+          - Conteúdo das Release Notes: Milestone/Sprint-7/conteudo_releasenote_v0.1.0.md
+          - Requisitos: Milestone/Sprint-7/requisitos.md
+          - Especificação do Dashboard: Milestone/Sprint-7/spec-dashboard.md
+          - Versionamento do Story Map: Milestone/Sprint-7/versionamento-story-map.md
+      - Sprint 8:
+          - Definições de Back-End: Milestone/Sprint-8/definições-de-back.md
+  - Arquitetura:
+      - Visão Geral: arquitetura/index.md
+      - Escolha da Arquitetura: arquitetura/definir-arquitetura.md
+      - Fluxo de Dados: arquitetura/definir-fluxo-de-dados.md
+
+# Configuração do renderizador do Mermaid
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
