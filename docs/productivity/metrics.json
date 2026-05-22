@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-05-21T23:38:56.905978Z",
+  "generated_at": "2026-05-22T01:43:02.869058Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W21",
-      "opened": 8,
+      "opened": 9,
       "closed": 6
     },
     {
@@ -55,7 +55,7 @@
     },
     {
       "range": "21-40",
-      "count": 61
+      "count": 62
     },
     {
       "range": "41-60",
@@ -67,14 +67,19 @@
     },
     {
       "range": "81+",
-      "count": 23
+      "count": 24
     }
   ],
   "commit_heatmap": [
     {
+      "day": 5,
+      "hour": 1,
+      "count": 1
+    },
+    {
       "day": 4,
       "hour": 23,
-      "count": 10
+      "count": 11
     },
     {
       "day": 4,
@@ -299,11 +304,11 @@
     },
     {
       "username": "actions-user",
-      "commits": 29
+      "commits": 30
     },
     {
       "username": "matheusqsa",
-      "commits": 22
+      "commits": 23
     },
     {
       "username": "Nic0laslc",
@@ -324,11 +329,11 @@
       "prs_opened": 5
     },
     {
-      "username": "IsraelSoares-25",
-      "prs_opened": 2
+      "username": "EdsonToppzera",
+      "prs_opened": 3
     },
     {
-      "username": "EdsonToppzera",
+      "username": "IsraelSoares-25",
       "prs_opened": 2
     },
     {
@@ -365,23 +370,23 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 34
+      "count": 35
+    },
+    {
+      "label": "organização",
+      "count": 20
     },
     {
       "label": "arquitetura",
       "count": 20
     },
     {
-      "label": "organização",
-      "count": 19
+      "label": "front-end",
+      "count": 17
     },
     {
       "label": "estudar",
       "count": 17
-    },
-    {
-      "label": "front-end",
-      "count": 16
     },
     {
       "label": "back-end",
@@ -417,7 +422,7 @@
     },
     {
       "label": "enhancement",
-      "count": 2
+      "count": 3
     },
     {
       "label": "bug",
