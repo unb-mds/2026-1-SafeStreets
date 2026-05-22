@@ -9,6 +9,8 @@ repo_name: safestreets
 theme:
   name: material
   language: pt-BR
+  logo: imagens/logo-escudo.PNG
+  favicon: imagens/logo-escudo.PNG
   features:
     - navigation.tabs          # CRIA AS ABAS SUPERIORES (Home, Arquitetura, etc)
     - navigation.sections      # Melhora a organização lateral
@@ -19,15 +21,15 @@ theme:
     # Configuração do Modo Claro / Escuro (com o ícone de Sol/Lua no topo)
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: deep purple
-      accent: deep purple
+      primary: green
+      accent: yellow
       toggle:
         icon: material/weather-night
         name: Mudar para modo escuro
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep purple
-      accent: deep purple
+      primary: green
+      accent: yellow
       toggle:
         icon: material/weather-sunny
         name: Mudar para modo claro
