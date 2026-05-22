@@ -16,3 +16,4 @@ Aqui estão documentados os levantamentos tecnológicos, diagramas, fluxos de da
 - [Diagrama de Arquitetura V2](documento-c4-v2.md)
 - [Escolha da Arquitetura](definir-arquitetura.md)
 - [Estudo de Fluxo de Dados](definir-fluxo-de-dados.md)
+- [Diagrama de Arquitetura V1](documento-c4.md)
