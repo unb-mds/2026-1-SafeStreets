@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeStreets | Dashboard de Produtividade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
+        .tooltip { position: absolute; text-align: center; padding: 10px; font-size: 13px; font-weight: 600; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 50; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
+        .card { background: #1e293b; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); border: 1px solid #334155; }
+        .chart-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #334155; padding-bottom: 0.75rem; }
+        .tick text { fill: #94a3b8; font-size: 11px; }
+        .domain, .tick line { stroke: #475569; }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#BFA630] selection:text-black">
+    
+    <header class="bg-[#0b1120] border-b border-[#334155] py-8">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-4xl font-extrabold tracking-tight text-white flex items-center gap-3">
+                    <span class="w-4 h-8 bg-[#BFA630] rounded-sm"></span>
+                    SafeStreets <span class="font-light text-gray-400">| Dashboard</span>
+                </h1>
+                <p class="text-sm mt-2 text-gray-400 flex items-center gap-2" id="last-updated">
+                    <svg class="w-4 h-4 animate-spin text-[#BFA630]" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    Sincronizando dados...
+                </p>
+            </div>
+            <div class="bg-[#1e293b] border border-[#334155] px-4 py-2 rounded-lg text-sm font-semibold tracking-wider text-[#BFA630] uppercase shadow-inner">
+                Squad 01 • MDS
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+        
+        <section class="card border-t-4 border-[#BFA630]">
+            <h2 class="chart-title text-gray-100">🏆 Rankings da Equipe</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-[#0f172a] rounded-lg p-4 border border-[#334155]">
+                    <h3 class="font-bold text-gray-400 uppercase text-xs tracking-wider mb-4">Top Commits</h3>
+                    <ul id="rank-commits" class="divide-y divide-[#334155]"></ul>
+                </div>
+                <div class="bg-[#0f172a] rounded-lg p-4 border border-[#334155]">
+                    <h3 class="font-bold text-gray-400 uppercase text-xs tracking-wider mb-4">Top PRs</h3>
+                    <ul id="rank-prs" class="divide-y divide-[#334155]"></ul>
+                </div>
+                <div class="bg-[#0f172a] rounded-lg p-4 border border-[#334155]">
+                    <h3 class="font-bold text-gray-400 uppercase text-xs tracking-wider mb-4">Top Issues</h3>
+                    <ul id="rank-issues" class="divide-y divide-[#334155]"></ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="card">
+                <h2 class="chart-title text-gray-100"><span class="text-[#3b82f6]">1.</span> Evolução de Issues (Por Sprint)</h2>
+                <div id="line-issues" class="w-full overflow-x-auto flex justify-center"></div>
+                <div class="flex justify-center gap-4 mt-4 text-xs font-semibold text-gray-300">
+                    <span class="flex items-center gap-2"><div class="w-3 h-3 bg-[#3b82f6] rounded-sm"></div> Abertas</span>
+                    <span class="flex items-center gap-2"><div class="w-3 h-3 bg-[#10b981] rounded-sm"></div> Fechadas</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="chart-title text-gray-100"><span class="text-[#3b82f6]">2.</span> Tamanho das Mensagens de Commit</h2>
+                <div id="hist-commits" class="w-full overflow-x-auto flex justify-center"></div>
+            </div>
+        </div>
+
+        <section class="card">
+            <h2 class="chart-title text-gray-100"><span class="text-[#10b981]">3.</span> Distribuição de Esforço (Labels)</h2>
+            <div id="pie-labels" class="w-full overflow-x-auto flex justify-center pb-4"></div>
+        </section>
+
+        <section class="card">
+            <h2 class="chart-title text-gray-100"><span class="text-[#3b82f6]">4.</span> Zona de Calor (Horários dos Commits)</h2>
+            <div id="heatmap" class="w-full overflow-x-auto flex justify-center pb-4"></div>
+        </section>
+
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        const tooltip = d3.select("#tooltip");
+        const showTooltip = (event, html) => {
+            tooltip.transition().duration(200).style("opacity", 1);
+            tooltip.html(html).style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+        };
+        const hideTooltip = () => tooltip.transition().duration(300).style("opacity", 0);
+
+        d3.json("metrics.json").then(data => {
+            const dateStr = new Date(data.generated_at).toLocaleString('pt-BR', { dateStyle: 'long', timeStyle: 'short' });
+            document.getElementById('last-updated').innerHTML = `<span class="text-[#10b981]">●</span> Atualizado em: <span class="font-bold text-white ml-1">${dateStr}</span>`;
+
+            // Rankings
+            const fillRank = (id, list, key, colorClass) => {
+                const el = document.getElementById(id);
+                if(list.length === 0) return el.innerHTML = '<li class="py-4 text-center text-gray-500 text-sm">Sem dados suficientes</li>';
+                list.forEach((d, i) => {
+                    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `<span class="w-5 inline-block text-center text-gray-500">${i+1}</span>`;
+                    el.innerHTML += `<li class="py-3 flex items-center justify-between">
+                        <span class="flex items-center gap-3 text-gray-300">
+                            <span class="text-lg">${medal}</span>
+                            <span class="font-medium">${d.username}</span>
+                        </span> 
+                        <span class="font-bold text-lg ${colorClass}">${d[key]}</span>
+                    </li>`;
+                });
+            };
+            fillRank('rank-commits', data.top_committers, 'commits', 'text-[#3b82f6]');
+            fillRank('rank-prs', data.top_pr_authors, 'prs_opened', 'text-[#10b981]');
+            fillRank('rank-issues', data.top_issue_contributors, 'total', 'text-[#BFA630]');
+
+            const margin = {top: 20, right: 20, bottom: 40, left: 40};
+            const width = 480 - margin.left - margin.right;
+            const height = 280 - margin.top - margin.bottom;
+
+            const createSVG = (selector) => d3.select(selector).append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // 1. Linhas (Evolução por Sprints como você pediu!)
+            const drawLineChart = () => {
+                const svg = createSVG("#line-issues");
+                if(!data.issues_per_week || data.issues_per_week.length === 0) return svg.append("text").attr("x", width/2).attr("y", height/2).attr("text-anchor", "middle").attr("fill", "#64748b").text("Sem dados.");
+                
+                const sprintData = data.issues_per_week
+                    .sort((a, b) => a.week.localeCompare(b.week))
+                    .map((d, index) => {
+                        return { ...d, sprintName: `Sprint ${index}` };
+                    });
+
+                const x = d3.scalePoint().range([0, width]).domain(sprintData.map(d => d.sprintName)).padding(0.5);
+                const y = d3.scaleLinear().range([height, 0]).domain([0, (d3.max(sprintData, d => Math.max(d.opened, d.closed)) || 1) * 1.2]);
+                
+                svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x)).selectAll("text").attr("transform", "rotate(-45)").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em");
+                svg.append("g").call(d3.axisLeft(y).ticks(5));
+                
+                const drawLine = (key, color) => {
+                    svg.append("path").datum(sprintData).attr("fill", "none").attr("stroke", color).attr("stroke-width", 3)
+                       .attr("d", d3.line().x(d => x(d.sprintName)).y(d => y(d[key])).curve(d3.curveMonotoneX));
+                    svg.selectAll(`.dot-${key}`).data(sprintData).enter().append("circle")
+                       .attr("cx", d=>x(d.sprintName)).attr("cy", d=>y(d[key])).attr("r", 5).attr("fill", color)
+                       .on("mouseover", (e, d) => showTooltip(e, `<b>${d.sprintName}</b><br>Semana Real: ${d.week}<br><span style="color:${color}">${d[key]} ${key === 'opened' ? 'abertas' : 'fechadas'}</span>`)).on("mouseout", hideTooltip);
+                };
+                drawLine("opened", "#3b82f6"); drawLine("closed", "#10b981");
+            };
+
+            // 2. Histograma (Original)
+            const drawHistogram = () => {
+                const svg = createSVG("#hist-commits");
+                const x = d3.scaleBand().range([0, width]).padding(0.2).domain(data.commit_message_histogram.map(d => d.range));
+                const y = d3.scaleLinear().range([height, 0]).domain([0, d3.max(data.commit_message_histogram, d => d.count) || 1]);
+                
+                svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
+                svg.append("g").call(d3.axisLeft(y).ticks(5));
+                
+                svg.selectAll("rect").data(data.commit_message_histogram).enter().append("rect")
+                    .attr("x", d => x(d.range)).attr("y", d => y(d.count)).attr("width", x.bandwidth()).attr("height", d => height - y(d.count))
+                    .attr("fill", "#004A8C").attr("rx", 4).attr("stroke", "#3b82f6").attr("stroke-width", 1)
+                    .on("mouseover", (e, d) => showTooltip(e, `<b>${d.count}</b> commits<br>(${d.range} chars)`)).on("mouseout", hideTooltip);
+            };
+
+            // 3. Labels (Top 5 + Outros)
+            const drawDonutChart = () => {
+                const pW = 800, pH = 280, radius = 110;
+                const svg = d3.select("#pie-labels").append("svg").attr("width", pW).attr("height", pH);
+                
+                let labelData = data.label_distribution || [];
+                if(labelData.length === 0) return svg.append("text").attr("x", pW/2).attr("y", pH/2).attr("text-anchor", "middle").attr("fill", "#64748b").text("Sem labels registradas.");
+
+                labelData.sort((a, b) => b.count - a.count);
+                let processedLabels = [];
+                if (labelData.length > 5) {
+                    processedLabels = labelData.slice(0, 5);
+                    const othersCount = labelData.slice(5).reduce((acc, curr) => acc + curr.count, 0);
+                    processedLabels.push({ label: 'Outros...', count: othersCount });
+                } else {
+                    processedLabels = labelData;
+                }
+
+                const g = svg.append("g").attr("transform", `translate(${radius + 50}, ${pH/2})`);
+                const colors = ["#3b82f6", "#10b981", "#BFA630", "#8b5cf6", "#f43f5e", "#64748b"];
+                const colorScale = d3.scaleOrdinal().domain(processedLabels.map(d=>d.label)).range(colors);
+                const pie = d3.pie().value(d => d.count).sort(null);
+                const arc = d3.arc().innerRadius(radius * 0.5).outerRadius(radius); 
+
+                const arcs = g.selectAll("arc").data(pie(processedLabels)).enter().append("g");
+                arcs.append("path")
+                    .attr("d", arc)
+                    .attr("fill", d => colorScale(d.data.label))
+                    .attr("stroke", "#1e293b").style("stroke-width", "3px")
+                    .on("mouseover", function(e, d) { d3.select(this).attr("opacity", 0.7); showTooltip(e, `<b>${d.data.label}</b><br>${d.data.count} itens`); })
+                    .on("mouseout", function() { d3.select(this).attr("opacity", 1); hideTooltip(); });
+
+                const legend = svg.append("g").attr("transform", `translate(${radius * 2 + 150}, ${pH/2 - (processedLabels.length * 15)})`);
+                processedLabels.forEach((d, i) => {
+                    const lg = legend.append("g").attr("transform", `translate(0, ${i * 30})`);
+                    lg.append("rect").attr("width", 16).attr("height", 16).attr("fill", colorScale(d.label)).attr("rx", 3);
+                    lg.append("text").attr("x", 28).attr("y", 13).text(`${d.label} (${d.count})`).style("font-size", "14px").attr("fill", "#e2e8f0").style("font-weight", "500");
+                });
+            };
+
+            // 4. Heatmap
+            const drawHeatmap = () => {
+                const hMargin = {top: 20, right: 20, bottom: 40, left: 50}, hWidth = 800 - hMargin.left - hMargin.right, hHeight = 300 - hMargin.top - hMargin.bottom;
+                const svg = d3.select("#heatmap").append("svg").attr("width", hWidth + hMargin.left + hMargin.right).attr("height", hHeight + hMargin.top + hMargin.bottom).append("g").attr("transform", `translate(${hMargin.left},${hMargin.top})`);
+                const days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+                const hours = Array.from({length: 24}, (_, i) => i);
+                const x = d3.scaleBand().range([0, hWidth]).domain(hours).padding(0.08);
+                const y = d3.scaleBand().range([0, hHeight]).domain(d3.range(7)).padding(0.08);
+                
+                svg.append("g").attr("transform", `translate(0,${hHeight})`).call(d3.axisBottom(x).tickFormat(d=>`${d}h`)).attr("class", "text-gray-400");
+                svg.append("g").call(d3.axisLeft(y).tickFormat(d => days[d])).attr("class", "text-gray-300 font-medium");
+                svg.selectAll(".domain").remove();
+
+                const maxCount = d3.max(data.commit_heatmap, d => d.count) || 1;
+                const githubColors = d3.scaleLinear().domain([0, 1, maxCount * 0.33, maxCount * 0.66, maxCount]).range(['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']);
+
+                svg.selectAll().data(data.commit_heatmap, d => d.day+':'+d.hour).enter().append("rect")
+                    .attr("x", d => x(d.hour)).attr("y", d => y(d.day)).attr("width", x.bandwidth()).attr("height", y.bandwidth())
+                    .style("fill", d => githubColors(d.count)).attr("rx", 3).attr("stroke", "#334155")
+                    .on("mouseover", function(e, d) { d3.select(this).attr("stroke", "#BFA630").attr("stroke-width", 2); showTooltip(e, `<b>${days[d.day]} às ${d.hour}h</b><br>${d.count} commit(s)`); })
+                    .on("mouseout", function() { d3.select(this).attr("stroke", "#334155").attr("stroke-width", 1); hideTooltip(); });
+            };
+
+            drawLineChart(); drawHistogram(); drawDonutChart(); drawHeatmap();
+        });
+    </script>
+</body>
+</html>
