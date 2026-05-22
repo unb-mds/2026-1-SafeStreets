@@ -4,8 +4,8 @@
 
 O projeto está dividido em **4 Épicos principais**, mapeados diretamente no Story Map do time:
 
-1. **Épico 1: Página de Notícias** (Focado em manter o cidadão informado).
-2. **Épico 2: Mapa interativo** (O núcleo do sistema: interagir com o mapa urbano).
+1. **Épico 1: Visualização de Informações e Notícias** (Focado em manter o cidadão informado).
+2. **Épico 2: Mapeamento de Ocorrências e Alertas** (O núcleo do sistema: interagir com o mapa urbano).
 3. **Épico 3: Dashboard de Busca/Filtros** (Painel estatístico dinâmico de produtividade e dados operacionais).
 4. **Épico 4: Sistema (Backend/API)** (Fornecimento de dados, processamento de requisições e integração).
 
@@ -15,29 +15,55 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 
 ### 🛠️ Épico 1: Visualização de Informações e Notícias
 
-* **RF01 - Feed de Notícias:** O sistema deve exibir, na página inicial, um feed de notícias recentes sobre segurança, eventos urbanos e infraestrutura.
+* **RF01 - Visualizar página de notícia:** O sistema deve exibir, na página inicial, um feed de notícias sobre segurança.
 * **RF02 - Detalhamento da Notícia:** O sistema deve permitir que o usuário clique em uma notícia do feed para ler a descrição detalhada, visualizar a data de publicação, local associado e acessar o link original da fonte.
-* **RF03 - Busca de Notícias:** O sistema deve disponibilizar uma barra de pesquisa para que o usuário busque notícias por palavras-chave.
+* **RF03 - Menu de Navegação:** O sistema deve conter um menu lateral com links diretos para as seções "Início", "Mapa" e "Sobre nós".
 
-### 🗺️ Épico 2: Mapeamento de Ocorrências e Alertas (Core do Protótipo)
+**User Stories:**
+* US 1.1.1 Como cidadão, quero acessar a página de informações sobre crimes na região do DF para me informar sobre a segurança.
+* US 1.1.2 Como cidadão, quero abrir uma notícia para visualizar detalhes completos da ocorrência.
+* US 1.1.3 Como cidadão, quero ter acesso ao menu da web-site redirecionando a outros conteúdos.
 
-* **RF04 - Renderização do Mapa:** O sistema deve apresentar um mapa interativo integrado à interface principal, exibindo marcadores de pontos de interesse e ocorrências.
-* **RF05 - Filtro de Ocorrências:** O sistema deve disponibilizar um menu lateral de filtros que permita ao usuário refinar os pontos exibidos no mapa por:
-  * *Tipo de Ocorrência* (Ex: Via Pública, Iluminação, Segurança).
-  * *Período/Data* (Ex: Últimos 7 dias, mês atual).
-* **RF06 - Limpeza de Filtros:** O sistema deve fornecer uma opção para "Limpar filtros", restaurando a visualização padrão de todos os pontos no mapa.
-* **RF07 - Detalhes do Ponto/Ocorrência:** Ao clicar em um marcador ou notícia vinculada ao mapa, o sistema deve exibir um modal ou página de detalhes contendo o título, número identificador (RA-XXXXX), localização exata e data.
-* **RF08 - Feedback de Busca Vazia:** O sistema deve exibir a mensagem *"Nenhum resultado encontrado"* caso os filtros aplicados não encontrem nenhuma ocorrência no mapa.
+### 🗺️ Épico 2: Mapeamento de Ocorrências e Alertas
 
-### 📊 Épico 3: Dashboard de Métricas e Filtros
+* **RF04 - Card Resumo:** O sistema deve disponibilizar após a seleção de uma notícia, um card resumo linkado ao local por um pin.
+* **RF05 - Renderização do Mapa:** O sistema deve apresentar um mapa interativo integrado à interface principal, que pode ser explorado e será carregado com zoom padrão centralizado no DF.
 
-* **RF09 - Menu de Navegação:** O sistema deve conter um menu lateral com links diretos para as seções "Início", "Mapa" e "Sobre nós".
-* **RF10 - Painel de Produtividade Dinâmico:** O sistema deve renderizar um dashboard estatístico contendo gráficos interativos com a consolidação de dados operacionais.
+**User Stories:**
+* US 2.2.1 Como cidadão, quero que ao selecionar a notícia pelo dashboard um card resumo apareça linkado ao local por um PIN.
+* US 2.2.2 Como cidadão, quero que o mapa interativo carregue ao acessar o sistema, já exibindo regiões do DF, para que eu possa começar a explorar as áreas imediatamente.
+
+### 📊 Épico 3: Dashboard de Busca/Filtros
+
+* **RF06 - Filtro de Ocorrências:** O sistema deve disponibilizar um menu lateral de filtros que permita ao usuário refinar os pontos exibidos no mapa por:
+  * *Região administrativa* (Ex: Ceilândia, Taguatinga).
+  * *Período/Data* .
+* **RF07 - Feedback de Busca Vazia:** O sistema deve exibir a mensagem *"Nenhum resultado encontrado"* caso os filtros aplicados não encontrem nenhuma ocorrência no mapa.
+* **RF08 - Limpeza de Filtros:** O sistema deve fornecer uma opção para "Limpar filtros".
+* **RF09 - Painel de Produtividade Dinâmico:** O sistema deve renderizar um dashboard estatístico contendo gráficos interativos com a consolidação de dados operacionais.
+* **RF10 - Detalhes do Ponto/Ocorrência:** Ao clicar em um marcador ou notícia vinculada ao mapa, o sistema deve exibir um card contendo o risco, título, número identificador (RA-XXXXX), localização exata e data.
+* **RF11 - Gerar Resumo de IA:** O sistema deve exibir um resumo gerado por IA, ao selecionar uma região no mapa.
+
+**User Stories:**
+* US 3.3.1 Como cidadão, quero buscar informações por RA, e ter a opção de filtrar as notícias em intervalos de tempo.
+* US 3.3.2 Como cidadão, quero que a mensagem "nenhum resultado encontrado" seja exibida, caso nenhuma notícia seja encontrada ao buscar.
+* US 3.3.3 Como cidadão, quero que tenha uma opção de limpar filtros.
+* US 3.3.4 Como cidadão, quero que os dados sejam carregados na dashboard automaticamente para visualização de monitoramento urbano após a busca.
+* US 3.3.5 Como cidadão, quero visualizar um card contendo informações  e indicadores (risco e período) sobre o local.
+* US 3.3.6 Como cidadão, quero que ao buscar minha região no mapa e selecioná-la, apareça um resumo gerado automaticamente com auxílio da IA.
 
 ### ⚙️ Épico 4: Sistema (Backend/API)
 
-* **RF11 - Consumo de APIs Externas:** O backend deve realizar requisições e coletar dados de fontes externas de forma assíncrona para alimentar as métricas do painel.
-* **RF12 - Disponibilização de Endpoints:** A API do backend deve disponibilizar endpoints estruturados para o fornecimento dos dados de notícias, marcadores do mapa e estatísticas para o frontend.
+* **RF12 - Coleta de Informações:** O sistema deve categorizar os tipos de crimes automaticamente.
+* **RF13 - Disponibilização de Endpoints:** A API do backend deve disponibilizar endpoints estruturados para o fornecimento dos dados de notícias, marcadores do mapa e estatísticas para o frontend.
+* **RF14 - Consumo de APIs Externas:** O backend deve realizar requisições e coletar dados de fontes externas de forma assíncrona para alimentar as métricas do painel.
+* **RF15 - Retornar Respostas (JSON)** O sistema deve retornar respostas em json.
+
+**User Stories:**
+* US 4.4.1 Como desenvolvedor, quero criar scripts de scraping para categorizar tipos de crimes automaticamente.
+* US 4.4.2 Como desenvolvedor, quero criar endpoints para disponibilizar dados ao sistema.
+* US 4.4.3 Como desenvolvedor, quero que o sistema processe requisições do usuário para retornar os dados corretos.
+* US 4.4.4 Como desenvolvedor, quero que o sistema retorne respostas em JSON para garantir integração com o front-end.
 
 ---
 
@@ -51,7 +77,7 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 
 ### 🎨 Usabilidade e Interface (IHC)
 
-* **RNF04 - Responsividade:** A interface do sistema deve ser totalmente responsiva, adaptando-se perfeitamente para desktops, conforme desenhado nas telas do protótipo.
+* **RNF04 - Compatibilidade de Plataforma (Foco Desktop):** A interface do sistema deve ser otimizada para visualização e interação exclusivas em ambientes **Desktop/Web**, adaptando-se às resoluções de monitores de computadores conforme detalhado nas telas do protótipo do Figma.
 * **RNF05 - Aderência ao Protótipo:** Os componentes visuais implementados (botões, menus e modais) devem seguir estritamente o guia de estilos, paleta de cores e tipografia definidos no *Protótipo de Alta Fidelidade do Figma*.
 
 ### 🔒 Segurança e Privacidade de Dados
