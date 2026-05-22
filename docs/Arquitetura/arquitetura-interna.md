@@ -98,7 +98,7 @@ Cada camada **não conhece** a camada acima dela. O `repository` não sabe que e
 Descreve o caminho completo de uma interação do cidadão até o banco de dados e de volta ao mapa.
 
 ```
-1. Clique no Mapa (Front-End / Leaflet)
+1. Busca no Mapa (Front-End / Leaflet)
          ↓ captura lat/lon do clique
 2. Back-End (FastAPI)
          ↓ recebe POST /occurrences
