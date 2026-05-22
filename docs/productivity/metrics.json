@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-22T14:12:07.347114Z",
+  "generated_at": "2026-05-22T18:56:57.625936Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W21",
-      "opened": 10,
-      "closed": 6
+      "opened": 12,
+      "closed": 7
     },
     {
       "week": "2026-W20",
@@ -51,11 +51,11 @@
   "commit_message_histogram": [
     {
       "range": "0-20",
-      "count": 19
+      "count": 20
     },
     {
       "range": "21-40",
-      "count": 69
+      "count": 70
     },
     {
       "range": "41-60",
@@ -67,14 +67,24 @@
     },
     {
       "range": "81+",
-      "count": 25
+      "count": 26
     }
   ],
   "commit_heatmap": [
     {
       "day": 5,
-      "hour": 14,
+      "hour": 18,
+      "count": 3
+    },
+    {
+      "day": 5,
+      "hour": 17,
       "count": 1
+    },
+    {
+      "day": 5,
+      "hour": 14,
+      "count": 2
     },
     {
       "day": 5,
@@ -207,11 +217,6 @@
       "count": 5
     },
     {
-      "day": 5,
-      "hour": 18,
-      "count": 2
-    },
-    {
       "day": 3,
       "hour": 5,
       "count": 5
@@ -315,11 +320,11 @@
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 39
+      "commits": 41
     },
     {
       "username": "actions-user",
-      "commits": 35
+      "commits": 36
     },
     {
       "username": "matheusqsa",
@@ -367,7 +372,7 @@
     },
     {
       "username": "jorgevasquez25",
-      "total": 9
+      "total": 11
     },
     {
       "username": "matheusqsa",
@@ -385,11 +390,11 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 36
+      "count": 38
     },
     {
       "label": "organização",
-      "count": 21
+      "count": 23
     },
     {
       "label": "arquitetura",
