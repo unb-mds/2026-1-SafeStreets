@@ -1,5 +1,7 @@
 # 🏷️ Protótipo de Alta Fidelidade da Plataforma SafeStreets
 
+Link do protótipo: https://www.figma.com/design/ELsAXrAg9XaFQ8MODp3tdA/Prot%C3%B3tipo-de-alta-fidelidade-SafeStreets?node-id=0-1&t=AtI0TWu2eHCBbRM0-1
+
 ---
 
 ## 🚀 Objetivo
