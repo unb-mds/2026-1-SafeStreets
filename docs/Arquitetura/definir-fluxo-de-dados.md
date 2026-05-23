@@ -9,7 +9,7 @@ Conforme definido na decisão de arquitetura, o sistema adota um pipeline estrut
 O **FastAPI** gerencia o ciclo de vida da ingestão de dados de forma assíncrona, garantindo que a comunicação com serviços externos não bloqueie a experiência do usuário ao navegar pelo mapa de criminalidade.
 
 ```plaintext
-[API Aberta - dados.df.gov.br]
+[API Aberta - RSS Portais de Nóticias]
            │
            ▼ (HTTPX / Requests Assíncronos por Lat/Long)
 [Camada de Ingestão (Python)] ──► Validação Inicial (Pydantic)
