@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-05-23T02:28:40.936430Z",
+  "generated_at": "2026-05-23T03:55:48.083912Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W21",
-      "opened": 14,
+      "opened": 15,
       "closed": 8
     },
     {
@@ -55,7 +55,7 @@
     },
     {
       "range": "21-40",
-      "count": 84
+      "count": 85
     },
     {
       "range": "41-60",
@@ -67,14 +67,19 @@
     },
     {
       "range": "81+",
-      "count": 32
+      "count": 33
     }
   ],
   "commit_heatmap": [
     {
       "day": 6,
+      "hour": 3,
+      "count": 1
+    },
+    {
+      "day": 6,
       "hour": 2,
-      "count": 8
+      "count": 9
     },
     {
       "day": 5,
@@ -320,7 +325,7 @@
   "top_committers": [
     {
       "username": "actions-user",
-      "commits": 48
+      "commits": 49
     },
     {
       "username": "IsraelSoares-25",
@@ -332,7 +337,7 @@
     },
     {
       "username": "Nic0laslc",
-      "commits": 19
+      "commits": 20
     },
     {
       "username": "jorgevasquez25",
@@ -353,12 +358,12 @@
       "prs_opened": 5
     },
     {
-      "username": "IsraelSoares-25",
+      "username": "Nic0laslc",
       "prs_opened": 2
     },
     {
-      "username": "Nic0laslc",
-      "prs_opened": 1
+      "username": "IsraelSoares-25",
+      "prs_opened": 2
     }
   ],
   "top_issue_contributors": [
@@ -390,7 +395,7 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 40
+      "count": 41
     },
     {
       "label": "organização",
@@ -398,39 +403,39 @@
     },
     {
       "label": "arquitetura",
-      "count": 20
+      "count": 21
     },
     {
       "label": "front-end",
-      "count": 19
+      "count": 20
+    },
+    {
+      "label": "back-end",
+      "count": 17
     },
     {
       "label": "estudar",
       "count": 17
     },
     {
-      "label": "back-end",
-      "count": 16
-    },
-    {
       "label": "implementação",
       "count": 9
+    },
+    {
+      "label": "banco de dados",
+      "count": 8
     },
     {
       "label": "git/github",
       "count": 8
     },
     {
-      "label": "banco de dados",
+      "label": "docker",
       "count": 7
     },
     {
       "label": "feat/api🔌",
       "count": 7
-    },
-    {
-      "label": "docker",
-      "count": 6
     },
     {
       "label": "enhancement",
