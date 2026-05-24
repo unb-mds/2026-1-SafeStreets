@@ -3,7 +3,7 @@
 site_name: SafeStreets
 site_description: Documentação oficial do projeto
 site_author: Equipe Safe Streets
-repo_url: https://github.com/unb-mds/2026-1-SafeStreets
+site_url: https://unb-mds.github.io/2026-1-SafeStreets/
 repo_name: safestreets
 
 theme:
