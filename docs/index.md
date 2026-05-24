@@ -1,4 +1,4 @@
-# 🛡️ SafeStreets — Monitor de Segurança Urbana
+# SafeStreets — Monitor de Segurança Urbana
 
 **SafeStreets** é uma aplicação voltada ao monitoramento inteligente de riscos urbanos a partir da análise de notícias e dados públicos de segurança pública do Distrito Federal.
 
@@ -47,16 +47,14 @@ A comunicação entre camadas segue o padrão **Jamstack**: o frontend consome d
 
 ---
 
-## 💻 Stack Tecnológica
-
-### Frontend
+## 💻 Frontend
 | Tecnologia | Função |
 |---|---|
 | **Next.js** | Framework React com SSR/SSG |
 | **TypeScript + JSX** | Linguagem tipada para interfaces |
 | **CSS Modules** | Estilização com escopo local |
 
-### Backend
+## 💾 Backend
 | Tecnologia | Função |
 |---|---|
 | **Python + FastAPI** | Framework principal da API REST |
@@ -207,3 +205,4 @@ O time adota **Scrum** com entregas semanais, quadro Kanban para gestão de tare
 | 🎨 Protótipo Figma | [Alta Fidelidade](https://www.figma.com/design/ELsAXrAg9XaFQ8MODp3tdA/Prot%C3%B3tipo-de-alta-fidelidade-SafeStreets) |
 | 🗺️ Story Map | [Figma — Squad 1](https://www.figma.com/board/13SnyvGleeaYsubnOhMeYk/Template-MDS-Squad-1) |
 | 📋 Backlog / Issues | [GitHub Issues](https://github.com/unb-mds/2026-1-SafeStreets/issues) |
+| 📈 Dashboard de Produtividade | [Dashboard](https://unb-mds.github.io/2026-1-SafeStreets/productivity/) |
