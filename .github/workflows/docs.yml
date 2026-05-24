@@ -22,8 +22,9 @@ jobs:
         with:
           python-version: 3.x
           
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install MkDocs
+        # Instalamos o mkdocs e o tema material
+        run: pip install mkdocs-material
         
       - name: Deploy to GitHub Pages
         # Esse comando constrói os arquivos e joga para a branch gh-pages automaticamente
