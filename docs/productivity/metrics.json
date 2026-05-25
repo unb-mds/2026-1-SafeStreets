@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-25T02:48:13.625680Z",
+  "generated_at": "2026-05-25T03:41:26.543500Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W22",
-      "opened": 1,
-      "closed": 0
+      "opened": 2,
+      "closed": 2
     },
     {
       "week": "2026-W21",
@@ -68,14 +68,24 @@
     },
     {
       "range": "61-80",
-      "count": 15
+      "count": 16
     },
     {
       "range": "81+",
-      "count": 38
+      "count": 39
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 1,
+      "hour": 3,
+      "count": 1
+    },
+    {
+      "day": 1,
+      "hour": 2,
+      "count": 4
+    },
     {
       "day": 0,
       "hour": 17,
@@ -268,11 +278,6 @@
     },
     {
       "day": 1,
-      "hour": 2,
-      "count": 3
-    },
-    {
-      "day": 1,
       "hour": 1,
       "count": 1
     },
@@ -353,15 +358,15 @@
       "commits": 44
     },
     {
+      "username": "matheusqsa",
+      "commits": 26
+    },
+    {
       "username": "EdsonToppzera",
       "commits": 26
     },
     {
       "username": "jorgevasquez25",
-      "commits": 24
-    },
-    {
-      "username": "matheusqsa",
       "commits": 24
     },
     {
@@ -375,11 +380,11 @@
   ],
   "top_pr_authors": [
     {
-      "username": "EdsonToppzera",
-      "prs_opened": 5
+      "username": "matheusqsa",
+      "prs_opened": 6
     },
     {
-      "username": "matheusqsa",
+      "username": "EdsonToppzera",
       "prs_opened": 5
     },
     {
@@ -420,7 +425,7 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 41
+      "count": 42
     },
     {
       "label": "organização",
@@ -444,7 +449,7 @@
     },
     {
       "label": "implementação",
-      "count": 10
+      "count": 11
     },
     {
       "label": "git/github",
@@ -455,16 +460,16 @@
       "count": 8
     },
     {
+      "label": "enhancement",
+      "count": 7
+    },
+    {
       "label": "docker",
       "count": 7
     },
     {
       "label": "feat/api🔌",
       "count": 7
-    },
-    {
-      "label": "enhancement",
-      "count": 6
     },
     {
       "label": "requisitos",
@@ -476,7 +481,7 @@
     },
     {
       "label": "bug",
-      "count": 1
+      "count": 2
     }
   ]
 }
