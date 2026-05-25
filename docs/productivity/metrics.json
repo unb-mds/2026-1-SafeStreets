@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-25T03:50:34.376814Z",
+  "generated_at": "2026-05-25T04:40:37.065668Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W22",
       "opened": 2,
-      "closed": 2
+      "closed": 1
     },
     {
       "week": "2026-W21",
@@ -60,7 +60,7 @@
     },
     {
       "range": "21-40",
-      "count": 108
+      "count": 109
     },
     {
       "range": "41-60",
@@ -79,7 +79,7 @@
     {
       "day": 1,
       "hour": 3,
-      "count": 2
+      "count": 3
     },
     {
       "day": 1,
