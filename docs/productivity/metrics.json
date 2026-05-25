@@ -1,7 +1,12 @@
 {
-  "generated_at": "2026-05-24T17:22:05.827729Z",
+  "generated_at": "2026-05-25T02:48:13.625680Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
+    {
+      "week": "2026-W22",
+      "opened": 1,
+      "closed": 0
+    },
     {
       "week": "2026-W21",
       "opened": 15,
@@ -55,7 +60,7 @@
     },
     {
       "range": "21-40",
-      "count": 106
+      "count": 107
     },
     {
       "range": "41-60",
@@ -71,6 +76,11 @@
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 0,
+      "hour": 17,
+      "count": 1
+    },
     {
       "day": 0,
       "hour": 16,
@@ -339,10 +349,6 @@
   ],
   "top_committers": [
     {
-      "username": "actions-user",
-      "commits": 63
-    },
-    {
       "username": "IsraelSoares-25",
       "commits": 44
     },
@@ -361,6 +367,10 @@
     {
       "username": "Nic0laslc",
       "commits": 21
+    },
+    {
+      "username": "ArthurFeitosa05",
+      "commits": 9
     }
   ],
   "top_pr_authors": [
@@ -396,7 +406,7 @@
     },
     {
       "username": "matheusqsa",
-      "total": 7
+      "total": 8
     },
     {
       "username": "EdsonToppzera",
@@ -434,14 +444,14 @@
     },
     {
       "label": "implementação",
+      "count": 10
+    },
+    {
+      "label": "git/github",
       "count": 9
     },
     {
       "label": "banco de dados",
-      "count": 8
-    },
-    {
-      "label": "git/github",
       "count": 8
     },
     {
@@ -454,7 +464,7 @@
     },
     {
       "label": "enhancement",
-      "count": 5
+      "count": 6
     },
     {
       "label": "requisitos",

@@ -40,6 +40,9 @@ def main():
     label_counter = Counter()
     pr_authors = Counter()
     issue_authors = Counter()
+    
+    # Lista de bots a serem ignorados nos rankings
+    usuarios_ignorados = {"actions-user", "github-actions[bot]", "dependabot[bot]"}
 
     # CORREÇÃO DO INDEX ERROR (ISSUES): Loop seguro em vez de slicing [:300] direto
     issues_paginated = repo.get_issues(state="all", sort="created", direction="desc")
@@ -52,10 +55,12 @@ def main():
         for l in item.labels:
             label_counter[l.name] += 1
             
-        if item.pull_request:
-            pr_authors[item.user.login] += 1
-        else:
-            issue_authors[item.user.login] += 1
+        author_login = item.user.login
+        if author_login not in usuarios_ignorados:
+            if item.pull_request:
+                pr_authors[author_login] += 1
+            else:
+                issue_authors[author_login] += 1
 
         week = get_week_string(item.created_at)
         if week not in issues_weeks: 
@@ -87,7 +92,9 @@ def main():
             break # Para ao atingir 300 commits
             
         if commit.author: 
-            commit_authors[commit.author.login] += 1
+            author_login = commit.author.login
+            if author_login not in usuarios_ignorados:
+                commit_authors[author_login] += 1
         
         msg_len = len(commit.commit.message)
         if msg_len <= 20: hist_bins["0-20"] += 1
