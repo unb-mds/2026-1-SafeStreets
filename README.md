@@ -20,8 +20,9 @@ Auxiliar na compreensão do cenário de segurança urbana, promovendo acesso a i
 
 ## 🧩Principais Links: 
 
-* 🗺️[Protótipo de alta fidelidade e Story Map](https://www.figma.com/board/13SnyvGleeaYsubnOhMeYk/Template-MDS-Squad-1?t=RpJETIb0Vk6BLL3d-0)
-* 🏗️[Arquitetura](https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/Milestone/Sprint-3/documento-c4.md)
+* 🗺️[Story Map](https://www.figma.com/board/13SnyvGleeaYsubnOhMeYk/Template-MDS-Squad-1?t=RpJETIb0Vk6BLL3d-0)
+* 🎨[Protótipo de Alta Fidelidade](https://www.figma.com/design/PnCiIkDZprkfS66k8bdyCq/Wireframe?node-id=0-1&t=1NT6dQNROoeGOVYk-1)
+* 🏗️[Arquitetura](https://github.com/unb-mds/2026-1-SafeStreets/tree/main/docs/Arquitetura)
 
 ## 👥 Equipe
 Squad 01 MDS-01/2026
