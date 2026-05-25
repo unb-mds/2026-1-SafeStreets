@@ -1,4 +1,8 @@
 # 2026-1-SafeStreets
+<div img="center">
+
+<img src="https://unb-mds.github.io/2026-1-SafeStreets/imagens/logo-escudo.PNG" width="120" alt="SafeStreets Logo"/>
+
 ## 🛡️ SafeStreets — Monitor de Segurança Urbana
 
 O SafeStreets é uma aplicação voltada ao monitoramento inteligente de riscos urbanos a partir da análise de notícias e dados públicos de segurança. O projeto tem como objetivo fornecer uma visão clara e atualizada sobre ocorrências criminais em diferentes regiões, contribuindo para a conscientização e prevenção.
@@ -13,6 +17,63 @@ Além disso, o SafeNight busca transformar dados em informação útil, possibil
   <img src="https://img.shields.io/badge/REACT-FRONTEND-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
   <img src="https://img.shields.io/badge/DOCKER-CONTAINERIZED-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
 </p>
+
+## Estrutura do Projeto
+
+```text
+SafeStreets/
+│
+├── docs/               # Documentação do projeto
+├── frontend/           # Aplicação React
+├── backend/            # API FastAPI
+├── database/           # Scripts e estrutura SQL
+├── assets/             # Imagens e arquivos estáticos
+└── README.md
+```
+## 🎨 Desing e Prototipação
+O projeto possui:
+
+* Wireframes
+* Protótipos de baixa fidelidade
+* Protótipos de alta fidelidade
+* Planejamento visual no Figma
+
+## Metodologia
+
+* Kanban
+* Sprints
+* Story Mapping
+* Templates de Issues e Pull Requests
+
+## Como Executar o Projeto
+
+* Python 3.11+
+* PostgreSQL
+* Docker (Opcional)
+
+## 🔹 Clonando o repositório
+```text
+git clone https://github.com/unb-mds/2026-1-SafeStreets.git
+```
+## 🔹 Back-end
+```text
+cd backend
+
+python -m venv venv
+
+# Linux/macOS
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+
+pip install -r requirements.txt
+
+uvicorn main:app --reload
+```
+## 🌐 GitHub Pages
+
+https://unb-mds.github.io/2026-1-SafeStreets/
 
 ## 🔍 Principais funcionalidades
 * Coleta de notícias e dados de segurança pública
