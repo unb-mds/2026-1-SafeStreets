@@ -6,6 +6,13 @@ O SafeStreets é uma aplicação voltada ao monitoramento inteligente de riscos 
 A proposta combina coleta de dados em tempo real com técnicas de inteligência artificial para identificar padrões, classificar tipos de crimes e estimar sua localização aproximada. Com isso, o sistema gera indicadores que permitem acompanhar a evolução da criminalidade em bairros e cidades.
 
 Além disso, o SafeNight busca transformar dados em informação útil, possibilitando a criação de uma API que pode ser utilizada por aplicativos de mobilidade, imobiliárias e outras plataformas interessadas em oferecer mais segurança aos usuários.
+## 📊Tecnologias 
+<p align="left">
+  <img src="https://img.shields.io/badge/FASTAPI-BACKEND-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/POSTGRESQL-DATABASE-336791?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/REACT-FRONTEND-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/DOCKER-CONTAINERIZED-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+</p>
 
 ## 🔍 Principais funcionalidades
 * Coleta de notícias e dados de segurança pública
