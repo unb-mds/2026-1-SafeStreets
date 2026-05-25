@@ -26,7 +26,7 @@ project/
 │   ├── repositories/          # Acesso ao banco de dados
 │   ├── models/                # Define tabelas via SQLAlchemy
 │   ├── schemas/               # Valida entrada e saída com Pydantic
-│   ├── integrations/          # Isola APIs externas (Nominatim, dados.df.gov.br)
+│   ├── integrations/          # Isola APIs externas (Nominatim, RSS Portais de Nóticias)
 │   ├── core/                  # Centraliza conexão com o banco e variáveis de ambiente
 │   └── tests/                 # Testes para cada componente
 │
@@ -44,7 +44,7 @@ project/
 | Tipagem | `frontend/src/types/` | TypeScript (interfaces) | Espelha os schemas do backend |
 | Roteamento | `backend/routes/` | Python + FastAPI | Recebe requisições HTTP, controla fluxo |
 | Negócio | `backend/services/` | Python | Regras de negócio, geocoding, validação do DF |
-| Integração | `backend/integrations/` | Python (httpx) | Nominatim (OSM) e dados.df.gov.br |
+| Integração | `backend/integrations/` | Python (httpx) | Nominatim (OSM) e RSS Portais de Nóticias |
 | Modelos | `backend/models/` | Python + SQLAlchemy | Mapeamento das tabelas do PostgreSQL |
 | Validação | `backend/schemas/` | Python + Pydantic | Validação de entrada e saída da API |
 | Dados | `backend/repositories/` | Python + GeoAlchemy2 | Queries no PostgreSQL + PostGIS |
@@ -102,7 +102,7 @@ Descreve o caminho completo de uma interação do cidadão até o banco de dados
          ↓ captura lat/lon do clique
 2. Back-End (FastAPI)
          ↓ recebe POST /occurrences
-3. Consulta API Aberta (dados.df.gov.br)
+3. Consulta API Aberta (Portais de Nóticias)
          ↓ busca ocorrências usando Latitude e Longitude
 4. Busca ocorrências usando a Latitude e Longitude
          ↓
@@ -128,7 +128,7 @@ Descreve o caminho completo de uma interação do cidadão até o banco de dados
 | 2 | `services/api.ts` | TypeScript Fetch | `POST /occurrences {lat, lon}` para o backend |
 | 3 | `routes/occurrences.py` | FastAPI | Recebe e valida a requisição via Pydantic |
 | 4 | `services/occurrence_service.py` | Python | Chama `integrations/dados_df.py` com lat/lon |
-| 5 | `integrations/dados_df.py` | Python (httpx) | Consulta `dados.df.gov.br` — API aberta do GDF |
+| 5 | `integrations/dados_df.py` | Python (httpx) | Consulta `(RSS)Portais de Nóticias` — API aberta do GDF |
 | 6 | `schemas/occurrence.py` | Pydantic v2 | Normaliza e valida os dados retornados |
 | 7 | Agente de IA (externo) | Gemini API | Resume o conteúdo das notícias encontradas |
 | 8 | `repositories/occurrence_repository.py` | SQLAlchemy + PostGIS | `INSERT` com `GEOMETRY(POINT, 4326)` |
@@ -142,7 +142,7 @@ Descreve o caminho completo de uma interação do cidadão até o banco de dados
 | Serviço | Camada | Tecnologia | Uso |
 |---------|--------|------------|-----|
 | **Nominatim (OSM)** | `integrations/nominatim.py` | HTTP (httpx) | Geocoding reverso: converte lat/lon em endereço e bairro do DF |
-| **dados.df.gov.br** | `integrations/dados_df.py` | HTTP (httpx) | Busca ocorrências e notícias abertas do GDF por coordenada |
+| **RSS** | `integrations/dados_df.py` | HTTP (httpx) | Busca ocorrências e notícias abertas do GDF por coordenada |
 | **Agente de IA (Gemini)** | `services/` | API externa | Resume textos de notícias e classifica grau de risco |
 
 ---
