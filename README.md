@@ -48,7 +48,7 @@ Squad 01 MDS-01/2026
     </td>
     <td align="center">
       <a href="LINK_DO_GITHUB_4">
-        <img src="LINK_DA_FOTO_4" width="150px;" alt="Jorge"/><br>
+        <img src="https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/imagens/foto-jorge.jpeg" width="150px;" alt="Jorge"/><br>
         <sub><b>Jorge</b></sub>
       </a>
     </td>
