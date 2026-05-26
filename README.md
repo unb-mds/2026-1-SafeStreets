@@ -130,7 +130,7 @@ Squad 01 MDS-01/2026
     </td>
     <td align="center">
       <a href="LINK_DO_GITHUB_6">
-        <img src="LINK_DA_FOTO_6" width="150px;" alt="Nicolas Lopes"/><br>
+        <img src="https://github.com/unb-mds/2026-1-SafeStreets/blob/main/docs/imagens/nicolas%20foto.jpg" width="150px;" alt="Nicolas Lopes"/><br>
         <sub><b>Nicolas Lopes</b></sub>
       </a>
     </td>
