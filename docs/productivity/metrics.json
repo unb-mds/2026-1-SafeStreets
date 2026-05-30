@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-29T21:32:12.869176Z",
+  "generated_at": "2026-05-30T04:06:07.699491Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W22",
-      "opened": 2,
-      "closed": 2
+      "opened": 4,
+      "closed": 3
     },
     {
       "week": "2026-W21",
@@ -60,7 +60,7 @@
     },
     {
       "range": "21-40",
-      "count": 123
+      "count": 124
     },
     {
       "range": "41-60",
@@ -79,7 +79,7 @@
     {
       "day": 5,
       "hour": 21,
-      "count": 8
+      "count": 9
     },
     {
       "day": 5,
@@ -409,7 +409,7 @@
     },
     {
       "username": "Nic0laslc",
-      "prs_opened": 2
+      "prs_opened": 3
     },
     {
       "username": "IsraelSoares-25",
@@ -423,7 +423,7 @@
     },
     {
       "username": "Nic0laslc",
-      "total": 12
+      "total": 13
     },
     {
       "username": "jorgevasquez25",
@@ -445,7 +445,7 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 42
+      "count": 44
     },
     {
       "label": "organização",
@@ -453,23 +453,23 @@
     },
     {
       "label": "arquitetura",
-      "count": 21
+      "count": 23
     },
     {
       "label": "front-end",
-      "count": 20
-    },
-    {
-      "label": "back-end",
-      "count": 17
+      "count": 22
     },
     {
       "label": "estudar",
-      "count": 17
+      "count": 19
+    },
+    {
+      "label": "back-end",
+      "count": 19
     },
     {
       "label": "implementação",
-      "count": 11
+      "count": 13
     },
     {
       "label": "git/github",
