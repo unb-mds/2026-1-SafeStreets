@@ -9,7 +9,7 @@ export default function Logo({ size = 36 }: LogoProps) {
   return (
     <div className={styles.logo}>
       <Image
-        src="/logo-original.png"
+        src="/logo-escudo.png"
         alt="SafeStreets escudo"
         width={size}
         height={size}
