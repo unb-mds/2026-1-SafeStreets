@@ -1,0 +1,130 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.backdropVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 201;
+  width: 300px;
+  height: 100vh;
+  background-color: var(--cor-superficie);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.08);
+}
+
+.panelOpen {
+  transform: translateX(0);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: background-color 0.15s;
+}
+
+.closeButton:hover {
+  background-color: var(--verde-tint);
+}
+
+.nav {
+  flex: 1;
+}
+
+.navLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--cor-cinza);
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: background-color 0.15s;
+  color: var(--cor-texto);
+}
+
+.navItem:hover {
+  background-color: var(--verde-tint);
+}
+
+.navItemActive {
+  background-color: var(--verde-tint);
+}
+
+.iconBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background-color: var(--verde-tint);
+  flex-shrink: 0;
+}
+
+.iconBoxActive {
+  background-color: var(--cor-verde);
+}
+
+.navItemLabel {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.footer {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--cor-cinza);
+  line-height: 1.5;
+  padding-top: 20px;
+  border-top: 1px solid var(--cor-linha);
+  margin-top: auto;
+}
