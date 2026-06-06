@@ -3,6 +3,8 @@
 ## 📌 Objetivo
 Este documento tem como finalidade formalizar a escolha da stack de desenvolvimento back-end do projeto SafeStreets, justificando tecnicamente as tecnologias selecionadas para atender aos requisitos funcionais, arquiteturais e de inteligência artificial presentes no sistema.
 
+> **Cross-references**: [CONTEXT.md](./CONTEXT.md) · [API-Contract.md](./API-Contract.md) · [ADRs-PENDENTES.md](./ADRs-PENDENTES.md) · [definir-fluxo-de-dados.md](./definir-fluxo-de-dados.md)
+
 ---
 
 # 🚀 Stack Back-end Definida
@@ -107,3 +109,47 @@ A sintaxe do Python combinada com o FastAPI permite:
 - maior produtividade da equipe
 
 Isso é especialmente importante em projetos acadêmicos e colaborativos.
+
+---
+
+## 6. Padrões de Resilience (Adicionados na Refinação de Arquitetura)
+
+O backend implementa padrões críticos para produção:
+
+- **Rate Limiter**: Proteção contra quotas de API externa
+- **Retry Exponencial**: 1s → 2s → 4s → 8s em falhas transitórias
+- **Circuit Breaker**: Proteção contra API indisponível por > 5 minutos
+- **Timeout**: 30 segundos máximo por requisição externa
+- **Cache Distribuído**: PostgreSQL (principal) + Redis/in-memory (TTL 24h)
+
+Referência: [definir-fluxo-de-dados.md - Resilience Patterns](./definir-fluxo-de-dados.md#resilience-patterns-aplicados)
+
+---
+
+## 7. Estratégia de Fallback para Integrações Externas
+
+### Google Gemini (Sumarização)
+- **Falha Temporária**: Retry com backoff exponencial
+- **Falha Permanente**: Circuit breaker abre; resposta com `resumo_status="FALLBACK_GENERICO"` ou `"PENDENTE"`
+- **Detalhes**: [ADR-001: Gemini Fallback Strategy](./ADR-001-Gemini-Fallback-Strategy.md)
+
+### Feed RSS (Portal de Notícia Correio Braziliense)
+- **Rate Limiting**: Rate limiter + fila de requisições para evitar sobrecarga
+- **Indisponibilidade**: Circuit breaker + feeds cacheados (stale)
+- **Timeout**: 30 segundos máximo por requisição; falência após
+- **Parser RSS**: Extração robusta de título, descrição, link, data de publicação
+
+---
+
+## 8. Decisões Arquiteturais Pendentes
+
+Seguintes decisões devem ser finalizadas antes de implementação completa:
+
+| ADR | Tópico | Questão | Status |
+|-----|--------|---------|--------|
+| [ADR-001](./ADR-001-Gemini-Fallback-Strategy.md) | Gemini Fallback | Comportamento exato em falha? | ⏳ Pendente |
+| [ADR-002](./ADRs-PENDENTES.md) | Cache TTL | Fixo 24h ou variável? | ⏳ Pendente |
+| [ADR-003](./ADRs-PENDENTES.md) | Redis | Obrigatório ou opcional? | ⏳ Pendente |
+| [ADR-004](./ADRs-PENDENTES.md) | Schema Versioning | Backward compat automática? | ⏳ Pendente |
+
+Consulte [ADRs-PENDENTES.md](./ADRs-PENDENTES.md) para detalhes.
