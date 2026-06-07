@@ -1,7 +1,12 @@
 {
-  "generated_at": "2026-06-06T04:09:52.249500Z",
+  "generated_at": "2026-06-07T04:45:53.963061Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
+    {
+      "week": "2026-W23",
+      "opened": 1,
+      "closed": 4
+    },
     {
       "week": "2026-W22",
       "opened": 4,
@@ -60,7 +65,7 @@
     },
     {
       "range": "21-40",
-      "count": 131
+      "count": 132
     },
     {
       "range": "41-60",
@@ -76,6 +81,11 @@
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 6,
+      "hour": 4,
+      "count": 3
+    },
     {
       "day": 5,
       "hour": 4,
@@ -105,11 +115,6 @@
       "day": 0,
       "hour": 4,
       "count": 3
-    },
-    {
-      "day": 6,
-      "hour": 4,
-      "count": 2
     },
     {
       "day": 5,
@@ -413,12 +418,12 @@
       "prs_opened": 5
     },
     {
-      "username": "Nic0laslc",
+      "username": "IsraelSoares-25",
       "prs_opened": 3
     },
     {
-      "username": "IsraelSoares-25",
-      "prs_opened": 2
+      "username": "Nic0laslc",
+      "prs_opened": 3
     }
   ],
   "top_issue_contributors": [
@@ -450,15 +455,15 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 44
+      "count": 45
     },
     {
       "label": "organização",
-      "count": 25
+      "count": 26
     },
     {
       "label": "arquitetura",
-      "count": 23
+      "count": 24
     },
     {
       "label": "front-end",
