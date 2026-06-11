@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-11T01:20:43.503170Z",
+  "generated_at": "2026-06-11T04:46:43.763681Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
@@ -70,7 +70,7 @@
     },
     {
       "range": "21-40",
-      "count": 141
+      "count": 142
     },
     {
       "range": "41-60",
@@ -89,7 +89,7 @@
     {
       "day": 4,
       "hour": 1,
-      "count": 1
+      "count": 2
     },
     {
       "day": 3,
@@ -492,7 +492,7 @@
     },
     {
       "label": "front-end",
-      "count": 25
+      "count": 26
     },
     {
       "label": "arquitetura",
