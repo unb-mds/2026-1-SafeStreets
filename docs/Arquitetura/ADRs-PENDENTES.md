@@ -35,9 +35,9 @@
 
 **Opções**:
 - A: TTL fixo de 24h para todos os dados
-- B: TTL variável por região administrativa (RAs com alta frequência de notícias = TTL menor)
-- C: TTL baseado em frequência de atualizações do feed RSS
-- D: TTL adaptativo baseado em volume de notícias recentes na região (alta atividade = 12h, baixa = 72h)
+- B: TTL variável por tipo de crime (homicídios = 12h, roubo = 48h)
+- C: TTL baseado em frequência de atualizações da API governamental
+- D: TTL adaptativo baseado em trending (crimes em alta = 12h, em baixa = 72h)
 
 **Trade-off**: 
 - Maior TTL = menos chamadas à API + menor custo ↔ risco de dados stale
@@ -66,18 +66,18 @@
 
 ## ADR-004: Schema Versioning
 
-**Questão**: Como o sistema reage quando o feed RSS do Correio Braziliense muda sua estrutura XML (novos campos, campos renomeados ou removidos)?
+**Questão**: Como o sistema reage quando API governamental muda seu JSON schema?
 
 **Opções**:
-- A: **Backward compatibility automática** — parser RSS ignora campos desconhecidos; Pydantic usa defaults para campos ausentes
-- B: **Falha explícita (fail-fast)** — parser lança erro ao encontrar mudança estrutural; requer intervenção manual e novo deploy
-- C: **Versionamento de parser** — manter múltiplas versões do parser RSS (`parser_v1`, `parser_v2`) com detecção automática de formato
+- A: **Backward compatibility automática** — Pydantic ignora campos desconhecidos, usa defaults para novos campos
+- B: **Migration manual** — ADR ou migration script necessário para cada mudança; falha fast
+- C: **Versioning de endpoints** — `/v1/ocorrencias` vs `/v2/ocorrencias` no backend
 
 **Trade-off**:
-- Backward compat automática = pipeline nunca quebra ↔ pode ingerir dados malformados silenciosamente
-- Fail-fast = mudanças são detectadas imediatamente ↔ gera downtime até correção manual
+- Backward compat automática = resiliente a mudanças ↔ pode esconder bugs silenciosamente
+- Migration manual = transparência total ↔ operacional pesado, risco de downtime
 
-**Impacto**: Resiliência do pipeline de ingestão, observabilidade, manutenibilidade
+**Impacto**: Resiliência, operacional, testabilidade
 
 ---
 
