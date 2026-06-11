@@ -1,4 +1,4 @@
-import type { Noticia } from "@/data/noticias";
+import type { Noticia } from "@/utils/noticias";
 import NewsCard from "@/components/NewsCard/NewsCard";
 import styles from "./NewsFeed.module.css";
 
