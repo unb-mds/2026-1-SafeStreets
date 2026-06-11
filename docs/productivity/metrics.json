@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-10T22:45:15.915230Z",
+  "generated_at": "2026-06-11T01:20:43.503170Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W24",
-      "opened": 2,
-      "closed": 4
+      "opened": 4,
+      "closed": 6
     },
     {
       "week": "2026-W23",
@@ -70,7 +70,7 @@
     },
     {
       "range": "21-40",
-      "count": 140
+      "count": 141
     },
     {
       "range": "41-60",
@@ -82,14 +82,24 @@
     },
     {
       "range": "81+",
-      "count": 43
+      "count": 45
     }
   ],
   "commit_heatmap": [
     {
+      "day": 4,
+      "hour": 1,
+      "count": 1
+    },
+    {
+      "day": 3,
+      "hour": 23,
+      "count": 1
+    },
+    {
       "day": 3,
       "hour": 22,
-      "count": 1
+      "count": 2
     },
     {
       "day": 3,
@@ -404,7 +414,7 @@
     },
     {
       "username": "jorgevasquez25",
-      "commits": 33
+      "commits": 35
     },
     {
       "username": "matheusqsa",
@@ -433,16 +443,16 @@
       "prs_opened": 5
     },
     {
+      "username": "jorgevasquez25",
+      "prs_opened": 3
+    },
+    {
       "username": "IsraelSoares-25",
       "prs_opened": 3
     },
     {
       "username": "Nic0laslc",
       "prs_opened": 3
-    },
-    {
-      "username": "jorgevasquez25",
-      "prs_opened": 2
     }
   ],
   "top_issue_contributors": [
@@ -452,7 +462,7 @@
     },
     {
       "username": "jorgevasquez25",
-      "total": 13
+      "total": 14
     },
     {
       "username": "Nic0laslc",
@@ -482,7 +492,7 @@
     },
     {
       "label": "front-end",
-      "count": 24
+      "count": 25
     },
     {
       "label": "arquitetura",
@@ -498,15 +508,19 @@
     },
     {
       "label": "implementação",
-      "count": 15
+      "count": 17
     },
     {
       "label": "enhancement",
-      "count": 9
+      "count": 11
     },
     {
       "label": "git/github",
       "count": 9
+    },
+    {
+      "label": "requisitos",
+      "count": 8
     },
     {
       "label": "banco de dados",
@@ -519,10 +533,6 @@
     {
       "label": "feat/api🔌",
       "count": 7
-    },
-    {
-      "label": "requisitos",
-      "count": 6
     },
     {
       "label": "prototipação",
