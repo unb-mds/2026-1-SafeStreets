@@ -11,10 +11,22 @@ interface DrawerProps {
   onClose: () => void;
 }
 
-const navItems = [
+type NavItem = {
+  href: string;
+  label: string;
+  Icon: typeof HomeIcon;
+  external?: boolean;
+};
+
+const navItems: NavItem[] = [
   { href: "/", label: "Início", Icon: HomeIcon },
   { href: "/mapa", label: "Mapa de risco", Icon: MapIcon },
-  { href: "/sobre", label: "Sobre nós", Icon: InfoIcon },
+  {
+    href: "https://unb-mds.github.io/2026-1-SafeStreets/",
+    label: "Sobre nós",
+    Icon: InfoIcon,
+    external: true,
+  },
 ];
 
 export default function Drawer({ open, onClose }: DrawerProps) {
@@ -41,21 +53,38 @@ export default function Drawer({ open, onClose }: DrawerProps) {
         <nav className={styles.nav}>
           <p className={styles.navLabel}>NAVEGAÇÃO</p>
           <ul className={styles.navList}>
-            {navItems.map(({ href, label, Icon }) => {
-              const isActive = pathname === href;
+            {navItems.map(({ href, label, Icon, external }) => {
+              const isActive = !external && pathname === href;
+              const content = (
+                <>
+                  <span className={`${styles.iconBox} ${isActive ? styles.iconBoxActive : ""}`}>
+                    <Icon size={18} color={isActive ? "var(--cor-branco)" : "var(--cor-verde)"} />
+                  </span>
+                  <span className={styles.navItemLabel}>{label}</span>
+                  <ArrowRightIcon size={14} color="var(--cor-cinza)" className={styles.arrow} />
+                </>
+              );
               return (
                 <li key={href}>
-                  <Link
-                    href={href}
-                    className={`${styles.navItem} ${isActive ? styles.navItemActive : ""}`}
-                    onClick={onClose}
-                  >
-                    <span className={`${styles.iconBox} ${isActive ? styles.iconBoxActive : ""}`}>
-                      <Icon size={18} color={isActive ? "var(--cor-branco)" : "var(--cor-verde)"} />
-                    </span>
-                    <span className={styles.navItemLabel}>{label}</span>
-                    <ArrowRightIcon size={14} color="var(--cor-cinza)" className={styles.arrow} />
-                  </Link>
+                  {external ? (
+                    <a
+                      href={href}
+                      className={styles.navItem}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={onClose}
+                    >
+                      {content}
+                    </a>
+                  ) : (
+                    <Link
+                      href={href}
+                      className={`${styles.navItem} ${isActive ? styles.navItemActive : ""}`}
+                      onClick={onClose}
+                    >
+                      {content}
+                    </Link>
+                  )}
                 </li>
               );
             })}
