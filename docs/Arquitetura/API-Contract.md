@@ -29,7 +29,6 @@ class Ocorrencia(Base):
     locais_pin_id: int (foreign_key)
     titulo_noticia: str
     descricao_detalhada: str (nullable)
-    tipo_crime: str  # e.g., "roubo", "homicídio"
     data_ocorrencia: datetime
     latitude: float (precision: 6 decimals)
     longitude: float (precision: 6 decimals)
@@ -43,13 +42,12 @@ class Ocorrencia(Base):
 ### Request: GET `/ocorrencias` (com Filtros)
 
 ```json
-GET /ocorrencias?regiao=RA-XXX&data_inicio=2026-06-01&data_fim=2026-06-06&tipo_crime=roubo
+GET /ocorrencias?regiao=RA-XXX&data_inicio=2026-06-01&data_fim=2026-06-06
 
 Query Parameters:
 - regiao: string (RA code, e.g., "RA-010")
 - data_inicio: date (ISO 8601)
 - data_fim: date (ISO 8601)
-- tipo_crime: string (opcional; múltiplos separados por comma)
 - limit: int (default: 100, max: 500)
 - offset: int (default: 0)
 ```
@@ -64,7 +62,6 @@ Query Parameters:
       "id": 1,
       "titulo": "Roubo em Taguatinga",
       "descricao": "Roubo de veículo na QNL...",
-      "tipo_crime": "roubo",
       "data_ocorrencia": "2026-06-06T14:30:00Z",
       "latitude": -15.7975,
       "longitude": -48.0473,
@@ -114,7 +111,6 @@ interface Noticia {
   id: string;
   titulo: string;
   descricao: string;
-  tipo_crime: string;
   data: Date;
   localizacao: {
     latitude: number;
@@ -136,7 +132,6 @@ Backend Response (Ocorrencia) → Frontend (Noticia)
 ├── id ────────────────► id
 ├── titulo_noticia ────► titulo
 ├── descricao ─────────► descricao
-├── tipo_crime ────────► tipo_crime
 ├── data_ocorrencia ───► data
 ├── latitude + longitude ──► localizacao.latitude/longitude
 ├── regiao_administrativa ─► localizacao.regiao
@@ -157,7 +152,6 @@ Response 200:
 {
   "id": 1,
   "titulo": "Roubo em Taguatinga",
-  "tipo_crime": "roubo",
   "data": "2026-06-06T14:30:00Z",
   "localizacao": {
     "latitude": -15.7975,
@@ -266,6 +260,7 @@ Response 401:
 | Marcador (pin) | Campo `marcador_id` em cada Ocorrência |
 | Resumo gerado por IA | Campo `resumo_gemini` + status |
 | Região administrativa | Campo `regiao_administrativa` |
+| Indicador de risco | Campo `risco_nivel` (calculado a partir da contagem de ocorrências da região) |
 | Cache espacial | TTL de 24h em histórico_consultas |
 | Dashboard | Consome múltiplos `/ocorrencias` com filtros |
 
@@ -276,7 +271,7 @@ Response 401:
 Quando os seguintes ADRs forem resolvidos, este contrato será atualizado:
 
 - [ ] **ADR-001**: Definir resposta exata quando resumo Gemini falha
-- [ ] **ADR-002**: Definir se TTL variável por crime
+- [ ] **ADR-002**: Definir se TTL variável por região administrativa
 - [ ] **ADR-004**: Definir estratégia de schema versioning
 
 ---

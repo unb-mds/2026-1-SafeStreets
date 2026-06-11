@@ -1,4 +1,4 @@
-#  Stack Front-end – SafeStreets
+﻿#  Stack Front-end – SafeStreets
 
 Este documento define as tecnologias utilizadas no desenvolvimento do front-end do **SafeStreets**, bem como as justificativas para cada escolha. O foco é garantir um sistema **moderno, escalável e de fácil manutenção**, sem adicionar complexidade desnecessária.
 > **Cross-references**: [CONTEXT.md](./CONTEXT.md) · [API-Contract.md](./API-Contract.md) · [definições-de-back.md](./definições-de-back.md)
@@ -47,6 +47,23 @@ Uso de CSS tradicional com escopo local através de CSS Modules (suportado nativ
 * Sem dependência de frameworks de estilo
 
 ---
+##  Mapas Interativos: Leaflet
+
+**Definição:**
+Biblioteca JavaScript open-source para renderização de mapas interativos no browser, integrada ao Next.js via `react-leaflet`.
+
+**Por que utilizar:**
+
+* Renderização leve e performática de marcadores georreferenciados
+* Integração direta com Next.js via `react-leaflet`
+* Suporte a zoom, pan e clique em pins
+* Sem dependência de API paga (diferente de Google Maps)
+
+**Responsabilidade no sistema:**
+Exibe as ocorrências como marcadores (pins) no mapa centralizado no DF. Ao clicar em um pin, dispara a requisição ao backend para exibir o card resumo da ocorrência.
+
+---
+
 
 ##  Boas Práticas Utilizadas
 
@@ -60,8 +77,8 @@ Uso de CSS tradicional com escopo local através de CSS Modules (suportado nativ
 
 O frontend consome dados via API REST e **monta a estrutura de Notícia** para o usuário:
 
-- **Ocorrência** (backend): Abstração interna com campos técnicos (latitude, longitude precisas, tipo_crime, etc)
-- **Notícia** (frontend): Apresentação enriquecida para o usuário (título, resumo IA, localização aproximada, RA)
+- **Ocorrência** (backend): Abstração interna com campos técnicos (latitude, longitude precisas, resumo_gemini, regiao_administrativa, etc)
+- **Notícia** (frontend): Apresentação enriquecida para o usuário (título, resumo IA, localização aproximada, RA, indicador de risco da região)
 
 Detalhes de mapeamento: [API-Contract.md - Modelo: Notícia](./API-Contract.md#2-modelo-notícia-montagem-no-frontend)
 

@@ -27,7 +27,7 @@ O **FastAPI** gerencia o ciclo de vida da ingestão de dados de forma assíncron
 [Camada de Ingestão (Python)] ──► Validação Inicial (Pydantic) + Extração de Localização
            │
            ▼
-[Pipeline de Processamento (ETL)] ──► Enriquecimento (Classificação de tipo de crime) + Geocodificação
+[Pipeline de Processamento (ETL)] ──► Enriquecimento (Extração de Localização + Geocodificação)
            │
            ▼
 [Módulo de Inteligência Artificial] ──► Gemini (Geração de Resumos Concisos)
@@ -49,10 +49,11 @@ O backend extrai notícias do feed RSS (Portal de Notícia Correio Braziliense) 
 
 ## **2. Enriquecimento**
 
-Para cada notícia extraída do feed RSS (muitas vezes com descrições resumidas), o sistema enriquece o conteúdo:
-- Classificação automática do tipo de crime (roubo, homicídio, etc.)
+Para cada notícia extraída do feed RSS, o sistema enriquece o conteúdo com dados estruturáveis — sem interpretar ou categorizar o crime:
 - Extração e normalização de localização do texto (ex: "Taguatinga" → RA-026 + lat/long centroide)
-- Limpeza de conteúdo (remoção de HTML, normalização de caracteres) 
+- Limpeza de conteúdo (remoção de HTML, normalização de caracteres)
+
+> **O sistema não classifica tipos de crime.** Não há lógica de categorização semântica (ex: roubo, homicídio). O texto da notícia é repassado ao Gemini para resumo sem análise prévia de categoria criminal.
 
 ## **3. Tratamento e Transformação (Pydantic + ORM)**
 
@@ -75,7 +76,7 @@ O texto validado é enviado via API para o Google Gemini. O modelo executa uma �
 ## **5. Persistência Dupla (Cache Distribuido)**
 
 A ocorrência, agora com seu resumo gerado pela IA e suas coordenadas exatas, é persistida em:
-1. **PostgreSQL** (principal): Tabela `ocorrencias_criminais` com índices em `locais_pin_id`, `data_criacao`, `tipo_crime`
+1. **PostgreSQL** (principal): Tabela `ocorrencias_criminais` com índices em `locais_pin_id`, `data_criacao`
 2. **Redis/In-Memory** (cache): TTL de 24h; respostas ultra-rápidas para queries frequentes (top crimes, region X)
 
 Isso evita:

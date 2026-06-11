@@ -35,9 +35,9 @@
 
 **Opções**:
 - A: TTL fixo de 24h para todos os dados
-- B: TTL variável por tipo de crime (homicídios = 12h, roubo = 48h)
-- C: TTL baseado em frequência de atualizações da API governamental
-- D: TTL adaptativo baseado em trending (crimes em alta = 12h, em baixa = 72h)
+- B: TTL variável por região administrativa (RAs com alta frequência de notícias = TTL menor)
+- C: TTL baseado em frequência de atualizações do feed RSS
+- D: TTL adaptativo baseado em volume de notícias recentes na região (alta atividade = 12h, baixa = 72h)
 
 **Trade-off**: 
 - Maior TTL = menos chamadas à API + menor custo ↔ risco de dados stale

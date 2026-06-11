@@ -21,6 +21,15 @@ Este documento tem como finalidade formalizar a escolha da stack de desenvolvime
 ## 🔹 ORM
 - SQLAlchemy
 
+## 🔹 Validação de Dados
+- Pydantic (em 2 pontos: entrada do feed RSS + serialização de resposta)
+
+## 🔹 Cache
+- Redis (distribuído, produção) ou in-memory com TTL (desenvolvimento) — decisão pendente ADR-003
+
+## 🔹 Integração de IA
+- Google Gemini API (sumarização de ocorrências; único componente de IA do sistema)
+
 ## 🔹 Documentação da API
 - Swagger / OpenAPI
 
@@ -39,24 +48,23 @@ O FastAPI apresenta vantagens significativas para projetos modernos orientados a
 
 # ✅ Motivos da Escolha
 
-## 1. Excelente integração com Inteligência Artificial
+## 1. Integração com Inteligência Artificial (Google Gemini)
 
-O ecossistema Python é atualmente o principal ambiente para desenvolvimento de soluções de IA e Machine Learning.
+O ecossistema Python é o principal ambiente para integração com APIs de IA modernas. No SafeStreets, a IA tem **escopo restrito e deliberado**: o Google Gemini é o único componente de IA do sistema, usado exclusivamente para **sumarização de ocorrências**.
 
-O FastAPI permite integração direta com bibliotecas como:
+> **O sistema não realiza classificação de crimes, análise semântica ou NLP próprio.** O texto da notícia é enviado integralmente ao Gemini, que retorna um resumo conciso. Nenhuma categorização de tipo de crime é feita pelo backend.
 
-- Transformers
-- Scikit-learn
-- TensorFlow
-- PyTorch
-- spaCy
-- OpenAI SDK
+O que o backend **faz** com IA:
+- Envia o texto bruto da ocorrência ao Gemini via API
+- Persiste o resumo retornado no campo `resumo_gemini`
+- Gerencia o ciclo de fallback em caso de falha (ADR-001)
 
-Isso facilita a implementação de:
-- classificação automática
-- análise textual
-- sumarização
-- processamento de linguagem natural (NLP)
+O que o backend **não faz**:
+- Não classifica tipos de crime (roubo, homicídio, etc.)
+- Não usa modelos locais (Transformers, spaCy, PyTorch, etc.)
+- Não realiza NLP próprio
+
+**Indicador de risco**: calculado pelo backend como uma métrica de **quantidade de ocorrências por região administrativa**. Quanto maior o volume de ocorrências em uma RA, maior o nível de risco atribuído a ela. Não depende de classificação de conteúdo.
 
 ---
 

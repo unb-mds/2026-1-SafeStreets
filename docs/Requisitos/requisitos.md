@@ -56,13 +56,13 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 
 ### ⚙️ Épico 4: Sistema (Backend/API)
 
-* **RF12 - Classificação de Ocorrências:** O sistema deve classificar automaticamente os tipos de crimes e incidentes associados a cada ocorrência durante o pipeline de ingestão de dados.
+* **RF12 - Enriquecimento de Ocorrências:** O sistema deve, durante o pipeline de ingestão, extrair e normalizar a localização geográfica de cada notícia (nome de região administrativa → lat/long centroide) e limpar o conteúdo bruto (remoção de HTML, normalização de caracteres). O sistema **não classifica tipos de crime**.
 * **RF13 - Disponibilização de Endpoints:** A API do backend deve disponibilizar endpoints estruturados para o fornecimento dos dados de notícias de monitoramento urbano, marcadores do mapa e estatísticas para o frontend.
 * **RF14 - Consumo de APIs Externas:** O backend deve realizar requisições e coletar dados de fontes externas de forma assíncrona para alimentar as métricas do painel.
 * **RF15 - Retornar Respostas (JSON)** O sistema deve retornar respostas em json.
 
 **User Stories:**
-* US 4.4.1 Como desenvolvedor, quero implementar a lógica de classificação de tipos de crimes para enriquecer as ocorrências no pipeline de ingestão.
+* US 4.4.1 Como desenvolvedor, quero implementar a lógica de extração de localização geográfica (texto → RA + lat/long) e limpeza de conteúdo para enriquecer as ocorrências no pipeline de ingestão.
 * US 4.4.2 Como desenvolvedor, quero criar endpoints para disponibilizar dados ao sistema.
 * US 4.4.3 Como desenvolvedor, quero que o sistema processe requisições do usuário para retornar os dados corretos.
 * US 4.4.4 Como desenvolvedor, quero que o sistema retorne respostas em JSON para garantir integração com o front-end.
