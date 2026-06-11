@@ -27,3 +27,6 @@ yarn-error.log*
 # typescript incremental build
 *.tsbuildinfo
 next-env.d.ts
+
+# swc cache
+.swc/
