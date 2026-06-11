@@ -69,7 +69,7 @@
 ### ADR-004: Schema Versioning
 **Status**: ⏳ Pendente
 
-**Questão**: Responder a mudanças da API governamental?
+**Questão**: Responder a mudanças na estrutura XML do feed RSS do Correio Braziliense?
 
 **Opções**:
 - [ ] A: Backward compat automática (Pydantic default)
@@ -152,11 +152,11 @@ class Ocorrencia(Base):
 **Endpoints**:
 
 #### GET /ocorrencias
-- [x] Query params: regiao, data_inicio, data_fim, tipo_crime, limit, offset
+- [x] Query params: regiao, data_inicio, data_fim, limit, offset
 - [ ] Response: 200 com paginação (conforme API-Contract.md)
 - [ ] Response: 400 se data_inicio > data_fim
 - [ ] Response: 429 se rate limit excedido
-- [ ] Response: 503 se API governamental indisponível
+- [ ] Response: 503 se feed RSS indisponível
 
 **Referência**: [API-Contract.md#2-request-get-ocorrências-com-filtros](./docs/Arquitetura/API-Contract.md#request-get-ocorrências-com-filtros)
 

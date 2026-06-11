@@ -66,18 +66,18 @@
 
 ## ADR-004: Schema Versioning
 
-**Questão**: Como o sistema reage quando API governamental muda seu JSON schema?
+**Questão**: Como o sistema reage quando o feed RSS do Correio Braziliense muda sua estrutura XML (novos campos, campos renomeados ou removidos)?
 
 **Opções**:
-- A: **Backward compatibility automática** — Pydantic ignora campos desconhecidos, usa defaults para novos campos
-- B: **Migration manual** — ADR ou migration script necessário para cada mudança; falha fast
-- C: **Versioning de endpoints** — `/v1/ocorrencias` vs `/v2/ocorrencias` no backend
+- A: **Backward compatibility automática** — parser RSS ignora campos desconhecidos; Pydantic usa defaults para campos ausentes
+- B: **Falha explícita (fail-fast)** — parser lança erro ao encontrar mudança estrutural; requer intervenção manual e novo deploy
+- C: **Versionamento de parser** — manter múltiplas versões do parser RSS (`parser_v1`, `parser_v2`) com detecção automática de formato
 
 **Trade-off**:
-- Backward compat automática = resiliente a mudanças ↔ pode esconder bugs silenciosamente
-- Migration manual = transparência total ↔ operacional pesado, risco de downtime
+- Backward compat automática = pipeline nunca quebra ↔ pode ingerir dados malformados silenciosamente
+- Fail-fast = mudanças são detectadas imediatamente ↔ gera downtime até correção manual
 
-**Impacto**: Resiliência, operacional, testabilidade
+**Impacto**: Resiliência do pipeline de ingestão, observabilidade, manutenibilidade
 
 ---
 

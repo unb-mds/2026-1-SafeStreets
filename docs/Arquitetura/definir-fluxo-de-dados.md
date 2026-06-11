@@ -112,7 +112,7 @@ O sistema adota um modelo relacional simplificado no PostgreSQL, focado na liga�
 
 ### Validação de Versionamento de Schema
 
-Se API governamental mudar formato (e.g., novo campo, renomear existing):
+Se o feed RSS do Correio Braziliense mudar sua estrutura XML (e.g., novo campo, campo renomeado):
 1. **Backward Compatibility**: Pydantic ignora campos desconhecidos (configurável)
 2. **New Required Fields**: Tratadas com default fallback para não quebrar pipeline
 3. **Schema Migration**: Se mudança crítica, ADR deve documentar e preparar migration script

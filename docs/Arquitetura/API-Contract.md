@@ -243,7 +243,7 @@ Response 401:
 > Não exposto ao frontend, mas documentado para contexto interno.
 
 ```python
-# Backend tratamento de rate limit da API governamental
+# Backend tratamento de rate limit do feed RSS (Correio Braziliense)
 # Retentar com backoff: 1s → 2s → 4s → 8s
 # Circuit breaker abre após 5 tentativas
 # Retorna dados stale ou erro ao cliente
