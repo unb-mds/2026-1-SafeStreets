@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-11T21:46:58.768123Z",
+  "generated_at": "2026-06-11T22:38:04.738615Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W24",
       "opened": 7,
-      "closed": 10
+      "closed": 11
     },
     {
       "week": "2026-W23",
@@ -70,15 +70,15 @@
     },
     {
       "range": "21-40",
-      "count": 155
+      "count": 160
     },
     {
       "range": "41-60",
-      "count": 35
+      "count": 37
     },
     {
       "range": "61-80",
-      "count": 17
+      "count": 18
     },
     {
       "range": "81+",
@@ -88,8 +88,13 @@
   "commit_heatmap": [
     {
       "day": 4,
-      "hour": 21,
+      "hour": 22,
       "count": 3
+    },
+    {
+      "day": 4,
+      "hour": 21,
+      "count": 5
     },
     {
       "day": 4,
@@ -113,8 +118,13 @@
     },
     {
       "day": 4,
+      "hour": 2,
+      "count": 1
+    },
+    {
+      "day": 4,
       "hour": 1,
-      "count": 2
+      "count": 3
     },
     {
       "day": 3,
@@ -155,6 +165,11 @@
       "day": 0,
       "hour": 4,
       "count": 4
+    },
+    {
+      "day": 6,
+      "hour": 19,
+      "count": 15
     },
     {
       "day": 6,
@@ -313,11 +328,6 @@
     },
     {
       "day": 6,
-      "hour": 19,
-      "count": 14
-    },
-    {
-      "day": 6,
       "hour": 13,
       "count": 4
     },
@@ -419,12 +429,12 @@
   ],
   "top_committers": [
     {
-      "username": "jorgevasquez25",
-      "commits": 50
+      "username": "IsraelSoares-25",
+      "commits": 52
     },
     {
-      "username": "IsraelSoares-25",
-      "commits": 45
+      "username": "jorgevasquez25",
+      "commits": 50
     },
     {
       "username": "matheusqsa",
