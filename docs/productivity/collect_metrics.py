@@ -2,19 +2,24 @@ import os
 import json
 from datetime import datetime, timezone
 from collections import Counter
-from github import Github
+from github import Github, Auth # Import do Auth adicionado
 
 def get_week_string(date_obj):
     year, week, _ = date_obj.isocalendar()
     return f"{year}-W{week:02d}"
 
 def main():
-    # Tenta pegar o token do ambiente (funciona na Action e se você exportar local)
+    # Tenta pegar o token do ambiente
     token = os.environ.get("GITHUB_TOKEN")
+    
+    # CORREÇÃO DA AUTENTICAÇÃO: Usando a nova estrutura Auth do PyGithub
     if not token:
         print("⚠️ Aviso: GITHUB_TOKEN não encontrado no ambiente. Rodando como anônimo.")
+        g = Github() # Fallback para uso sem token
+    else:
+        auth = Auth.Token(token)
+        g = Github(auth=auth)
         
-    g = Github(token)
     repo_name = "unb-mds/2026-1-SafeStreets"
     repo = g.get_repo(repo_name)
 
@@ -35,19 +40,27 @@ def main():
     label_counter = Counter()
     pr_authors = Counter()
     issue_authors = Counter()
-
-    # Busca os itens recentes - o GitHub já traz as labels aqui dentro!
-    recent_items = repo.get_issues(state="all", sort="created", direction="desc")[:300]
     
-    for item in recent_items:
+    # Lista de bots a serem ignorados nos rankings
+    usuarios_ignorados = {"actions-user", "github-actions[bot]", "dependabot[bot]"}
+
+    # CORREÇÃO DO INDEX ERROR (ISSUES): Loop seguro em vez de slicing [:300] direto
+    issues_paginated = repo.get_issues(state="all", sort="created", direction="desc")
+    
+    for i, item in enumerate(issues_paginated):
+        if i >= 300:
+            break # Para ao atingir 300 itens
+            
         # CORREÇÃO CRUCIAL: Lendo a propriedade local .labels em vez de forçar um GET request
         for l in item.labels:
             label_counter[l.name] += 1
             
-        if item.pull_request:
-            pr_authors[item.user.login] += 1
-        else:
-            issue_authors[item.user.login] += 1
+        author_login = item.user.login
+        if author_login not in usuarios_ignorados:
+            if item.pull_request:
+                pr_authors[author_login] += 1
+            else:
+                issue_authors[author_login] += 1
 
         week = get_week_string(item.created_at)
         if week not in issues_weeks: 
@@ -71,9 +84,17 @@ def main():
     hist_bins = {"0-20": 0, "21-40": 0, "41-60": 0, "61-80": 0, "81+": 0}
     heatmap_counter = Counter()
 
-    for commit in repo.get_commits()[:300]:
+    # CORREÇÃO DO INDEX ERROR (COMMITS): Loop seguro em vez de slicing [:300] direto
+    commits_paginated = repo.get_commits()
+    
+    for i, commit in enumerate(commits_paginated):
+        if i >= 300:
+            break # Para ao atingir 300 commits
+            
         if commit.author: 
-            commit_authors[commit.author.login] += 1
+            author_login = commit.author.login
+            if author_login not in usuarios_ignorados:
+                commit_authors[author_login] += 1
         
         msg_len = len(commit.commit.message)
         if msg_len <= 20: hist_bins["0-20"] += 1

@@ -1,0 +1,11 @@
+.footer {
+  padding: 24px;
+  border-top: 1px solid var(--cor-linha);
+  text-align: center;
+}
+
+.text {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--cor-cinza);
+}

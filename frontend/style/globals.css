@@ -1,0 +1,70 @@
+/* ──────────────────────────────────────────────
+   Design tokens
+   ────────────────────────────────────────────── */
+:root {
+  /* Marca */
+  --cor-verde:        #016d01;
+  --cor-amarelo:      #f8c311;
+  --cor-branco:       #ffffff;
+
+  /* Derivadas */
+  --cor-verde-escuro: #013d12;
+  --verde-tint:       #e8f3ea;
+  --cor-fundo:        #f4f7f2;
+  --cor-superficie:   #ffffff;
+  --cor-texto:        #2b2f2b;
+  --cor-cinza:        #6b716b;
+  --cor-linha:        #e3e8e3;
+
+  /* Tipografia */
+  --font-display: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-body:    "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ──────────────────────────────────────────────
+   Reset mínimo
+   ────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}

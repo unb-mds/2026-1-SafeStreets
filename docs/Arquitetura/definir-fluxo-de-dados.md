@@ -21,7 +21,7 @@ O **FastAPI** gerencia o ciclo de vida da ingestão de dados de forma assíncron
 - **Timeout**: Máximo 30s por requisição ao feed; falência após
 
 ```plaintext
-[Feed RSS - Portal de Notícia Correio Braziliense]
+[API Aberta - RSS Portais de Nóticias]
            │
            ▼ (HTTPX / Requests Assíncronos + Parser XML)
 [Camada de Ingestão (Python)] ──► Validação Inicial (Pydantic) + Extração de Localização

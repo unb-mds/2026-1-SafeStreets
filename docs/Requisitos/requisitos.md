@@ -23,8 +23,8 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 
 **User Stories:**
 * US 1.1.1 Como cidadão, quero acessar a página de informações sobre crimes na região do DF para me informar sobre a segurança.
-* US 1.1.2 Como cidadão, quero abrir uma notícia para visualizar detalhes completos da ocorrência.
-* US 1.1.3 Como cidadão, quero ter acesso ao menu da web-site redirecionando a outros conteúdos.
+* US 1.1.2 Como cidadão, quero abrir uma notícia para visualizar detalhes completos da ocorrência para adquirir maior entendimento da ocorrência.
+* US 1.1.3 Como cidadão, quero ter acesso ao menu da web-site para me redirecionar a outros conteúdos.
 
 ### 🗺️ Épico 2: Mapeamento de Ocorrências e Alertas
 
