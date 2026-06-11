@@ -1,4 +1,4 @@
-import type { Noticia } from "@/data/noticias";
+import type { Noticia } from "@/utils/noticias";
 import { PinIcon, ArrowRightIcon } from "@/components/icons";
 import styles from "./NewsCard.module.css";
 

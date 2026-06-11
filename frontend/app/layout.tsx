@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import Chrome from "@/components/Chrome/Chrome";
-import "./globals.css";
+import "@/style/globals.css";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   subsets: ["latin"],

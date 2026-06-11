@@ -1,13 +1,5 @@
-import Hero from "@/components/Hero/Hero";
-import NewsFeed from "@/components/NewsFeed/NewsFeed";
-import { noticias } from "@/data/noticias";
-import styles from "./page.module.css";
+import Home from "@/view/Home/Home";
 
 export default function HomePage() {
-  return (
-    <div className={styles.page}>
-      <Hero />
-      <NewsFeed noticias={noticias} />
-    </div>
-  );
+  return <Home />;
 }
