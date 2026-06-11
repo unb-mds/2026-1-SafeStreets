@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-11T20:27:28.604840Z",
+  "generated_at": "2026-06-11T21:46:58.768123Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W24",
       "opened": 7,
-      "closed": 8
+      "closed": 10
     },
     {
       "week": "2026-W23",
@@ -70,11 +70,11 @@
     },
     {
       "range": "21-40",
-      "count": 154
+      "count": 155
     },
     {
       "range": "41-60",
-      "count": 34
+      "count": 35
     },
     {
       "range": "61-80",
@@ -82,14 +82,19 @@
     },
     {
       "range": "81+",
-      "count": 46
+      "count": 47
     }
   ],
   "commit_heatmap": [
     {
       "day": 4,
+      "hour": 21,
+      "count": 3
+    },
+    {
+      "day": 4,
       "hour": 20,
-      "count": 1
+      "count": 2
     },
     {
       "day": 4,
@@ -182,6 +187,11 @@
       "count": 1
     },
     {
+      "day": 6,
+      "hour": 3,
+      "count": 5
+    },
+    {
       "day": 5,
       "hour": 21,
       "count": 9
@@ -243,11 +253,6 @@
     },
     {
       "day": 6,
-      "hour": 3,
-      "count": 4
-    },
-    {
-      "day": 6,
       "hour": 2,
       "count": 9
     },
@@ -280,11 +285,6 @@
       "day": 4,
       "hour": 23,
       "count": 11
-    },
-    {
-      "day": 4,
-      "hour": 21,
-      "count": 2
     },
     {
       "day": 4,
@@ -436,7 +436,7 @@
     },
     {
       "username": "Nic0laslc",
-      "commits": 23
+      "commits": 25
     },
     {
       "username": "ArthurFeitosa05",
