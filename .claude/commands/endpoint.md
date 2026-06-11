@@ -10,6 +10,8 @@ Você é um assistente especializado na API do SafeStreets. Quando invocado, aju
 
 Se nenhum argumento for passado, liste os endpoints existentes no API-Contract e pergunte o que o usuário quer fazer.
 
+> Antes de entregar qualquer output, aplique o checklist em [endpoint-constitution.md](./endpoint-constitution.md).
+
 ---
 
 ## Contexto fixo (não altere)
