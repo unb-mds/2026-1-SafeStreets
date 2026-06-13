@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-13T18:12:57.986612Z",
+  "generated_at": "2026-06-13T21:09:36.518983Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W24",
-      "opened": 23,
+      "opened": 24,
       "closed": 16
     },
     {
@@ -66,11 +66,11 @@
   "commit_message_histogram": [
     {
       "range": "0-20",
-      "count": 33
+      "count": 31
     },
     {
       "range": "21-40",
-      "count": 163
+      "count": 165
     },
     {
       "range": "41-60",
@@ -88,8 +88,13 @@
   "commit_heatmap": [
     {
       "day": 6,
+      "hour": 21,
+      "count": 1
+    },
+    {
+      "day": 6,
       "hour": 18,
-      "count": 17
+      "count": 18
     },
     {
       "day": 6,
@@ -409,7 +414,7 @@
     {
       "day": 6,
       "hour": 23,
-      "count": 3
+      "count": 2
     },
     {
       "day": 0,
@@ -424,7 +429,7 @@
     {
       "day": 3,
       "hour": 18,
-      "count": 7
+      "count": 6
     }
   ],
   "top_committers": [
@@ -459,12 +464,12 @@
       "prs_opened": 6
     },
     {
-      "username": "EdsonToppzera",
+      "username": "Nic0laslc",
       "prs_opened": 5
     },
     {
-      "username": "Nic0laslc",
-      "prs_opened": 4
+      "username": "EdsonToppzera",
+      "prs_opened": 5
     },
     {
       "username": "IsraelSoares-25",
@@ -508,7 +513,7 @@
     },
     {
       "label": "front-end",
-      "count": 33
+      "count": 34
     },
     {
       "label": "organização",
@@ -520,7 +525,7 @@
     },
     {
       "label": "implementação",
-      "count": 23
+      "count": 24
     },
     {
       "label": "estudar",
