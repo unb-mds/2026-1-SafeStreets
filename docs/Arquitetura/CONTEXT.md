@@ -4,7 +4,7 @@
 Este documento define o vocabulário e os conceitos fundamentais do domínio SafeStreets. Serve como referência canônica para alinhar equipe, documentação, requisitos e implementação em torno dos termos de negócio usados no sistema.
 
 ## Escopo do sistema
-SafeStreets é uma plataforma de monitoramento de segurança urbana que transforma notícias públicas em ocorrências georreferenciadas e visualizações interativas para apoio à conscientização sobre segurança no Distrito Federal. O sistema **não analisa, interpreta ou classifica** o conteúdo das notícias — ele extrai localização, persiste os dados e delega a síntese textual exclusivamente ao Google Gemini.
+SafeStreets é uma plataforma de monitoramento de segurança urbana que transforma notícias públicas em ocorrências georreferenciadas e visualizações interativas para apoio à conscientização sobre segurança no Distrito Federal. O sistema **não classifica de tipos de crimes** ele analisa o conteúdo das notícias ,extrai localização, persiste os dados e delega a síntese textual exclusivamente ao Google Gemini.
 
 ---
 
@@ -44,7 +44,7 @@ SafeStreets é uma plataforma de monitoramento de segurança urbana que transfor
 - Métrica calculada pelo backend que representa o nível de perigo de uma **região administrativa**, derivada exclusivamente da **quantidade de ocorrências registradas nessa região**. Quanto maior o volume de ocorrências, maior o indicador de risco. Não depende de classificação de tipo de crime — o risco é uma função da contagem, não do conteúdo das notícias. Exibido no card resumo e nos marcadores do mapa (ex: baixo / médio / alto).
 
 ### Card resumo
-- Painel de informação exibido quando o usuário seleciona uma ocorrência ou região no mapa. Contém: título, risco, localização exata, data, número identificador (RA-XXXXX) e resumo gerado por IA.
+- Painel de informação exibido quando o usuário seleciona uma ocorrência na dashboard. Contém: título, risco, localização exata, data, número identificador (RA-XXXXX) e resumo gerado por IA.Após selecionar na dashboard ele precisa exibir mini card indentificador exibindo essas informações, com opção de detalhamento para card resumo.
 
 ### Resumo gerado por IA
 - Texto sintetizado automaticamente (via Google Gemini) que condensa informações de uma ocorrência, facilitando a leitura rápida pelo usuário final.
