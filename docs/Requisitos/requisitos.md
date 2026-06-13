@@ -90,3 +90,71 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 ### 🛠️ Manutenibilidade e Arquitetura
 
 * **RNF08 - Separação de Camadas (Desacoplamento - Jamstack):** A camada de visualização (Frontend) deve interagir com as fontes de dados (Backend/APIs) estritamente por meio de chamadas de API RESTful, permitindo a evolução independente do código sem quebra de regras de negócio.
+
+---
+
+## 4. Critérios de Aceite das User Stories (Épicos 1 a 3)
+
+### 🛠️ Épico 1: Visualização de Informações e Notícias
+
+**US 1.1.1** — Como cidadão, quero acessar a página de informações sobre crimes na região do DF para me informar sobre a segurança.
+* Dado que o usuário acessa a página inicial, então o sistema deve exibir um feed com as notícias de monitoramento urbano mais recentes sobre segurança pública no DF.
+* Dado que o feed está sendo carregado, então a renderização dos componentes estruturais da página não deve ser bloqueada (carregamento assíncrono).
+* Dado que não há notícias disponíveis, então o sistema deve exibir uma mensagem indicando ausência de conteúdo, sem quebrar o layout da página.
+
+**US 1.1.2** — Como cidadão, quero abrir uma notícia para visualizar detalhes completos da ocorrência para adquirir maior entendimento da ocorrência.
+* Dado que o usuário clica em uma notícia do feed, então o sistema deve exibir a descrição detalhada da ocorrência.
+* Dado que a notícia está em exibição detalhada, então o sistema deve exibir a data de publicação e a localização associada à ocorrência.
+* Dado que a notícia está em exibição detalhada, então o sistema deve exibir um link de acesso à fonte original dos dados, e esse link deve abrir a fonte externa.
+
+**US 1.1.3** — Como cidadão, quero ter acesso ao menu da web-site para me redirecionar a outros conteúdos.
+* Dado que o usuário está em qualquer página do sistema, então o menu lateral deve estar visível e acessível.
+* Dado que o usuário clica em "Início", então o sistema deve redirecionar para a página inicial com o feed de notícias.
+* Dado que o usuário clica em "Mapa", então o sistema deve redirecionar para a página do mapa interativo.
+* Dado que o usuário clica em "Sobre nós", então o sistema deve redirecionar para a página com informações institucionais do projeto.
+
+### 🗺️ Épico 2: Mapeamento de Ocorrências e Alertas
+
+**US 2.2.1** — Como cidadão, quero que ao selecionar uma notícia de monitoramento urbano no dashboard de pesquisa, um card resumo apareça linkado ao local por um marcador (pin) no mapa.
+* Dado que o usuário seleciona uma notícia no dashboard de pesquisa, então o sistema deve exibir um card resumo acima do pin contendo os detalhes da ocorrência correspondente.
+* Dado que o card resumo é exibido, então o sistema deve destacar/posicionar um marcador (pin) no mapa correspondente à localização da ocorrência.
+* Dado que o usuário seleciona outra notícia, então o card resumo e o marcador no mapa devem ser atualizados de acordo com a nova seleção.
+
+**US 2.2.2** — Como cidadão, quero que o mapa interativo carregue ao acessar o sistema, já exibindo regiões do DF, para que eu possa começar a explorar as áreas imediatamente.
+* Dado que o usuário acessa a página do mapa, então o mapa interativo deve ser renderizado automaticamente, sem necessidade de ação adicional do usuário.
+* Dado que o mapa foi renderizado, então ele deve ser exibido com zoom padrão centralizado na região do Distrito Federal.
+* Dado que o mapa está carregado, então o usuário deve conseguir explorar (arrastar, dar zoom in/out) as regiões exibidas livremente.
+
+### 📊 Épico 3: Dashboard de Busca/Filtros
+
+**US 3.3.1** — Como cidadão, quero buscar notícias de monitoramento urbano por região administrativa (RA) e ter a opção de filtrar por intervalos de tempo.
+* Dado que o usuário acessa o menu lateral de filtros, então deve haver um campo/seletor para escolher uma região administrativa (Ex: Ceilândia, Taguatinga).
+* Dado que o usuário acessa o menu lateral de filtros, então deve haver uma opção para definir um período/intervalo de datas.
+* Dado que o usuário aplica um filtro de região e/ou período, então o sistema deve aplicar os marcadores exibidos no mapa para refletir apenas as ocorrências que atendem aos critérios selecionados.
+* Dado que o usuário combina filtro de região e período, então o sistema deve aplicar ambos os critérios simultaneamente (interseção).
+
+**US 3.3.2** — Como cidadão, quero que a mensagem "nenhum resultado encontrado" seja exibida, caso nenhuma notícia seja encontrada ao buscar.
+* Dado que o usuário aplica um ou mais filtros, e nenhuma ocorrência atende aos critérios, então o sistema deve exibir a mensagem "Nenhum resultado encontrado".
+* Dado que a mensagem "Nenhum resultado encontrado" está sendo exibida, então o mapa não deve apresentar marcadores e o dashboard não deve apresentar dados de ocorrências.
+* Dado que o usuário altera os filtros para critérios que retornam resultados, então a mensagem "Nenhum resultado encontrado" deve desaparecer e os dados correspondentes devem ser exibidos.
+
+**US 3.3.3** — Como cidadão, quero que tenha uma opção de limpar filtros.
+* Dado que o usuário possui um ou mais filtros aplicados, então deve haver um botão/opção "Limpar filtros" visível no menu de filtros.
+* Dado que o usuário clica em "Limpar filtros", então todos os filtros aplicados (região e período) devem ser removidos.
+* Dado que os filtros foram limpos, então o mapa e o dashboard devem voltar ao estado padrão.
+
+**US 3.3.4** — Como cidadão, quero que os dados sejam carregados na dashboard automaticamente para visualização de monitoramento urbano após a busca.
+* Dado que o usuário realiza uma busca/aplica filtros, então o dashboard de busca deve ser atualizado automaticamente com os dados consolidados correspondentes, sem necessidade de recarregar a página.
+* Dado que a atualização do dashboard está em andamento, então o sistema deve indicar visualmente o estado de carregamento (loading) até que os dados estejam disponíveis.
+
+**US 3.3.5** — Como cidadão, quero visualizar um card contendo informações e indicadores (risco e período) sobre o local.
+* Dado que o usuário selecione uma notícia no dashboard, então o sistema deve exibir um card resumo contendo: nível de risco, título, número identificador (RA-XXXXX), localização exata e data da ocorrência.
+* Dado que o card resumo é exibido, então as informações de risco e período devem corresponder à ocorrência buscada.
+
+**US 3.3.6** — Como cidadão, quero que ao buscar/selecionar minha nóticia no dashboard de pesquisa e aparecer o pin com o card resumo acima dela, tenha uma opção de "Ver detalhes" no card resumo que irá gerar uma nova tela contendo, além das especificações da notícia, um resumo gerado por inteligência artificial.
+* Dado que o usuário busca/seleciona uma notícia no dashboard de pesquisa, então o sistema deve exibir o pin correspondente no mapa com o card resumo posicionado acima dele.
+* Dado que o card resumo está sendo exibido, então deve haver uma opção "Ver detalhes" visível no card.
+* Dado que o usuário clica em "Ver detalhes", então o sistema deve abrir uma nova tela contendo as especificações completas da notícia (título, número identificador, localização, data e risco).
+* Dado que a nova tela de detalhes é exibida, então o sistema deve apresentar um resumo gerado por inteligência artificial referente à ocorrência selecionada.
+* Dado que o resumo gerado por IA está sendo carregado, então o sistema deve indicar visualmente o estado de carregamento até que o conteúdo esteja disponível.
+* Dado que não seja possível gerar o resumo por IA para a ocorrência selecionada, então o sistema deve exibir uma mensagem informando a indisponibilidade do resumo.
