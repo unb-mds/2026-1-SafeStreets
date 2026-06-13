@@ -11,6 +11,13 @@
   border-bottom: 1px solid var(--cor-linha);
 }
 
+.headerOverlay {
+  position: fixed;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: none;
+}
+
 .left {
   display: flex;
   align-items: center;

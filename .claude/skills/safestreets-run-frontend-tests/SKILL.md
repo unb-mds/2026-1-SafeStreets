@@ -1,5 +1,5 @@
 ---
-name: run-frontend-tests
+name: safestreets-run-frontend-tests
 description: Executa testes unitários do frontend do SafeStreets. Use quando solicitado a testar, rodar testes, verificar cobertura ou validar o comportamento de componentes na pasta frontend.
 ---
 
