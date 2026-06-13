@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import health
+from app.routes import health
 
 app = FastAPI(
     title="SafeStreets API",

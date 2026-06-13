@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float
-from app.database import Base
+from app.core.database import Base
 
 # classe inicial basica para teste
 class Ocorrencia(Base):

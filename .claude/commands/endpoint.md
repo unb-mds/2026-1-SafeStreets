@@ -16,7 +16,7 @@ Se nenhum argumento for passado, liste os endpoints existentes no API-Contract e
 
 **Contrato de referência**: `docs/Arquitetura/API-Contract.md`  
 **Glossário de domínio**: `docs/Arquitetura/CONTEXT.md`  
-**Modelo ORM**: `backend/app/models.py`  
+**Modelo ORM**: `backend/app/models/ocorrencia.py`  
 
 **Endpoints documentados no contrato**:
 | Endpoint | Método | Descrição |

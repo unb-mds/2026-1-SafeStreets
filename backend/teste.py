@@ -1,4 +1,4 @@
-from app.database import engine, Base, SessionLocal
+from app.core.database import engine, Base, SessionLocal
 from app.models import Ocorrencia
 
 # 1. Este comando olha para o models.py e CRIA a tabela no PostgreSQL!
