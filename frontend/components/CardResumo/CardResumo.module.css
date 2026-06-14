@@ -1,0 +1,71 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 220px;
+  padding: 12px;
+  border: 1px solid var(--cor-verde);
+  border-radius: 12px;
+  background: var(--cor-superficie);
+  font-family: var(--font-body);
+}
+
+.badgeRisco {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--cor-branco);
+}
+
+.riscoAlto {
+  background: var(--cor-risco-alto);
+}
+
+.riscoMedio {
+  background: var(--cor-risco-medio);
+  color: var(--cor-texto);
+}
+
+.riscoBaixo {
+  background: var(--cor-risco-baixo);
+}
+
+.titulo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--cor-texto);
+  line-height: 1.3;
+}
+
+.detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--cor-cinza);
+}
+
+.linha dt {
+  font-weight: 600;
+}
+
+.linha dd {
+  text-align: right;
+}
+
+.verDetalhes {
+  margin-top: 4px;
+  align-self: flex-start;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cor-verde);
+  text-decoration: underline;
+}

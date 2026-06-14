@@ -16,6 +16,11 @@
   --cor-cinza:        #6b716b;
   --cor-linha:        #e3e8e3;
 
+  /* Risco (semântico) */
+  --cor-risco-alto:   #c0392b;
+  --cor-risco-medio:  #f8c311;
+  --cor-risco-baixo:  #016d01;
+
   /* Tipografia */
   --font-display: "Schibsted Grotesk", system-ui, sans-serif;
   --font-body:    "Plus Jakarta Sans", system-ui, sans-serif;
