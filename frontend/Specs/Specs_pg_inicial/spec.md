@@ -18,10 +18,13 @@ de qualquer integração com dados reais.
 - [x] Exibir uma página inicial com seção hero + feed de notícias de segurança (dados de exemplo/estáticos).
 - [x] Disponibilizar um menu de navegação (drawer lateral) para "Início", "Mapa de risco" e "Sobre nós".
 - [x] Permitir buscar/filtrar o feed de notícias pelo campo de busca da barra superior.
+- [x] Abrir o detalhamento de uma notícia ao clicar em "Ler notícia".
 - [x] Aplicar a identidade visual do protótipo (logo, paleta, tipografia, cards).
 
 ## Requisitos cobertos
 - **RF01 — Visualizar página de notícia:** a página inicial exibe um feed de notícias sobre segurança.
+- **RF02 — Detalhamento da notícia:** ao clicar em "Ler notícia", o usuário vê a descrição
+  detalhada da ocorrência, a data de publicação, a localização associada e um link para a fonte original.
 - **RF03 — Menu de navegação:** menu lateral com links diretos para "Início", "Mapa" e "Sobre nós".
 - **RF08 — Busca de notícias:** o campo da barra superior filtra o feed da home pelo termo digitado.
 
@@ -49,8 +52,18 @@ de qualquer integração com dados reais.
   - Badge de **região** (pílula amarela com ícone de pin) + badge de **data** (cinza, dd/mm/aaaa).
   - **Título** em negrito.
   - **Descrição** breve.
-  - Rodapé do card: link "Ler notícia →" (alinhado à direita).
+  - Rodapé do card: link "Ler notícia →" (alinhado à direita) que leva ao
+    detalhamento da notícia (`/noticia/{id}`).
   - *Sem* área de imagem e *sem* rótulo de fonte (removidos do card).
+
+### Página de detalhe ("/noticia/{id}")
+- Link "← Voltar para notícias" no topo, que retorna para o feed (`/`).
+- Badge de **região** (localização associada) em pílula amarela com ícone de pin.
+- **Título** grande em verde-escuro.
+- **Data de publicação** (dd/mm/aaaa) em fonte mono.
+- **Resumo** em destaque, seguido do **corpo** da ocorrência (parágrafos da descrição detalhada).
+- Cartão "Acessar fonte original" com botão "Abrir link" que abre a **fonte de dados
+  original** em nova aba.
 
 ### Menu (drawer)
 - Abre **pela esquerda** ao clicar no hambúrguer, sobre um fundo escurecido (backdrop).
@@ -73,6 +86,16 @@ de qualquer integração com dados reais.
   do protótipo, sem imagem e sem fonte.
 - O conteúdo vem de dados estáticos de exemplo (sem chamada de rede nesta fase).
 - A lista rola verticalmente quando há mais cards do que cabem na tela.
+
+### RF02 — Detalhamento da notícia
+- **Dado** que estou no feed, **quando** clico em "Ler notícia" de um card, **então** sou
+  levado à página de detalhe daquela notícia (`/noticia/{id}`), sem recarregar a aplicação.
+- A página de detalhe exibe título, data de publicação, localização associada (região),
+  resumo e o corpo detalhado da ocorrência.
+- **Quando** clico em "Abrir link" no cartão de fonte, **então** a fonte original abre em nova aba.
+- **Quando** clico em "Voltar para notícias", **então** retorno ao feed (`/`).
+- **Dado** um id inexistente, **quando** acesso `/noticia/{id}`, **então** vejo a página de
+  "não encontrado" (404).
 
 ### RF03 — Menu de navegação
 - **Dado** que estou em qualquer página, **quando** clico no hambúrguer, **então** o
@@ -100,9 +123,8 @@ de qualquer integração com dados reais.
 - Logo do escudo presente na barra superior e no topo do drawer.
 
 ## Fora de escopo (NÃO fazer agora)
-- Qualquer backend, API ou banco de dados (a busca opera sobre os dados mockados).
-- Página de detalhe da notícia: o link "Ler notícia →" aparece, mas fica **inerte**
-  nesta fase (RF02 — fase posterior).
+- Qualquer backend, API ou banco de dados (busca e detalhe operam sobre os dados mockados;
+  a fonte original é um link externo real).
 - Mapa interativo: a rota `/mapa` é entregue por outra feature (dashboard de busca),
   fora do escopo desta spec.
 - Resumo de IA (RF14), badges de risco.

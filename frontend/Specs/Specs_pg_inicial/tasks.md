@@ -56,6 +56,15 @@
 - [x] T027 Tornar o campo de busca do `Header` um input controlado; `Chrome` lê o contexto e repassa por props; `layout` envolve com `<SearchProvider>` — TDD: atualizar `Header.test.tsx`
 - [x] T028 `Home` filtra as notícias pelo termo e o `NewsFeed` exibe estado vazio — teste de integração `__tests__/view/Home.test.tsx`
 
+## Fase 10 — Detalhamento da notícia (RF02)
+- [x] T029 Estender o modelo `Noticia` com `corpo: string[]` e `fonteUrl: string` e adicionar
+      `getNoticiaPorId(id)` — `utils/noticias.ts` (+ testes de campos e do lookup)
+- [x] T030 Ícones `ArrowLeft` e `ExternalLink` — `components/icons/index.tsx`
+- [x] T031 `NewsCard`: "Ler notícia →" vira `<Link>` para `/noticia/{id}` — TDD: `NewsCard.test.tsx`
+- [x] T032 View `NoticiaDetalhe` (voltar, região, título, data, resumo, corpo, fonte original) —
+      `view/NoticiaDetalhe/` (+ `__tests__/view/NoticiaDetalhe.test.tsx`)
+- [x] T033 Rota dinâmica `app/noticia/[id]/page.tsx` (lookup por id, `notFound`, `generateStaticParams`, metadata)
+
 ## Critérios de pronto (Definition of Done)
 - [x] A rota `/` mostra barra superior, hero, seção "Notícias" e o feed de cards com dados de exemplo.
 - [x] Os cards exibem região, data, título e descrição — sem imagem e sem fonte.
@@ -66,5 +75,8 @@
 - [x] "Sobre nós" abre o site institucional em nova aba e fecha o drawer.
 - [x] O drawer também fecha pelo X e pelo backdrop.
 - [x] Visual fiel ao protótipo, dentro da paleta `#016d01` / `#f8c311` / `#ffffff`.
-- [x] "Ler notícia →" presente mas inerte; nenhuma chamada de rede, nenhum backend.
+- [x] "Ler notícia →" leva ao detalhamento da notícia (`/noticia/{id}`), que mostra título,
+      data, localização, resumo, corpo e link para a fonte original (abre em nova aba).
+- [x] Acessar um id inexistente em `/noticia/{id}` cai na página de "não encontrado" (404).
+- [x] Nenhuma chamada de rede a backend próprio; dados mockados; a fonte original é link externo.
 - [x] Suíte de testes (Jest + RTL) e `npm run build` passando.

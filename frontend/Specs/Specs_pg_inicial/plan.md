@@ -26,6 +26,9 @@ app/
   page.tsx                # rota "/"     → renderiza <Home />
   mapa/
     page.tsx              # rota "/mapa" → renderiza <Mapa /> (entregue pela feature dashboard)
+  noticia/
+    [id]/
+      page.tsx           # rota "/noticia/{id}" → busca a notícia por id e renderiza <NoticiaDetalhe /> (notFound se não existir)
 view/
   Home/
     Home.tsx              # "use client": lê o termo de busca, filtra notícias e monta Hero + NewsFeed
@@ -33,6 +36,9 @@ view/
   Mapa/
     Mapa.tsx              # tela do mapa (feature dashboard de busca)
     Mapa.module.css
+  NoticiaDetalhe/
+    NoticiaDetalhe.tsx    # detalhamento (RF02): voltar, região, título, data, resumo, corpo, fonte original
+    NoticiaDetalhe.module.css
 components/
   Chrome/
     Chrome.tsx            # "use client": estado do drawer; lê contexto de busca; Header + Drawer + children + Footer
@@ -64,7 +70,7 @@ components/
 style/
   globals.css             # reset + design tokens + variáveis de fonte
 utils/
-  noticias.ts             # tipo Noticia + 6 notícias de exemplo (camada de dados)
+  noticias.ts             # tipo Noticia + 6 notícias de exemplo + getNoticiaPorId(id) (camada de dados)
   busca.ts                # filtrarNoticias(lista, termo): filtro puro, sem acento e case-insensitive
 public/
   logo-escudo.png         # escudo usado no Header e no Drawer
@@ -117,9 +123,14 @@ export type Noticia = {
   ra: string;            // ex: "RA-I"
   data: string;          // "dd/mm/aaaa"
   fonte: string;         // ex: "Boletim de Segurança · SSP-DF" (não exibido no card; usado na busca)
+  corpo: string[];       // parágrafos da descrição detalhada (RF02)
+  fonteUrl: string;      // link da fonte de dados original (RF02)
 };
 
 export const noticias: Noticia[] = [ /* 6 itens do protótipo */ ];
+
+// Lookup usado pela rota de detalhe:
+export function getNoticiaPorId(id: string): Noticia | undefined;
 ```
 
 ## Busca (RF08)
@@ -135,8 +146,9 @@ export const noticias: Noticia[] = [ /* 6 itens do protótipo */ ];
 ## Rotas
 | Rota     | Página        | Conteúdo                                                  |
 |----------|---------------|----------------------------------------------------------|
-| `/`      | Início        | Header + Drawer + Hero + NewsFeed (mock, filtrável) + Footer |
-| `/mapa`  | Mapa de risco | Entregue pela feature **dashboard de busca** (Header overlay, sem Footer) |
+| `/`            | Início        | Header + Drawer + Hero + NewsFeed (mock, filtrável) + Footer |
+| `/mapa`        | Mapa de risco | Entregue pela feature **dashboard de busca** (Header overlay, sem Footer) |
+| `/noticia/{id}`| Detalhe       | Header + Drawer + `NoticiaDetalhe` (SSG via `generateStaticParams`; `notFound` se id inválido) + Footer |
 
 - "Sobre nós" **não é rota interna**: é um link externo (`<a target="_blank">`) para o
   site institucional `https://unb-mds.github.io/2026-1-SafeStreets/`.
@@ -153,7 +165,8 @@ export const noticias: Noticia[] = [ /* 6 itens do protótipo */ ];
 | Dados | Array tipado em `utils/noticias.ts` | Isola a camada de dados (constituição §7); troca futura por API sem mexer nos componentes |
 | Card | Sem imagem e sem fonte | Decisão de produto: o card mostra apenas região, data, título, descrição e o CTA |
 | "Sobre nós" | Link externo ao site institucional | Não há página interna "Sobre"; o conteúdo vive no site do projeto |
-| "Ler notícia" | Visual inerte | Detalhe da notícia (RF02) fica para fase posterior |
+| Detalhe (RF02) | Rota dinâmica `/noticia/[id]` (server) + `NoticiaDetalhe` apresentacional | `page.tsx` faz o lookup por id e `notFound`; a view recebe a `Noticia` por props (testável e estática) |
+| Fonte original | `<a target="_blank">` para `fonteUrl` | Link real da fonte de dados; abre em nova aba |
 
 ## Riscos / atenção
 - **Não acoplar componentes ao formato do mock.** `NewsCard` recebe uma `Noticia` por props;
