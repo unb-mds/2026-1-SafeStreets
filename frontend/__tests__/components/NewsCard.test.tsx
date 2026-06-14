@@ -38,9 +38,9 @@ describe("NewsCard", () => {
       expect(screen.getByText("02/06/2026")).toBeInTheDocument();
     });
 
-    it("displays the fonte", () => {
+    it("does not display the fonte on the card", () => {
       render(<NewsCard noticia={baseNoticia} />);
-      expect(screen.getByText("SSP-DF")).toBeInTheDocument();
+      expect(screen.queryByText("SSP-DF")).not.toBeInTheDocument();
     });
 
     it("renders the 'Ler notícia' call-to-action", () => {
@@ -83,29 +83,17 @@ describe("NewsCard", () => {
       expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("X");
     });
 
-    it("renders correctly when fonte contains bullet separator (edge: composite string)", () => {
-      const noticia: Noticia = {
-        ...baseNoticia,
-        fonte: "Boletim de Segurança · SSP-DF",
-      };
-      render(<NewsCard noticia={noticia} />);
-      expect(
-        screen.getByText("Boletim de Segurança · SSP-DF")
-      ).toBeInTheDocument();
-    });
-
     it("renders correctly when regiao has accented characters (edge: UTF-8)", () => {
       const noticia: Noticia = { ...baseNoticia, regiao: "Ceilândia" };
       render(<NewsCard noticia={noticia} />);
       expect(screen.getByText("Ceilândia")).toBeInTheDocument();
     });
 
-    it("renders the image placeholder section (edge: missing img graceful degradation)", () => {
+    it("does not render an image or image placeholder (edge: image removed from card)", () => {
       const { container } = render(<NewsCard noticia={baseNoticia} />);
-      const imagePlaceholder = container.querySelector(
-        "[aria-hidden='true']"
-      );
-      expect(imagePlaceholder).toBeInTheDocument();
+      expect(container.querySelector("img")).toBeNull();
+      // o antigo placeholder de imagem usava o rótulo "[ imagem · ... ]"
+      expect(screen.queryByText(/\[ imagem/)).not.toBeInTheDocument();
     });
   });
 });

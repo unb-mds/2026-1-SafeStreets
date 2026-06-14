@@ -25,16 +25,23 @@ describe("Header", () => {
       expect(logoLink).toHaveAttribute("href", "/");
     });
 
-    it("renders the visual search placeholder text", () => {
+    it("renders a search input with an accessible name and placeholder", () => {
       render(<Header onMenuClick={jest.fn()} />);
-      expect(screen.getByText(/Buscar por região/i)).toBeInTheDocument();
+      const input = screen.getByRole("searchbox", { name: /Buscar notícias/i });
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("placeholder", expect.stringMatching(/Buscar por região/i));
+    });
+
+    it("reflects the searchQuery prop as the input value", () => {
+      render(<Header onMenuClick={jest.fn()} searchQuery="Ceilândia" />);
+      expect(screen.getByRole("searchbox")).toHaveValue("Ceilândia");
     });
   });
 
   describe("overlay variant (rota /mapa)", () => {
     it("does not render the search box", () => {
       render(<Header onMenuClick={jest.fn()} overlay />);
-      expect(screen.queryByText(/Buscar por região/i)).not.toBeInTheDocument();
+      expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
     });
 
     it("still renders the menu button and logo", () => {
@@ -66,6 +73,24 @@ describe("Header", () => {
       render(<Header onMenuClick={() => {}} />);
       expect(() =>
         fireEvent.click(screen.getByRole("button", { name: /Abrir menu/i }))
+      ).not.toThrow();
+    });
+
+    it("calls onSearchChange with the typed value when the user types", () => {
+      const onSearchChange = jest.fn();
+      render(<Header onMenuClick={jest.fn()} onSearchChange={onSearchChange} />);
+      fireEvent.change(screen.getByRole("searchbox"), {
+        target: { value: "furtos" },
+      });
+      expect(onSearchChange).toHaveBeenCalledWith("furtos");
+    });
+
+    it("does not throw when typing without an onSearchChange handler (edge: missing handler)", () => {
+      render(<Header onMenuClick={jest.fn()} />);
+      expect(() =>
+        fireEvent.change(screen.getByRole("searchbox"), {
+          target: { value: "x" },
+        })
       ).not.toThrow();
     });
   });
