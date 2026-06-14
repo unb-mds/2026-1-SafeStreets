@@ -9,6 +9,8 @@ const makeNoticia = (over: Partial<Noticia>): Noticia => ({
   ra: "RA-I",
   data: "01/01/2026",
   fonte: "SSP-DF",
+  corpo: ["Parágrafo padrão."],
+  fonteUrl: "https://exemplo.df.gov.br/",
   ...over,
 });
 

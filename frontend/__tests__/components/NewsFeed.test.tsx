@@ -11,6 +11,8 @@ const makeNoticia = (id: string): Noticia => ({
   ra: "RA-I",
   data: "01/01/2026",
   fonte: "Fonte Teste",
+  corpo: [`Corpo da notícia ${id}.`],
+  fonteUrl: "https://exemplo.df.gov.br/",
 });
 
 describe("NewsFeed", () => {

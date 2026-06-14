@@ -11,6 +11,8 @@ const baseNoticia: Noticia = {
   ra: "RA-I",
   data: "02/06/2026",
   fonte: "SSP-DF",
+  corpo: ["Parágrafo de corpo."],
+  fonteUrl: "https://exemplo.df.gov.br/",
 };
 
 describe("NewsCard", () => {
@@ -46,6 +48,12 @@ describe("NewsCard", () => {
     it("renders the 'Ler notícia' call-to-action", () => {
       render(<NewsCard noticia={baseNoticia} />);
       expect(screen.getByText(/Ler notícia/)).toBeInTheDocument();
+    });
+
+    it("links 'Ler notícia' to the detail route of the notícia (RF02)", () => {
+      render(<NewsCard noticia={baseNoticia} />);
+      const link = screen.getByRole("link", { name: /Ler notícia/i });
+      expect(link).toHaveAttribute("href", "/noticia/1");
     });
 
     it("renders an article element", () => {
