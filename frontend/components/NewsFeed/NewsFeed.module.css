@@ -32,3 +32,13 @@
   max-width: 720px;
   margin: 0 auto;
 }
+
+.vazio {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--cor-cinza);
+  text-align: center;
+}
