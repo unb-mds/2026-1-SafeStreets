@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-14T04:55:44.808191Z",
+  "generated_at": "2026-06-14T16:35:24.801060Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W24",
-      "opened": 26,
-      "closed": 19
+      "opened": 27,
+      "closed": 22
     },
     {
       "week": "2026-W23",
@@ -70,7 +70,7 @@
     },
     {
       "range": "21-40",
-      "count": 168
+      "count": 165
     },
     {
       "range": "41-60",
@@ -82,10 +82,30 @@
     },
     {
       "range": "81+",
-      "count": 50
+      "count": 53
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 0,
+      "hour": 16,
+      "count": 10
+    },
+    {
+      "day": 0,
+      "hour": 14,
+      "count": 1
+    },
+    {
+      "day": 0,
+      "hour": 4,
+      "count": 5
+    },
+    {
+      "day": 0,
+      "hour": 2,
+      "count": 2
+    },
     {
       "day": 0,
       "hour": 0,
@@ -192,11 +212,6 @@
       "count": 7
     },
     {
-      "day": 0,
-      "hour": 4,
-      "count": 4
-    },
-    {
       "day": 6,
       "hour": 19,
       "count": 15
@@ -265,11 +280,6 @@
       "day": 0,
       "hour": 17,
       "count": 1
-    },
-    {
-      "day": 0,
-      "hour": 16,
-      "count": 9
     },
     {
       "day": 6,
@@ -384,12 +394,12 @@
     {
       "day": 3,
       "hour": 1,
-      "count": 4
+      "count": 1
     },
     {
       "day": 3,
       "hour": 0,
-      "count": 2
+      "count": 1
     },
     {
       "day": 0,
@@ -427,11 +437,6 @@
       "count": 1
     },
     {
-      "day": 0,
-      "hour": 2,
-      "count": 1
-    },
-    {
       "day": 3,
       "hour": 18,
       "count": 6
@@ -440,11 +445,15 @@
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 52
+      "commits": 49
     },
     {
       "username": "jorgevasquez25",
       "commits": 49
+    },
+    {
+      "username": "Nic0laslc",
+      "commits": 27
     },
     {
       "username": "matheusqsa",
@@ -455,10 +464,6 @@
       "commits": 26
     },
     {
-      "username": "Nic0laslc",
-      "commits": 25
-    },
-    {
       "username": "ArthurFeitosa05",
       "commits": 16
     }
@@ -466,7 +471,7 @@
   "top_pr_authors": [
     {
       "username": "Nic0laslc",
-      "prs_opened": 6
+      "prs_opened": 7
     },
     {
       "username": "matheusqsa",
@@ -518,11 +523,11 @@
     },
     {
       "label": "front-end",
-      "count": 42
+      "count": 43
     },
     {
       "label": "implementação",
-      "count": 33
+      "count": 34
     },
     {
       "label": "organização",
