@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import PainelFiltros from "@/components/PainelFiltros/PainelFiltros";
 import { REGIOES_ADMINISTRATIVAS, PERIODOS } from "@/utils/filtros";
+import { noticias } from "@/utils/noticias";
 
 describe("PainelFiltros", () => {
   describe("rendering", () => {
@@ -77,6 +78,38 @@ describe("PainelFiltros", () => {
       expect(regiaoSelect.value).toBe("");
       expect(periodoSelect.value).toBe("");
       expect(buscaInput.value).toBe("");
+    });
+  });
+
+  describe("Lista de resultados (RF06/RF07)", () => {
+    it("shows no list and no empty message when no filter/busca is applied (initial state)", () => {
+      render(<PainelFiltros onSelecionarNoticia={() => {}} />);
+      expect(screen.queryByText("Nenhum resultado encontrado")).not.toBeInTheDocument();
+      expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
+    });
+
+    it('shows "Nenhum resultado encontrado" when busca matches nothing', () => {
+      render(<PainelFiltros onSelecionarNoticia={() => {}} />);
+      const input = screen.getByPlaceholderText("Buscar");
+      fireEvent.change(input, { target: { value: "xxxxxxxxxxxx" } });
+      expect(screen.getByText("Nenhum resultado encontrado")).toBeInTheDocument();
+    });
+
+    it("shows a list of matching results when a região filter is applied", () => {
+      const onSelecionarNoticia = jest.fn();
+      render(<PainelFiltros onSelecionarNoticia={onSelecionarNoticia} />);
+      const select = screen.getByLabelText("Região Administrativa") as HTMLSelectElement;
+      const regiao = "Ceilândia";
+      fireEvent.change(select, { target: { value: regiao } });
+
+      const esperados = noticias.filter((n) => n.regiao === regiao);
+      esperados.forEach((noticia) => {
+        expect(screen.getByText(noticia.titulo)).toBeInTheDocument();
+      });
+      expect(screen.queryByText("Nenhum resultado encontrado")).not.toBeInTheDocument();
+
+      fireEvent.click(screen.getByText(esperados[0].titulo));
+      expect(onSelecionarNoticia).toHaveBeenCalledWith(esperados[0]);
     });
   });
 
