@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-14T00:40:15.044261Z",
+  "generated_at": "2026-06-14T04:55:44.808191Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W24",
-      "opened": 25,
+      "opened": 26,
       "closed": 19
     },
     {
@@ -70,11 +70,11 @@
     },
     {
       "range": "21-40",
-      "count": 167
+      "count": 168
     },
     {
       "range": "41-60",
-      "count": 36
+      "count": 35
     },
     {
       "range": "61-80",
@@ -89,7 +89,7 @@
     {
       "day": 0,
       "hour": 0,
-      "count": 1
+      "count": 2
     },
     {
       "day": 6,
@@ -389,7 +389,7 @@
     {
       "day": 3,
       "hour": 0,
-      "count": 3
+      "count": 2
     },
     {
       "day": 0,
@@ -447,10 +447,6 @@
       "commits": 49
     },
     {
-      "username": "Nic0laslc",
-      "commits": 26
-    },
-    {
       "username": "matheusqsa",
       "commits": 26
     },
@@ -459,21 +455,25 @@
       "commits": 26
     },
     {
+      "username": "Nic0laslc",
+      "commits": 25
+    },
+    {
       "username": "ArthurFeitosa05",
       "commits": 16
     }
   ],
   "top_pr_authors": [
     {
+      "username": "Nic0laslc",
+      "prs_opened": 6
+    },
+    {
       "username": "matheusqsa",
       "prs_opened": 6
     },
     {
       "username": "IsraelSoares-25",
-      "prs_opened": 5
-    },
-    {
-      "username": "Nic0laslc",
       "prs_opened": 5
     },
     {
@@ -518,11 +518,11 @@
     },
     {
       "label": "front-end",
-      "count": 38
+      "count": 42
     },
     {
       "label": "implementação",
-      "count": 29
+      "count": 33
     },
     {
       "label": "organização",
@@ -542,11 +542,15 @@
     },
     {
       "label": "requisitos",
-      "count": 17
+      "count": 20
     },
     {
       "label": "enhancement",
       "count": 13
+    },
+    {
+      "label": "testes",
+      "count": 11
     },
     {
       "label": "git/github",
@@ -554,10 +558,6 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 8
-    },
-    {
-      "label": "testes",
       "count": 8
     },
     {
