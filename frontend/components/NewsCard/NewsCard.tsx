@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Noticia } from "@/utils/noticias";
 import { PinIcon, ArrowRightIcon } from "@/components/icons";
 import styles from "./NewsCard.module.css";
@@ -27,10 +28,10 @@ export default function NewsCard({ noticia }: NewsCardProps) {
 
         {/* Rodapé */}
         <div className={styles.cardFooter}>
-          <span className={styles.lerNoticia}>
+          <Link href={`/noticia/${noticia.id}`} className={styles.lerNoticia}>
             Ler notícia
             <ArrowRightIcon size={14} color="var(--cor-verde)" />
-          </span>
+          </Link>
         </div>
       </div>
     </article>

@@ -1,0 +1,134 @@
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin-bottom: 28px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cor-verde-escuro);
+  transition: opacity 0.15s;
+}
+
+.voltar:hover {
+  opacity: 0.7;
+}
+
+.badgeRegiao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 5px 12px;
+  background-color: var(--cor-amarelo);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cor-verde-escuro);
+  margin-bottom: 16px;
+}
+
+.titulo {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--cor-verde-escuro);
+  margin-bottom: 16px;
+}
+
+.data {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--cor-cinza);
+  margin-bottom: 28px;
+}
+
+.resumo {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--cor-texto);
+  margin-bottom: 24px;
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.corpo p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--cor-texto);
+}
+
+.fonteCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding: 20px 24px;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-linha);
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.fonteInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fonteIcone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background-color: var(--verde-tint);
+  flex-shrink: 0;
+}
+
+.fonteTexto {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cor-verde-escuro);
+}
+
+.abrirLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: 1px solid var(--cor-linha);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cor-verde-escuro);
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.abrirLink:hover {
+  border-color: var(--cor-verde);
+  background-color: var(--verde-tint);
+}
