@@ -40,11 +40,13 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 * **RF06 - Filtro de Ocorrências:** O sistema deve disponibilizar um menu lateral de filtros que permita ao usuário refinar os pontos exibidos no mapa por:
   * *Região administrativa* (Ex: Ceilândia, Taguatinga).
   * *Período/Data* .
+  
+  Ao aplicar uma busca (via filtros e/ou barra de busca), o sistema deve exibir, abaixo da barra de busca, a lista de notícias de monitoramento urbano correspondentes aos critérios.
 * **RF07 - Feedback de Busca Vazia:** O sistema deve exibir a mensagem *"Nenhum resultado encontrado"* caso os filtros aplicados não encontrem nenhuma ocorrência no mapa.
 * **RF08 - Limpeza de Filtros:** O sistema deve fornecer uma opção para "Limpar filtros".
 * **RF09 - Painel de Produtividade Dinâmico:** O sistema deve renderizar um dashboard estatístico contendo gráficos interativos com a consolidação de dados operacionais.
-* **RF10 - Detalhes do Ponto/Ocorrência:** Ao clicar em um marcador no mapa ou selecionar uma notícia de monitoramento urbano no dashboard, o sistema deve exibir um card resumo contendo risco, título, número identificador (RA-XXXXX), localização exata, data e resumo gerado por IA.
-* **RF11 - Gerar Resumo de IA:** O sistema deve exibir um resumo gerado por IA, ao selecionar uma região no mapa.
+* **RF10 - Card Resumo da Ocorrência:** Ao selecionar uma notícia na lista de resultados do dashboard de busca, o sistema deve posicionar um marcador (pin) no mapa correspondente à localização da ocorrência e exibir, acima do pin, um card resumo contendo risco, título, número identificador (RA-XXXXX), localização exata e data. O resumo gerado por IA não é exibido neste card.
+* **RF11 - Gerar Resumo de IA:** Ao clicar na opção "Ver detalhes" do card resumo, o sistema deve abrir uma nova tela exibindo as especificações completas da ocorrência e um resumo gerado por IA.
 
 **User Stories:**
 * US 3.3.1 Como cidadão, quero buscar notícias de monitoramento urbano por região administrativa (RA) e ter a opção de filtrar por intervalos de tempo.
@@ -130,7 +132,7 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 **US 3.3.1** — Como cidadão, quero buscar notícias de monitoramento urbano por região administrativa (RA) e ter a opção de filtrar por intervalos de tempo.
 * Dado que o usuário acessa o menu lateral de filtros, então deve haver um campo/seletor para escolher uma região administrativa (Ex: Ceilândia, Taguatinga).
 * Dado que o usuário acessa o menu lateral de filtros, então deve haver uma opção para definir um período/intervalo de datas.
-* Dado que o usuário aplica um filtro de região e/ou período, então o sistema deve aplicar os marcadores exibidos no mapa para refletir apenas as ocorrências que atendem aos critérios selecionados.
+* Dado que o usuário aplica um filtro de região e/ou período, então o sistema deve exibir, abaixo da barra de busca, a lista de notícias de monitoramento urbano que atendem aos critérios selecionados.
 * Dado que o usuário combina filtro de região e período, então o sistema deve aplicar ambos os critérios simultaneamente (interseção).
 
 **US 3.3.2** — Como cidadão, quero que a mensagem "nenhum resultado encontrado" seja exibida, caso nenhuma notícia seja encontrada ao buscar.
@@ -148,7 +150,8 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 * Dado que a atualização do dashboard está em andamento, então o sistema deve indicar visualmente o estado de carregamento (loading) até que os dados estejam disponíveis.
 
 **US 3.3.5** — Como cidadão, quero visualizar um card contendo informações e indicadores (risco e período) sobre o local.
-* Dado que o usuário selecione uma notícia no dashboard, então o sistema deve exibir um card resumo contendo: nível de risco, título, número identificador (RA-XXXXX), localização exata e data da ocorrência.
+* Dado que o usuário selecione uma notícia na lista de resultados do dashboard, então o sistema deve posicionar um marcador (pin) no mapa correspondente à localização da ocorrência.
+* Dado que o marcador é posicionado, então o sistema deve exibir, acima do pin, um card resumo pequeno contendo: nível de risco, título, número identificador (RA-XXXXX), localização exata e data da ocorrência, sem o resumo gerado por IA.
 * Dado que o card resumo é exibido, então as informações de risco e período devem corresponder à ocorrência buscada.
 
 **US 3.3.6** — Como cidadão, quero que ao buscar/selecionar minha nóticia no dashboard de pesquisa e aparecer o pin com o card resumo acima dela, tenha uma opção de "Ver detalhes" no card resumo que irá gerar uma nova tela contendo, além das especificações da notícia, um resumo gerado por inteligência artificial.
