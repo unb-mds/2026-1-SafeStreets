@@ -25,19 +25,15 @@ frontend/
     CardResumo/
       CardResumo.tsx          # novo: card pequeno (risco, título, RA, local, data, "Ver detalhes")
       CardResumo.module.css
+    DetalhesOcorrencia/
+      DetalhesOcorrencia.tsx  # novo: card maior sobre o mapa (resumo de IA)
+      DetalhesOcorrencia.module.css
     MapaInterativo/
-      MapaInterativo.tsx      # + prop noticiaSelecionada
+      MapaInterativo.tsx      # + props noticiaSelecionada, detalhesAbertos, onVerDetalhes, onFecharDetalhes
       MapView.tsx              # + Marker/Popup com CardResumo
   view/
     Mapa/
-      Mapa.tsx                 # "use client" — estado noticiaSelecionada
-    OcorrenciaDetalhes/
-      OcorrenciaDetalhes.tsx   # novo: tela "Ver detalhes" (resumo de IA)
-      OcorrenciaDetalhes.module.css
-  app/
-    ocorrencia/
-      [id]/
-        page.tsx               # novo: rota de detalhes
+      Mapa.tsx                 # "use client" — estado noticiaSelecionada, detalhesAbertos
 ```
 
 ## Camada de dados
@@ -79,11 +75,11 @@ frontend/
   (campo `noticia.ra`) e `regiao`. `aria-pressed={selecionado}`.
 
 ### `CardResumo` (`components/CardResumo/`)
-- Props: `noticia: Noticia`.
+- Props: `noticia: Noticia`, `onVerDetalhes: () => void`.
 - Exibe: badge de risco (`noticia.risco`, cores: Alto=vermelho de status,
   Médio=`#f8c311`, Baixo=`#016d01`), título, `RA-XXXXX`, `regiao` (localização) e
   `data`.
-- Link "Ver detalhes" (`next/link` para `/ocorrencia/{noticia.id}`).
+- Botão "Ver detalhes" que chama `onVerDetalhes` (sem navegação de rota).
 - **Não** renderiza nenhum resumo de IA (RF10).
 
 ### `PainelFiltros` (atualização)
@@ -102,41 +98,46 @@ frontend/
   resultados volta ao estado inicial vazio, derivado automaticamente).
 
 ### `MapaInterativo` / `MapView` (atualização)
-- `MapaInterativo` recebe e repassa `noticiaSelecionada?: Noticia | null` para
-  `MapView`.
+- `MapaInterativo` recebe `noticiaSelecionada?: Noticia | null`,
+  `detalhesAbertos?: boolean`, `onVerDetalhes?: () => void`,
+  `onFecharDetalhes?: () => void`; repassa `noticiaSelecionada` e
+  `onVerDetalhes` para `MapView`.
 - `MapView`, quando `noticiaSelecionada` existe:
   - Renderiza um `<Marker position={[lat, lng]} icon={pinIcon}>` (ícone via
     `L.divIcon`, SVG inline nas cores da paleta — evita problemas de assets do
     Leaflet no Next.js).
-  - Dentro do `Marker`, um `<Popup autoPan={false}>` (sempre aberto, via
-    `ref`/`useEffect` chamando `openPopup()`, ou `Popup` com prop que mantenha
-    aberto) contendo `<CardResumo noticia={noticiaSelecionada} />` — o popup do
-    Leaflet já se posiciona acima do marcador, atendendo "card acima do pin".
+  - Dentro do `Marker`, um `<Popup autoPan={false}>` (aberto via
+    `ref`/`useEffect` chamando `openPopup()`) contendo
+    `<CardResumo noticia={noticiaSelecionada} onVerDetalhes={onVerDetalhes} />`
+    — o popup do Leaflet já se posiciona acima do marcador, atendendo "card
+    acima do pin".
 - Sem `noticiaSelecionada`: comportamento atual (nenhum marcador), preservando o
   teste existente "renders without any markers by default".
+- `MapaInterativo` renderiza, dentro do seu container (`position: relative`),
+  `<DetalhesOcorrencia noticia={noticiaSelecionada} onFechar={onFecharDetalhes} />`
+  quando `detalhesAbertos && noticiaSelecionada`, como overlay posicionado sobre
+  o mapa (fora do Leaflet, evitando reflow do mapa ao abrir/fechar).
 
 ### `view/Mapa/Mapa.tsx` (atualização)
 - Passa a ser `"use client"`.
 - `const [noticiaSelecionada, setNoticiaSelecionada] = useState<Noticia | null>(null)`.
-- `<PainelFiltros onSelecionarNoticia={setNoticiaSelecionada} noticiaSelecionadaId={noticiaSelecionada?.id} />`
-- `<MapaInterativo noticiaSelecionada={noticiaSelecionada} />`
+- `const [detalhesAbertos, setDetalhesAbertos] = useState(false)`.
+- Ao selecionar uma notícia na lista, atualiza `noticiaSelecionada` e fecha o
+  card de detalhes (`setDetalhesAbertos(false)`).
+- `<PainelFiltros onSelecionarNoticia={...} noticiaSelecionadaId={noticiaSelecionada?.id} />`
+- `<MapaInterativo noticiaSelecionada={noticiaSelecionada} detalhesAbertos={detalhesAbertos} onVerDetalhes={() => setDetalhesAbertos(true)} onFecharDetalhes={() => setDetalhesAbertos(false)} />`
 
-### `view/OcorrenciaDetalhes/OcorrenciaDetalhes.tsx` (novo)
-- `"use client"`. Props: `noticia: Noticia`.
+### `components/DetalhesOcorrencia/DetalhesOcorrencia.tsx` (novo)
+- `"use client"`. Props: `noticia: Noticia`, `onFechar: () => void`.
 - `useEffect` chama `gerarResumoIA(noticia)`:
   - estado `status: "loading" | "ready" | "error"`, `resumoIA: string | null`.
   - `loading` inicial → exibe indicador de carregamento ("Carregando resumo...").
   - sucesso → `status = "ready"`, exibe `resumoIA`.
   - erro → `status = "error"`, exibe mensagem de indisponibilidade ("Não foi
     possível gerar o resumo de IA para esta ocorrência.").
-- Exibe também: título, badge de risco, `RA-XXXXX`, `regiao`, `data` (mesmos dados
-  do `CardResumo`, em layout de página completa).
-
-### `app/ocorrencia/[id]/page.tsx` (novo)
-- Server component. `params: { id: string }`.
-- Busca `noticia = noticias.find(n => n.id === id)` (`utils/noticias.ts`).
-- Se não encontrada: `notFound()` (Next.js).
-- Renderiza `<OcorrenciaDetalhes noticia={noticia} />`.
+- Exibe também: botão de fechar (`aria-label="Fechar detalhes"`, chama
+  `onFechar`), título, badge de risco, `RA-XXXXX`, `regiao`, `data` e `resumo`
+  (mesmos dados do `CardResumo`, em card maior renderizado sobre o mapa).
 
 ## Estilo visual (paleta da constitution)
 - Badge de risco "Alto": vermelho de status (`#c0392b`) — cor semântica de risco,
@@ -147,8 +148,8 @@ frontend/
   leve — visualmente menor que o painel "FILTROS".
 - "Nenhum resultado encontrado": texto cinza centralizado, mesma tipografia do
   painel.
-- Tela de detalhes: segue o mesmo padrão de cores e tipografia das demais
-  páginas (`Header`/`Drawer` mantidos via layout existente).
+- Card de detalhes: segue o mesmo padrão de cores e tipografia do `CardResumo`,
+  porém maior, com sombra e botão de fechar circular no canto superior direito.
 
 ## Testes
 - `__tests__/utils/filtros.test.ts`: casos para `filtrarNoticias`
@@ -159,8 +160,7 @@ frontend/
 - `__tests__/components/ResultadoBusca.test.tsx`: renderização de
   título/RA/região, `onSelecionar` ao clicar, `aria-pressed`.
 - `__tests__/components/CardResumo.test.tsx`: renderiza risco/título/RA/local/data,
-  link "Ver detalhes" aponta para `/ocorrencia/{id}`, **não** renderiza resumo de
-  IA.
+  botão "Ver detalhes" chama `onVerDetalhes`, **não** renderiza resumo de IA.
 - `__tests__/components/PainelFiltros.test.tsx`: extensão —
   - sem filtros: área de resultados vazia (sem lista, sem mensagem).
   - com filtro sem correspondência: "Nenhum resultado encontrado".
@@ -168,6 +168,9 @@ frontend/
     `onSelecionarNoticia`.
 - `__tests__/components/MapaInterativo.test.tsx`: extensão — com
   `noticiaSelecionada`, renderiza `Marker`/`Popup` (mockados) com `CardResumo`;
-  sem ela, comportamento atual (sem marcador).
-- `__tests__/view/OcorrenciaDetalhes.test.tsx`: estados `loading` → `ready` e
-  `loading` → `error` (mock de `gerarResumoIA`).
+  sem ela, comportamento atual (sem marcador); clique em "Ver detalhes" chama
+  `onVerDetalhes`; com `detalhesAbertos`, renderiza `DetalhesOcorrencia`; clique
+  em fechar chama `onFecharDetalhes`.
+- `__tests__/components/DetalhesOcorrencia.test.tsx`: estados `loading` → `ready`
+  e `loading` → `error` (mock de `gerarResumoIA`); clique em fechar chama
+  `onFechar`.

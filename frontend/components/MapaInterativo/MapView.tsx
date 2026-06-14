@@ -23,9 +23,10 @@ const pinIcon = L.divIcon({
 
 interface MapViewProps {
   noticiaSelecionada?: Noticia | null;
+  onVerDetalhes?: () => void;
 }
 
-export default function MapView({ noticiaSelecionada = null }: MapViewProps) {
+export default function MapView({ noticiaSelecionada = null, onVerDetalhes = () => {} }: MapViewProps) {
   const markerRef = useRef<L.Marker>(null);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function MapView({ noticiaSelecionada = null }: MapViewProps) {
       {noticiaSelecionada && (
         <Marker ref={markerRef} position={[noticiaSelecionada.lat, noticiaSelecionada.lng]} icon={pinIcon}>
           <Popup closeButton={false} autoClose={false} autoPan={false}>
-            <CardResumo noticia={noticiaSelecionada} />
+            <CardResumo noticia={noticiaSelecionada} onVerDetalhes={onVerDetalhes} />
           </Popup>
         </Marker>
       )}

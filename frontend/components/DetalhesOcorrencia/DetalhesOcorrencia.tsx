@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import type { Noticia } from "@/utils/noticias";
 import { gerarResumoIA } from "@/utils/iaResumo";
-import styles from "./OcorrenciaDetalhes.module.css";
+import styles from "./DetalhesOcorrencia.module.css";
 
-interface OcorrenciaDetalhesProps {
+interface DetalhesOcorrenciaProps {
   noticia: Noticia;
+  onFechar: () => void;
 }
 
 type ResumoIAStatus = "loading" | "ready" | "error";
@@ -17,7 +18,7 @@ const RISCO_CLASSNAME: Record<Noticia["risco"], string> = {
   Baixo: styles.riscoBaixo,
 };
 
-export default function OcorrenciaDetalhes({ noticia }: OcorrenciaDetalhesProps) {
+export default function DetalhesOcorrencia({ noticia, onFechar }: DetalhesOcorrenciaProps) {
   const [status, setStatus] = useState<ResumoIAStatus>("loading");
   const [resumoIA, setResumoIA] = useState<string | null>(null);
 
@@ -43,9 +44,12 @@ export default function OcorrenciaDetalhes({ noticia }: OcorrenciaDetalhesProps)
   }, [noticia]);
 
   return (
-    <article className={styles.page}>
+    <article className={styles.card} aria-label="Detalhes da ocorrência">
+      <button type="button" className={styles.fechar} aria-label="Fechar detalhes" onClick={onFechar}>
+        ×
+      </button>
       <span className={`${styles.badgeRisco} ${RISCO_CLASSNAME[noticia.risco]}`}>{noticia.risco}</span>
-      <h1 className={styles.titulo}>{noticia.titulo}</h1>
+      <h2 className={styles.titulo}>{noticia.titulo}</h2>
       <dl className={styles.detalhes}>
         <div className={styles.linha}>
           <dt>RA</dt>
@@ -64,7 +68,7 @@ export default function OcorrenciaDetalhes({ noticia }: OcorrenciaDetalhesProps)
       <p className={styles.resumo}>{noticia.resumo}</p>
 
       <section className={styles.resumoIA} aria-label="Resumo gerado por IA">
-        <h2 className={styles.resumoIATitulo}>Resumo gerado por IA</h2>
+        <h3 className={styles.resumoIATitulo}>Resumo gerado por IA</h3>
         {status === "loading" && <p className={styles.resumoIAEstado}>Carregando resumo...</p>}
         {status === "ready" && <p className={styles.resumoIATexto}>{resumoIA}</p>}
         {status === "error" && (

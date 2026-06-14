@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import MapaInterativo from "@/components/MapaInterativo/MapaInterativo";
 import { noticias } from "@/utils/noticias";
 
@@ -7,6 +8,10 @@ jest.mock("next/dynamic", () => () => {
   const MapView = require("@/components/MapaInterativo/MapView").default;
   return MapView;
 });
+
+jest.mock("@/utils/iaResumo", () => ({
+  gerarResumoIA: jest.fn(() => new Promise(() => {})),
+}));
 
 jest.mock("react-leaflet", () => ({
   MapContainer: ({
@@ -91,5 +96,40 @@ describe("MapaInterativo", () => {
     expect(screen.getByTestId("zoom-control").getAttribute("data-position")).toBe(
       "bottomleft"
     );
+  });
+
+  describe("RF11 - card de detalhes da ocorrência", () => {
+    const noticia = noticias[0];
+
+    it("does not render the details card by default", () => {
+      render(<MapaInterativo noticiaSelecionada={noticia} />);
+      expect(screen.queryByLabelText("Detalhes da ocorrência")).not.toBeInTheDocument();
+    });
+
+    it('calls onVerDetalhes when "Ver detalhes" is clicked in the card resumo', async () => {
+      const onVerDetalhes = jest.fn();
+      render(<MapaInterativo noticiaSelecionada={noticia} onVerDetalhes={onVerDetalhes} />);
+
+      await userEvent.click(screen.getByRole("button", { name: "Ver detalhes" }));
+      expect(onVerDetalhes).toHaveBeenCalledTimes(1);
+    });
+
+    it("renders the details card when detalhesAbertos is true", () => {
+      render(<MapaInterativo noticiaSelecionada={noticia} detalhesAbertos />);
+
+      const detalhes = screen.getByLabelText("Detalhes da ocorrência");
+      expect(detalhes).toHaveTextContent(noticia.titulo);
+      expect(detalhes).toHaveTextContent(noticia.resumo);
+    });
+
+    it("calls onFecharDetalhes when the close button is clicked", async () => {
+      const onFecharDetalhes = jest.fn();
+      render(
+        <MapaInterativo noticiaSelecionada={noticia} detalhesAbertos onFecharDetalhes={onFecharDetalhes} />
+      );
+
+      await userEvent.click(screen.getByRole("button", { name: /fechar/i }));
+      expect(onFecharDetalhes).toHaveBeenCalledTimes(1);
+    });
   });
 });

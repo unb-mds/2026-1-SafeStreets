@@ -8,12 +8,23 @@ import styles from "./Mapa.module.css";
 
 export default function Mapa() {
   const [noticiaSelecionada, setNoticiaSelecionada] = useState<Noticia | null>(null);
+  const [detalhesAbertos, setDetalhesAbertos] = useState(false);
+
+  const handleSelecionarNoticia = (noticia: Noticia) => {
+    setNoticiaSelecionada(noticia);
+    setDetalhesAbertos(false);
+  };
 
   return (
     <div className={styles.page}>
-      <MapaInterativo noticiaSelecionada={noticiaSelecionada} />
+      <MapaInterativo
+        noticiaSelecionada={noticiaSelecionada}
+        detalhesAbertos={detalhesAbertos}
+        onVerDetalhes={() => setDetalhesAbertos(true)}
+        onFecharDetalhes={() => setDetalhesAbertos(false)}
+      />
       <PainelFiltros
-        onSelecionarNoticia={setNoticiaSelecionada}
+        onSelecionarNoticia={handleSelecionarNoticia}
         noticiaSelecionadaId={noticiaSelecionada?.id}
       />
     </div>

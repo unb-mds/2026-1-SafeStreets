@@ -1,9 +1,9 @@
-import Link from "next/link";
 import type { Noticia } from "@/utils/noticias";
 import styles from "./CardResumo.module.css";
 
 interface CardResumoProps {
   noticia: Noticia;
+  onVerDetalhes: () => void;
 }
 
 const RISCO_CLASSNAME: Record<Noticia["risco"], string> = {
@@ -12,7 +12,7 @@ const RISCO_CLASSNAME: Record<Noticia["risco"], string> = {
   Baixo: styles.riscoBaixo,
 };
 
-export default function CardResumo({ noticia }: CardResumoProps) {
+export default function CardResumo({ noticia, onVerDetalhes }: CardResumoProps) {
   return (
     <article className={styles.card} aria-label="Card resumo da ocorrência">
       <span className={`${styles.badgeRisco} ${RISCO_CLASSNAME[noticia.risco]}`}>{noticia.risco}</span>
@@ -31,9 +31,9 @@ export default function CardResumo({ noticia }: CardResumoProps) {
           <dd>{noticia.data}</dd>
         </div>
       </dl>
-      <Link href={`/ocorrencia/${noticia.id}`} className={styles.verDetalhes}>
+      <button type="button" className={styles.verDetalhes} onClick={onVerDetalhes}>
         Ver detalhes
-      </Link>
+      </button>
     </article>
   );
 }

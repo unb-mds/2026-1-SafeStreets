@@ -34,12 +34,12 @@
 
 ## Fase 2 — Componente `CardResumo` (RF10)
 - [x] T008 Teste de `CardResumo`: renderiza badge de risco, título, `RA-XXXXX`,
-  região e data; link "Ver detalhes" aponta para `/ocorrencia/{id}`; **não**
-  renderiza nenhum resumo de IA — `frontend/__tests__/components/CardResumo.test.tsx`
+  região e data; botão "Ver detalhes" chama `onVerDetalhes`; **não** renderiza
+  nenhum resumo de IA — `frontend/__tests__/components/CardResumo.test.tsx`
   (depende: T001) — escrever ANTES da implementação (red)
 - [x] T009 Implementar `CardResumo.tsx` + `.module.css` (badge de risco com cores
-  Alto/Médio/Baixo, título, RA, localização, data, link "Ver detalhes" via
-  `next/link`) — `frontend/components/CardResumo/` (depende: T008)
+  Alto/Médio/Baixo, título, RA, localização, data, botão "Ver detalhes" que
+  chama `onVerDetalhes`) — `frontend/components/CardResumo/` (depende: T008)
 
 ## Fase 3 — Lista de resultados e "Nenhum resultado encontrado" (RF06/RF07)
 - [x] T010 Estender teste de `PainelFiltros`: sem filtro/busca a área de
@@ -60,26 +60,28 @@
   (depende: T009) — escrever ANTES da implementação (red)
 - [x] T013 Atualizar `MapaInterativo.tsx`/`MapView.tsx`: prop
   `noticiaSelecionada?: Noticia | null`, ícone de pin via `L.divIcon` (cores da
-  paleta), `Marker` + `Popup` (sempre aberto) com `CardResumo` —
+  paleta), `Marker` + `Popup` (aberto via `openPopup()`) com `CardResumo` —
   `frontend/components/MapaInterativo/` (depende: T012)
 - [x] T014 Atualizar `view/Mapa/Mapa.tsx` para `"use client"`, estado
   `noticiaSelecionada`, conectar `PainelFiltros.onSelecionarNoticia` ↔
   `MapaInterativo.noticiaSelecionada` — `frontend/view/Mapa/Mapa.tsx` (depende:
   T011, T013)
 
-## Fase 5 — Tela "Ver detalhes" + resumo de IA (RF11)
-- [x] T015 Teste de `OcorrenciaDetalhes`: estado inicial de carregamento; após
+## Fase 5 — Card "Ver detalhes" + resumo de IA (RF11)
+- [x] T015 Teste de `DetalhesOcorrencia`: estado inicial de carregamento; após
   resolver `gerarResumoIA`, exibe o resumo; para notícia `id "5"` (rejeição),
-  exibe mensagem de indisponibilidade; exibe título/risco/RA/região/data —
-  `frontend/__tests__/view/OcorrenciaDetalhes.test.tsx` (depende: T004) —
+  exibe mensagem de indisponibilidade; exibe título/risco/RA/região/data/resumo;
+  clique em fechar chama `onFechar` —
+  `frontend/__tests__/components/DetalhesOcorrencia.test.tsx` (depende: T004) —
   escrever ANTES da implementação (red)
-- [x] T016 Implementar `view/OcorrenciaDetalhes/OcorrenciaDetalhes.tsx` +
+- [x] T016 Implementar `components/DetalhesOcorrencia/DetalhesOcorrencia.tsx` +
   `.module.css` (`"use client"`, `useEffect`/`useState` chamando `gerarResumoIA`,
-  estados loading/ready/error) — `frontend/view/OcorrenciaDetalhes/` (depende:
-  T015)
-- [x] T017 Criar rota `app/ocorrencia/[id]/page.tsx`: busca notícia por `id` em
-  `utils/noticias.ts`, `notFound()` se ausente, renderiza `OcorrenciaDetalhes` —
-  `frontend/app/ocorrencia/[id]/page.tsx` (depende: T016)
+  estados loading/ready/error, botão de fechar) —
+  `frontend/components/DetalhesOcorrencia/` (depende: T015)
+- [x] T017 Integrar `DetalhesOcorrencia` em `MapaInterativo`/`Mapa.tsx`: estado
+  `detalhesAbertos` elevado a `Mapa.tsx`, `CardResumo.onVerDetalhes` abre o card
+  maior sobre o mapa, botão de fechar volta ao card resumo — `frontend/view/Mapa/Mapa.tsx`,
+  `frontend/components/MapaInterativo/` (depende: T016)
 
 ## Critérios de pronto (Definition of Done)
 - No painel "FILTROS", aplicar Região/Período/Busca exibe a lista de notícias
@@ -87,7 +89,7 @@
   resultado encontrado"; sem filtro/busca, a área permanece vazia.
 - Selecionar uma notícia da lista posiciona um pin no mapa e exibe, acima dele, um
   card resumo (risco, título, RA-XXXXX, localização, data) sem resumo de IA.
-- O card resumo tem a opção "Ver detalhes", que abre `/ocorrencia/{id}` com as
-  especificações completas e um resumo gerado por IA, com estados de
-  carregamento e indisponibilidade.
+- O card resumo tem a opção "Ver detalhes", que expande um card maior sobre o
+  mapa com as especificações completas e um resumo gerado por IA, com estados de
+  carregamento e indisponibilidade, e uma opção para fechar e voltar ao mapa.
 - `npm test` passa integralmente.

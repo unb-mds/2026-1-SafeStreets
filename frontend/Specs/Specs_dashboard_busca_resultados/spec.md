@@ -23,9 +23,9 @@ resumo gerado por IA.
       (pin) no mapa na localização da ocorrência e exibir, acima do pin, um card
       resumo pequeno (risco, título, RA-XXXXX, localização, data — sem resumo de
       IA).
-- [ ] No card resumo, disponibilizar a opção "Ver detalhes", que abre uma nova tela
-      com as especificações completas da ocorrência e um resumo gerado por IA
-      (com estados de carregamento e indisponibilidade).
+- [ ] No card resumo, disponibilizar a opção "Ver detalhes", que expande um card
+      maior sobre o mapa com as especificações completas da ocorrência e um
+      resumo gerado por IA (com estados de carregamento e indisponibilidade).
 
 ## Requisitos cobertos
 - **RF07 — Feedback de Busca Vazia:** o sistema deve exibir a mensagem "Nenhum
@@ -36,8 +36,8 @@ resumo gerado por IA.
   dele, um card resumo contendo risco, título, número identificador (RA-XXXXX),
   localização exata e data — sem o resumo de IA.
 - **RF11 — Gerar Resumo de IA:** ao clicar em "Ver detalhes" no card resumo, o
-  sistema deve abrir uma nova tela com as especificações completas da ocorrência e
-  um resumo gerado por IA.
+  sistema deve expandir, sobre o mapa, um card maior com as especificações
+  completas da ocorrência e um resumo gerado por IA.
 
 ## User Stories
 - **US 3.3.1 (conclusão)** — exibição da lista de notícias correspondente aos
@@ -45,8 +45,8 @@ resumo gerado por IA.
 - **US 3.3.2** — mensagem "Nenhum resultado encontrado".
 - **US 3.3.5** — card resumo (pin + card pequeno) ao selecionar uma notícia da
   lista de resultados.
-- **US 3.3.6** — opção "Ver detalhes" no card resumo, abrindo tela com resumo de
-  IA, incluindo estados de carregamento e indisponibilidade.
+- **US 3.3.6** — opção "Ver detalhes" no card resumo, expandindo um card maior
+  com resumo de IA, incluindo estados de carregamento e indisponibilidade.
 
 ## Layout de referência (protótipo)
 - A lista de resultados aparece abaixo do campo "Buscar" do painel "FILTROS",
@@ -57,9 +57,10 @@ resumo gerado por IA.
 - O card resumo é pequeno, com borda verde (`#016d01`), exibido sobre o mapa,
   acima do pin correspondente. Contém: badge de risco, título da notícia,
   RA-XXXXX, localização e data, e o link "Ver detalhes" no rodapé.
-- A tela de detalhes ("Ver detalhes") é uma nova rota que exibe título, RA-XXXXX,
-  localização, data, nível de risco e o resumo gerado por IA (com indicador de
-  carregamento enquanto o resumo não está disponível).
+- O card de detalhes ("Ver detalhes") é exibido sobre o mapa (não é uma nova
+  rota/tela) e mostra título, RA-XXXXX, localização, data, nível de risco e o
+  resumo gerado por IA (com indicador de carregamento enquanto o resumo não está
+  disponível), além de um botão para fechar e voltar ao mapa.
 
 ## Critérios de aceitação
 
@@ -94,10 +95,11 @@ resumo gerado por IA.
 ### RF11/US 3.3.6 — Ver detalhes e resumo de IA
 - **Dado** que o card resumo está sendo exibido, **então** deve haver uma opção
   "Ver detalhes" visível no card.
-- **Dado** que o usuário clica em "Ver detalhes", **então** o sistema deve abrir
-  uma nova tela contendo as especificações completas da notícia (título, número
-  identificador, localização, data e risco).
-- **Dado** que a tela de detalhes é exibida, **então** o sistema deve apresentar
+- **Dado** que o usuário clica em "Ver detalhes", **então** o sistema deve
+  exibir, sobre o mapa, um card maior contendo as especificações completas da
+  notícia (título, número identificador, localização, data e risco), sem navegar
+  para uma nova tela/rota.
+- **Dado** que o card de detalhes é exibido, **então** o sistema deve apresentar
   um resumo gerado por inteligência artificial referente à ocorrência selecionada.
 - **Dado** que o resumo de IA está sendo carregado, **então** o sistema deve
   indicar visualmente o estado de carregamento até que o conteúdo esteja
@@ -105,6 +107,8 @@ resumo gerado por IA.
 - **Dado** que não seja possível gerar o resumo de IA para a ocorrência
   selecionada, **então** o sistema deve exibir uma mensagem informando a
   indisponibilidade do resumo.
+- **Dado** que o card de detalhes está sendo exibido, **então** deve haver uma
+  opção para fechá-lo e voltar à visualização do mapa com o card resumo/pin.
 
 ## Fora de escopo (NÃO fazer agora)
 - Painel de produtividade com gráficos (RF09).
