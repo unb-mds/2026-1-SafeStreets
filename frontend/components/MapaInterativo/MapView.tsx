@@ -29,9 +29,13 @@ export default function MapView({ noticiaSelecionada = null }: MapViewProps) {
   const markerRef = useRef<L.Marker>(null);
 
   useEffect(() => {
-    if (noticiaSelecionada) {
+    if (!noticiaSelecionada) return;
+
+    const timeoutId = setTimeout(() => {
       markerRef.current?.openPopup();
-    }
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
   }, [noticiaSelecionada]);
 
   return (
