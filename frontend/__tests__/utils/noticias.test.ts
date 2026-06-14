@@ -14,7 +14,7 @@ describe("noticias data", () => {
 
   describe("Noticia fields", () => {
     it("should have all required fields on every item", () => {
-      const requiredFields: (keyof Noticia)[] = [
+      const requiredFields: Array<"id" | "titulo" | "resumo" | "regiao" | "ra" | "data" | "fonte"> = [
         "id",
         "titulo",
         "resumo",
