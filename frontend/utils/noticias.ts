@@ -1,3 +1,5 @@
+export type Risco = "Alto" | "Médio" | "Baixo";
+
 export type Noticia = {
   id: string;
   titulo: string;
@@ -6,6 +8,9 @@ export type Noticia = {
   ra: string;
   data: string;
   fonte: string;
+  risco: Risco;
+  lat: number;
+  lng: number;
 };
 
 export const noticias: Noticia[] = [
@@ -18,6 +23,9 @@ export const noticias: Noticia[] = [
     ra: "RA-I",
     data: "02/06/2026",
     fonte: "Boletim de Segurança · SSP-DF",
+    risco: "Médio",
+    lat: -15.7942,
+    lng: -47.8822,
   },
   {
     id: "2",
@@ -28,6 +36,9 @@ export const noticias: Noticia[] = [
     ra: "RA-III",
     data: "01/06/2026",
     fonte: "Nota oficial · PMDF",
+    risco: "Baixo",
+    lat: -15.833,
+    lng: -48.057,
   },
   {
     id: "3",
@@ -38,6 +49,9 @@ export const noticias: Noticia[] = [
     ra: "RA-IX",
     data: "31/05/2026",
     fonte: "Relatório Mensal · PCDF",
+    risco: "Baixo",
+    lat: -15.815,
+    lng: -48.114,
   },
   {
     id: "4",
@@ -48,6 +62,9 @@ export const noticias: Noticia[] = [
     ra: "RA-II",
     data: "30/05/2026",
     fonte: "Comunicado · GDF",
+    risco: "Baixo",
+    lat: -16.0181,
+    lng: -48.066,
   },
   {
     id: "5",
@@ -58,6 +75,9 @@ export const noticias: Noticia[] = [
     ra: "RA-V",
     data: "29/05/2026",
     fonte: "Alerta de Segurança · PCDF",
+    risco: "Alto",
+    lat: -15.653,
+    lng: -47.789,
   },
   {
     id: "6",
@@ -68,5 +88,8 @@ export const noticias: Noticia[] = [
     ra: "RA-XII",
     data: "28/05/2026",
     fonte: "Boletim de Segurança · SSP-DF",
+    risco: "Médio",
+    lat: -15.874,
+    lng: -48.089,
   },
 ];
