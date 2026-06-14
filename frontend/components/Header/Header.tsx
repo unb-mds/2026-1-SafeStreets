@@ -5,11 +5,14 @@ import styles from "./Header.module.css";
 
 interface HeaderProps {
   onMenuClick: () => void;
+  overlay?: boolean;
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
+export default function Header({ onMenuClick, overlay = false }: HeaderProps) {
   return (
-    <header className={styles.header}>
+    <header
+      className={overlay ? `${styles.header} ${styles.headerOverlay}` : styles.header}
+    >
       <div className={styles.left}>
         <button
           className={styles.menuButton}
@@ -23,12 +26,14 @@ export default function Header({ onMenuClick }: HeaderProps) {
         </Link>
       </div>
 
-      <div className={styles.right}>
-        <div className={styles.searchBox} aria-label="Campo de busca (visual)">
-          <SearchIcon size={16} color="var(--cor-cinza)" />
-          <span className={styles.searchPlaceholder}>Buscar por região ou crim...</span>
+      {!overlay && (
+        <div className={styles.right}>
+          <div className={styles.searchBox} aria-label="Campo de busca (visual)">
+            <SearchIcon size={16} color="var(--cor-cinza)" />
+            <span className={styles.searchPlaceholder}>Buscar por região ou crim...</span>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }

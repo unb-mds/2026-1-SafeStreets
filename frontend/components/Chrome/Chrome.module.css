@@ -1,3 +1,10 @@
 .main {
   min-height: calc(100vh - 60px);
 }
+
+.mainFullScreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}

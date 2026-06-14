@@ -31,6 +31,19 @@ describe("Header", () => {
     });
   });
 
+  describe("overlay variant (rota /mapa)", () => {
+    it("does not render the search box", () => {
+      render(<Header onMenuClick={jest.fn()} overlay />);
+      expect(screen.queryByText(/Buscar por região/i)).not.toBeInTheDocument();
+    });
+
+    it("still renders the menu button and logo", () => {
+      render(<Header onMenuClick={jest.fn()} overlay />);
+      expect(screen.getByRole("button", { name: /Abrir menu/i })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /SafeStreets/i })).toBeInTheDocument();
+    });
+  });
+
   describe("interactions", () => {
     it("calls onMenuClick when the menu button is clicked", () => {
       const onMenuClick = jest.fn();

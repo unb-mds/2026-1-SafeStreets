@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { usePathname } from "next/navigation";
 import Chrome from "@/components/Chrome/Chrome";
 
 jest.mock("next/navigation", () => ({
@@ -73,6 +74,33 @@ describe("Chrome", () => {
         fireEvent.click(menuBtn);
         fireEvent.click(screen.getByRole("button", { name: /Fechar menu/i }));
       }).not.toThrow();
+    });
+  });
+
+  describe("overlay layout on /mapa (RF05)", () => {
+    beforeEach(() => {
+      (usePathname as jest.Mock).mockReturnValue("/mapa");
+    });
+
+    afterEach(() => {
+      (usePathname as jest.Mock).mockReturnValue("/");
+    });
+
+    it("does not render the Footer", () => {
+      render(<Chrome><span /></Chrome>);
+      expect(screen.queryByRole("contentinfo")).not.toBeInTheDocument();
+    });
+
+    it("renders the Header overlaying the content, without background separation", () => {
+      render(<Chrome><span /></Chrome>);
+      const header = screen.getByRole("banner");
+      expect(header.className).toMatch(/headerOverlay/);
+    });
+
+    it("renders children in a full-screen main element", () => {
+      render(<Chrome><span /></Chrome>);
+      const main = screen.getByRole("main");
+      expect(main.className).toMatch(/mainFullScreen/);
     });
   });
 
