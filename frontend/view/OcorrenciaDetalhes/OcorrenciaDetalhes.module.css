@@ -1,0 +1,86 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 120px 24px 64px;
+  font-family: var(--font-body);
+  color: var(--cor-texto);
+}
+
+.badgeRisco {
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cor-branco);
+}
+
+.riscoAlto {
+  background: var(--cor-risco-alto);
+}
+
+.riscoMedio {
+  background: var(--cor-risco-medio);
+  color: var(--cor-texto);
+}
+
+.riscoBaixo {
+  background: var(--cor-risco-baixo);
+}
+
+.titulo {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.linha {
+  display: flex;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.linha dt {
+  font-weight: 600;
+  color: var(--cor-cinza);
+}
+
+.resumo {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.resumoIA {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--cor-verde);
+  border-radius: 12px;
+  background: var(--verde-tint);
+}
+
+.resumoIATitulo {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cor-verde);
+  margin-bottom: 8px;
+}
+
+.resumoIATexto {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.resumoIAEstado {
+  font-size: 0.95rem;
+  color: var(--cor-cinza);
+}
