@@ -1,0 +1,36 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--cor-linha);
+  border-radius: 8px;
+  background: var(--cor-superficie);
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+.itemSelecionado {
+  border-color: var(--cor-verde);
+  background: var(--verde-tint);
+}
+
+.titulo {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.detalhes {
+  display: flex;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--cor-cinza);
+}
+
+.ra {
+  font-weight: 600;
+  color: var(--cor-verde);
+}

@@ -11,6 +11,9 @@ const baseNoticia: Noticia = {
   ra: "RA-I",
   data: "02/06/2026",
   fonte: "SSP-DF",
+  risco: "Médio",
+  lat: -15.7942,
+  lng: -47.8822,
 };
 
 describe("NewsCard", () => {

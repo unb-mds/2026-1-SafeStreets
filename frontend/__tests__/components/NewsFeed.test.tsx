@@ -11,6 +11,9 @@ const makeNoticia = (id: string): Noticia => ({
   ra: "RA-I",
   data: "01/01/2026",
   fonte: "Fonte Teste",
+  risco: "Baixo",
+  lat: -15.7797,
+  lng: -47.9297,
 });
 
 describe("NewsFeed", () => {
