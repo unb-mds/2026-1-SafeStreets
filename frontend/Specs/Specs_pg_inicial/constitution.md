@@ -38,7 +38,10 @@ que transforma notícias e dados públicos de segurança em informação útil p
 
 ## Convenções de código
 - Idioma do código: nomes de componentes e tipos em inglês ou português, mas **consistentes**.
-- Estrutura de pastas: App Router do Next.js (`app/`), componentes em `components/`,
-  estilos `.module.css` ao lado do componente, dados mockados em `data/`.
+- Estrutura de pastas: o código do frontend vive em `components/` (componentes
+  reutilizáveis, com `.module.css` ao lado), `view/` (telas montadas a partir dos
+  componentes), `style/` (tokens/estilos globais) e `utils/` (camada de dados mockados
+  e funções utilitárias). As pastas `app/` (App Router) e `public/` são exigidas pelo
+  Next.js: `app/` é mantida como camada fina de roteamento, apenas repassando para as `view/`.
 - Cada commit referencia o ID do requisito ou da tarefa (ex: `feat(RF01): feed de notícias`).
 - Realizar pelo menos um commit no momento da criação de um novo arquivo.

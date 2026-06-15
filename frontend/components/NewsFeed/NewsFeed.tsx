@@ -13,11 +13,17 @@ export default function NewsFeed({ noticias }: NewsFeedProps) {
         <h2 className={styles.sectionTitle}>Notícias</h2>
         <span className={styles.counter}>{noticias.length} recentes</span>
       </div>
-      <div className={styles.feed}>
-        {noticias.map((noticia) => (
-          <NewsCard key={noticia.id} noticia={noticia} />
-        ))}
-      </div>
+      {noticias.length === 0 ? (
+        <p className={styles.vazio}>
+          Nenhuma notícia encontrada para a sua busca.
+        </p>
+      ) : (
+        <div className={styles.feed}>
+          {noticias.map((noticia) => (
+            <NewsCard key={noticia.id} noticia={noticia} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

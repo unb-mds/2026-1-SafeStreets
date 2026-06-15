@@ -1,4 +1,4 @@
-import { noticias, type Noticia } from "@/utils/noticias";
+import { noticias, getNoticiaPorId, type Noticia } from "@/utils/noticias";
 
 describe("noticias data", () => {
   describe("array structure", () => {
@@ -44,6 +44,42 @@ describe("noticias data", () => {
         expect(n.data.trim()).not.toBe("");
         expect(n.fonte.trim()).not.toBe("");
       });
+    });
+
+    it("should have a non-empty corpo (array of paragraphs) on every item (RF02)", () => {
+      noticias.forEach((n) => {
+        expect(Array.isArray(n.corpo)).toBe(true);
+        expect(n.corpo.length).toBeGreaterThan(0);
+        n.corpo.forEach((paragrafo) => {
+          expect(typeof paragrafo).toBe("string");
+          expect(paragrafo.trim().length).toBeGreaterThan(0);
+        });
+      });
+    });
+
+    it("should have a valid http(s) fonteUrl on every item (RF02)", () => {
+      noticias.forEach((n) => {
+        expect(typeof n.fonteUrl).toBe("string");
+        expect(n.fonteUrl).toMatch(/^https?:\/\/.+/);
+      });
+    });
+  });
+
+  describe("getNoticiaPorId", () => {
+    it("returns the matching notícia for an existing id (happy path)", () => {
+      const primeira = noticias[0];
+      const encontrada = getNoticiaPorId(primeira.id);
+      expect(encontrada).toBeDefined();
+      expect(encontrada?.id).toBe(primeira.id);
+      expect(encontrada?.titulo).toBe(primeira.titulo);
+    });
+
+    it("returns undefined for an unknown id (edge: not found)", () => {
+      expect(getNoticiaPorId("id-inexistente")).toBeUndefined();
+    });
+
+    it("returns undefined for an empty id (edge: empty string)", () => {
+      expect(getNoticiaPorId("")).toBeUndefined();
     });
   });
 
