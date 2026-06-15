@@ -128,4 +128,20 @@
 
 .resultados {
   flex: 1;
+  overflow-y: auto;
+}
+
+.semResultados {
+  text-align: center;
+  color: var(--cor-cinza);
+  font-size: 0.9rem;
+}
+
+.listaResultados {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

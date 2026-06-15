@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { ChevronDownIcon, SearchIcon } from "@/components/icons";
-import { REGIOES_ADMINISTRATIVAS, PERIODOS } from "@/utils/filtros";
+import { REGIOES_ADMINISTRATIVAS, PERIODOS, algumFiltroAplicado, filtrarNoticias } from "@/utils/filtros";
+import { noticias, type Noticia } from "@/utils/noticias";
+import ResultadoBusca from "@/components/ResultadoBusca/ResultadoBusca";
 import styles from "./PainelFiltros.module.css";
 
 const INITIAL_STATE = {
@@ -11,7 +13,15 @@ const INITIAL_STATE = {
   busca: "",
 };
 
-export default function PainelFiltros() {
+interface PainelFiltrosProps {
+  onSelecionarNoticia?: (noticia: Noticia) => void;
+  noticiaSelecionadaId?: string;
+}
+
+export default function PainelFiltros({
+  onSelecionarNoticia = () => {},
+  noticiaSelecionadaId,
+}: PainelFiltrosProps) {
   const [regiao, setRegiao] = useState(INITIAL_STATE.regiao);
   const [periodo, setPeriodo] = useState(INITIAL_STATE.periodo);
   const [busca, setBusca] = useState(INITIAL_STATE.busca);
@@ -22,6 +32,10 @@ export default function PainelFiltros() {
     setPeriodo(INITIAL_STATE.periodo);
     setBusca(INITIAL_STATE.busca);
   }
+
+  const filtros = { regiao, periodo, busca };
+  const filtroAplicado = algumFiltroAplicado(filtros);
+  const resultados = filtroAplicado ? filtrarNoticias(noticias, filtros) : [];
 
   return (
     <section className={styles.painel} aria-label="Filtros de busca">
@@ -102,7 +116,24 @@ export default function PainelFiltros() {
           />
           <SearchIcon size={18} color="var(--cor-cinza)" className={styles.buscaIcone} />
         </div>
-        <div className={styles.resultados} aria-label="Resultados da busca" />
+        <div className={styles.resultados} aria-label="Resultados da busca">
+          {filtroAplicado && resultados.length === 0 && (
+            <p className={styles.semResultados}>Nenhum resultado encontrado</p>
+          )}
+          {resultados.length > 0 && (
+            <ul className={styles.listaResultados}>
+              {resultados.map((noticia) => (
+                <li key={noticia.id}>
+                  <ResultadoBusca
+                    noticia={noticia}
+                    selecionado={noticia.id === noticiaSelecionadaId}
+                    onSelecionar={() => onSelecionarNoticia(noticia)}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </section>
   );

@@ -1,3 +1,5 @@
+export type Risco = "Alto" | "Médio" | "Baixo";
+
 export type Noticia = {
   id: string;
   titulo: string;
@@ -8,6 +10,9 @@ export type Noticia = {
   fonte: string;
   corpo: string[]; // parágrafos da descrição detalhada (RF02)
   fonteUrl: string; // link original da fonte de dados (RF02)
+  risco: Risco;
+  lat: number;
+  lng: number;
 };
 
 export const noticias: Noticia[] = [
@@ -26,6 +31,9 @@ export const noticias: Noticia[] = [
       "Como resposta, a Secretaria de Segurança Pública anunciou o reforço do patrulhamento a pé no horário de pico e a instalação de quatro novas câmeras com leitura noturna. Moradores podem acompanhar a evolução dos índices pelo mapa interativo do SafeStreets.",
     ],
     fonteUrl: "https://www.ssp.df.gov.br/",
+    risco: "Médio",
+    lat: -15.7942,
+    lng: -47.8822,
   },
   {
     id: "2",
@@ -42,6 +50,9 @@ export const noticias: Noticia[] = [
       "As forças de segurança informaram que o policiamento ostensivo nas principais vias de acesso será mantido pelos próximos meses.",
     ],
     fonteUrl: "https://www.pmdf.df.gov.br/",
+    risco: "Baixo",
+    lat: -15.833,
+    lng: -48.057,
   },
   {
     id: "3",
@@ -58,6 +69,9 @@ export const noticias: Noticia[] = [
       "O órgão ressalta que a tendência precisa ser confirmada nos próximos meses antes de ser considerada estrutural.",
     ],
     fonteUrl: "https://www.pcdf.df.gov.br/",
+    risco: "Baixo",
+    lat: -15.815,
+    lng: -48.114,
   },
   {
     id: "4",
@@ -74,6 +88,9 @@ export const noticias: Noticia[] = [
       "O Governo do Distrito Federal afirma que outras unidades semelhantes estão previstas para regiões periféricas ao longo do ano.",
     ],
     fonteUrl: "https://www.df.gov.br/",
+    risco: "Baixo",
+    lat: -16.0181,
+    lng: -48.066,
   },
   {
     id: "5",
@@ -90,6 +107,9 @@ export const noticias: Noticia[] = [
       "A orientação é não realizar transferências para desconhecidos, desconfiar de pedidos urgentes e ativar a dupla autenticação nos aplicativos bancários.",
     ],
     fonteUrl: "https://www.pcdf.df.gov.br/",
+    risco: "Alto",
+    lat: -15.653,
+    lng: -47.789,
   },
   {
     id: "6",
@@ -106,6 +126,9 @@ export const noticias: Noticia[] = [
       "A Secretaria de Segurança Pública informou que as investigações seguem em andamento para identificar os demais envolvidos.",
     ],
     fonteUrl: "https://www.ssp.df.gov.br/",
+    risco: "Médio",
+    lat: -15.874,
+    lng: -48.089,
   },
 ];
 

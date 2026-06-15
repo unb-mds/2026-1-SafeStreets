@@ -13,6 +13,9 @@ const baseNoticia: Noticia = {
   fonte: "SSP-DF",
   corpo: ["Parágrafo de corpo."],
   fonteUrl: "https://exemplo.df.gov.br/",
+  risco: "Médio",
+  lat: -15.7942,
+  lng: -47.8822,
 };
 
 describe("NewsCard", () => {
