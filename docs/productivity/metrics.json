@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15T15:56:33.210978Z",
+  "generated_at": "2026-06-15T17:05:20.114878Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
@@ -10,7 +10,7 @@
     {
       "week": "2026-W25",
       "opened": 0,
-      "closed": 5
+      "closed": 7
     },
     {
       "week": "2026-W23",
@@ -71,15 +71,15 @@
   "commit_message_histogram": [
     {
       "range": "0-20",
-      "count": 24
+      "count": 26
     },
     {
       "range": "21-40",
-      "count": 166
+      "count": 164
     },
     {
       "range": "41-60",
-      "count": 32
+      "count": 33
     },
     {
       "range": "61-80",
@@ -87,14 +87,19 @@
     },
     {
       "range": "81+",
-      "count": 62
+      "count": 61
     }
   ],
   "commit_heatmap": [
     {
       "day": 1,
-      "hour": 15,
+      "hour": 17,
       "count": 2
+    },
+    {
+      "day": 1,
+      "hour": 15,
+      "count": 3
     },
     {
       "day": 1,
@@ -108,8 +113,13 @@
     },
     {
       "day": 0,
+      "hour": 18,
+      "count": 3
+    },
+    {
+      "day": 0,
       "hour": 17,
-      "count": 10
+      "count": 14
     },
     {
       "day": 0,
@@ -129,7 +139,7 @@
     {
       "day": 0,
       "hour": 2,
-      "count": 2
+      "count": 1
     },
     {
       "day": 0,
@@ -144,12 +154,12 @@
     {
       "day": 6,
       "hour": 20,
-      "count": 5
+      "count": 4
     },
     {
       "day": 6,
       "hour": 18,
-      "count": 18
+      "count": 17
     },
     {
       "day": 6,
@@ -354,12 +364,12 @@
     {
       "day": 6,
       "hour": 22,
-      "count": 2
+      "count": 1
     },
     {
       "day": 6,
       "hour": 13,
-      "count": 4
+      "count": 2
     },
     {
       "day": 6,
@@ -369,7 +379,7 @@
     {
       "day": 6,
       "hour": 1,
-      "count": 6
+      "count": 4
     },
     {
       "day": 6,
@@ -435,42 +445,32 @@
       "day": 0,
       "hour": 1,
       "count": 1
-    },
-    {
-      "day": 6,
-      "hour": 23,
-      "count": 1
-    },
-    {
-      "day": 0,
-      "hour": 3,
-      "count": 1
     }
   ],
   "top_committers": [
     {
       "username": "jorgevasquez25",
-      "commits": 48
+      "commits": 54
     },
     {
       "username": "IsraelSoares-25",
-      "commits": 43
+      "commits": 42
     },
     {
       "username": "Nic0laslc",
-      "commits": 38
+      "commits": 36
     },
     {
       "username": "matheusqsa",
-      "commits": 25
+      "commits": 24
     },
     {
       "username": "EdsonToppzera",
-      "commits": 20
+      "commits": 19
     },
     {
       "username": "ArthurFeitosa05",
-      "commits": 16
+      "commits": 14
     }
   ],
   "top_pr_authors": [
