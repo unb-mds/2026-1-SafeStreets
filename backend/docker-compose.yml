@@ -12,15 +12,30 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: safestreets
     ports:
-    # porta padrao do postgres
+      # porta padrao do postgres
       - "5432:5432"
     volumes:
-      #onde o volume docker sera armazenado e onde o postgres armazena os dados (pasta invisivel no seu pc)
+      # onde o volume docker sera armazenado
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d safestreets"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-    # Contêiner 2: ...
+  # Contêiner 2: Backend FastAPI
+  api:
+    build: .
+    container_name: safestreets_api
+    environment:
+      DATABASE_URL: postgresql://admin:123@db:5432/safestreets
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
-
-#criacao do volume para o banco de dados
+# criacao do volume para o banco de dados
 volumes:
   postgres_data:
