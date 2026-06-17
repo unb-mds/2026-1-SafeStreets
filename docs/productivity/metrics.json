@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-16T05:18:42.707195Z",
+  "generated_at": "2026-06-17T04:58:21.069955Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
+    {
+      "week": "2026-W25",
+      "opened": 3,
+      "closed": 11
+    },
     {
       "week": "2026-W24",
       "opened": 29,
       "closed": 22
-    },
-    {
-      "week": "2026-W25",
-      "opened": 0,
-      "closed": 10
     },
     {
       "week": "2026-W23",
@@ -75,7 +75,7 @@
     },
     {
       "range": "21-40",
-      "count": 166
+      "count": 167
     },
     {
       "range": "41-60",
@@ -87,10 +87,15 @@
     },
     {
       "range": "81+",
-      "count": 61
+      "count": 60
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 2,
+      "hour": 5,
+      "count": 1
+    },
     {
       "day": 2,
       "hour": 1,
@@ -404,7 +409,7 @@
     {
       "day": 5,
       "hour": 22,
-      "count": 2
+      "count": 1
     },
     {
       "day": 1,
@@ -467,7 +472,7 @@
     },
     {
       "username": "matheusqsa",
-      "commits": 24
+      "commits": 23
     },
     {
       "username": "EdsonToppzera",
@@ -484,6 +489,10 @@
       "prs_opened": 8
     },
     {
+      "username": "EdsonToppzera",
+      "prs_opened": 6
+    },
+    {
       "username": "matheusqsa",
       "prs_opened": 6
     },
@@ -494,10 +503,6 @@
     {
       "username": "IsraelSoares-25",
       "prs_opened": 5
-    },
-    {
-      "username": "EdsonToppzera",
-      "prs_opened": 5
     }
   ],
   "top_issue_contributors": [
@@ -506,12 +511,12 @@
       "total": 27
     },
     {
-      "username": "jorgevasquez25",
+      "username": "IsraelSoares-25",
       "total": 16
     },
     {
-      "username": "IsraelSoares-25",
-      "total": 15
+      "username": "jorgevasquez25",
+      "total": 16
     },
     {
       "username": "matheusqsa",
@@ -519,7 +524,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "total": 6
+      "total": 7
     },
     {
       "username": "ArthurFeitosa05",
@@ -537,7 +542,7 @@
     },
     {
       "label": "implementação",
-      "count": 38
+      "count": 41
     },
     {
       "label": "organização",
@@ -545,15 +550,15 @@
     },
     {
       "label": "arquitetura",
-      "count": 25
+      "count": 27
     },
     {
       "label": "requisitos",
-      "count": 24
+      "count": 26
     },
     {
       "label": "back-end",
-      "count": 21
+      "count": 24
     },
     {
       "label": "estudar",
@@ -568,20 +573,20 @@
       "count": 14
     },
     {
+      "label": "feat/api🔌",
+      "count": 11
+    },
+    {
+      "label": "banco de dados",
+      "count": 10
+    },
+    {
       "label": "git/github",
       "count": 10
     },
     {
-      "label": "feat/api🔌",
-      "count": 8
-    },
-    {
-      "label": "banco de dados",
-      "count": 8
-    },
-    {
       "label": "docker",
-      "count": 7
+      "count": 9
     },
     {
       "label": "prototipação",
