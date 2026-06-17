@@ -1,7 +1,7 @@
 # ADR-001: Estratégia de Fallback para Google Gemini API
 
 ## Status
-🔴 **PENDING** — Requer decisão da equipe
+🟢 **ACEITO** — Opção A (decidido pela equipe em 2026-06-17)
 
 ## Contexto
 
@@ -44,6 +44,10 @@ O sistema utiliza Google Gemini para gerar resumos concisos de ocorrências crim
 
 ## Recomendação (Proposta)
 
+> ⚠️ **Histórico**: esta era a proposta inicial. A equipe optou pela **Opção A**
+> (ver [Decisão Final](#decisão-final)). A Opção D fica registrada como possível
+> evolução futura quando o volume/escala justificar o custo de circuit breaker.
+
 **Opção D: Circuit Breaker + Fallback Híbrido**
 
 - **Justificativa**: Sistema crítico de segurança pública merece máxima resiliência
@@ -54,13 +58,34 @@ O sistema utiliza Google Gemini para gerar resumos concisos de ocorrências crim
   4. Quando circuit fecha: tenta Gemini novamente
 
 ## Decisão Final
-⏳ **Pendente** — Aguardando consenso da equipe de arquitetura
 
-### Critério de Aceição
-- [ ] Equipe de backend concordou com padrão
-- [ ] UX/Product validou comportamento degradado
-- [ ] Implementação em models.py + services.py incluída
-- [ ] Testes Pytest cobrindo todos os 4 caminhos
+✅ **Opção A — Retorna Notícia sem Resumo Imediatamente** (equipe, 2026-06-17)
+
+Quando o Gemini falhar (timeout, rate limit, 5xx ou input inválido), o sistema
+**não bloqueia** a entrega da ocorrência: persiste e exibe o card com título,
+data e localização, e o resumo aparece como indisponível.
+
+### Justificativa
+- **Simplicidade e custo**: não exige job queue (Celery/RQ) nem circuit breaker
+  — escopo adequado ao estágio atual do projeto.
+- **UX sem delay**: o usuário vê a informação básica imediatamente; o sistema
+  nunca trava esperando a IA.
+- A resiliência maior (Opção D) fica como evolução futura, sem reescrever o
+  fluxo — basta trocar o comportamento de fallback.
+
+### Consequências para a implementação
+- O campo `resumo_status` registra o estado: `COMPLETO` quando o Gemini
+  responde; `ERRO` quando falha (resumo fica nulo/"Indisponível").
+- O campo `resumo` (resumo_gemini) é **nullable** — pode ficar vazio.
+- **Sem** retry assíncrono e **sem** resumo genérico: a falha é refletida no
+  status, não mascarada.
+- Frontend deve tratar `resumo_status = "ERRO"` exibindo "Resumo indisponível".
+
+### Critério de Aceitação
+- [x] Equipe concordou com o padrão (2026-06-17)
+- [ ] Implementação em `models/` + `services/` (camada de integração Gemini)
+- [ ] Testes Pytest cobrindo os caminhos: sucesso (`COMPLETO`) e falha (`ERRO`)
+- [ ] Frontend trata `resumo_status = "ERRO"`
 
 ## Referências
 - [definir-fluxo-de-dados.md#4-processamento-por-ia](./definir-fluxo-de-dados.md#4-processamento-por-ia)
