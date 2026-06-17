@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-17T04:58:21.069955Z",
+  "generated_at": "2026-06-17T22:23:41.099741Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W25",
-      "opened": 3,
+      "opened": 4,
       "closed": 11
     },
     {
@@ -75,7 +75,7 @@
     },
     {
       "range": "21-40",
-      "count": 167
+      "count": 169
     },
     {
       "range": "41-60",
@@ -87,10 +87,20 @@
     },
     {
       "range": "81+",
-      "count": 60
+      "count": 58
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 3,
+      "hour": 22,
+      "count": 4
+    },
+    {
+      "day": 3,
+      "hour": 4,
+      "count": 6
+    },
     {
       "day": 2,
       "hour": 5,
@@ -230,16 +240,6 @@
       "day": 3,
       "hour": 23,
       "count": 1
-    },
-    {
-      "day": 3,
-      "hour": 22,
-      "count": 2
-    },
-    {
-      "day": 3,
-      "hour": 4,
-      "count": 5
     },
     {
       "day": 2,
@@ -440,39 +440,24 @@
       "day": 0,
       "hour": 13,
       "count": 1
-    },
-    {
-      "day": 1,
-      "hour": 12,
-      "count": 1
-    },
-    {
-      "day": 6,
-      "hour": 15,
-      "count": 1
-    },
-    {
-      "day": 6,
-      "hour": 5,
-      "count": 1
     }
   ],
   "top_committers": [
     {
       "username": "jorgevasquez25",
-      "commits": 54
+      "commits": 53
     },
     {
       "username": "IsraelSoares-25",
-      "commits": 40
+      "commits": 42
     },
     {
       "username": "Nic0laslc",
-      "commits": 36
+      "commits": 35
     },
     {
       "username": "matheusqsa",
-      "commits": 23
+      "commits": 22
     },
     {
       "username": "EdsonToppzera",
@@ -489,6 +474,10 @@
       "prs_opened": 8
     },
     {
+      "username": "IsraelSoares-25",
+      "prs_opened": 6
+    },
+    {
       "username": "EdsonToppzera",
       "prs_opened": 6
     },
@@ -498,10 +487,6 @@
     },
     {
       "username": "jorgevasquez25",
-      "prs_opened": 5
-    },
-    {
-      "username": "IsraelSoares-25",
       "prs_opened": 5
     }
   ],
@@ -534,7 +519,7 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 52
+      "count": 55
     },
     {
       "label": "front-end",
@@ -542,11 +527,11 @@
     },
     {
       "label": "implementação",
-      "count": 41
+      "count": 42
     },
     {
       "label": "organização",
-      "count": 29
+      "count": 32
     },
     {
       "label": "arquitetura",
@@ -558,7 +543,7 @@
     },
     {
       "label": "back-end",
-      "count": 24
+      "count": 25
     },
     {
       "label": "estudar",
@@ -574,7 +559,7 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 11
+      "count": 12
     },
     {
       "label": "banco de dados",
