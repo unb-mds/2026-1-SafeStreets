@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import Chrome from "@/components/Chrome/Chrome";
+import { SearchProvider } from "@/components/SearchProvider/SearchProvider";
 import "@/style/globals.css";
 
 const schibstedGrotesk = Schibsted_Grotesk({
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${schibstedGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        <Chrome>{children}</Chrome>
+        <SearchProvider>
+          <Chrome>{children}</Chrome>
+        </SearchProvider>
       </body>
     </html>
   );

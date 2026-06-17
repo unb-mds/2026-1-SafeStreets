@@ -5,11 +5,21 @@ import styles from "./Header.module.css";
 
 interface HeaderProps {
   onMenuClick: () => void;
+  overlay?: boolean;
+  searchQuery?: string;
+  onSearchChange?: (value: string) => void;
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
+export default function Header({
+  onMenuClick,
+  overlay = false,
+  searchQuery = "",
+  onSearchChange,
+}: HeaderProps) {
   return (
-    <header className={styles.header}>
+    <header
+      className={overlay ? `${styles.header} ${styles.headerOverlay}` : styles.header}
+    >
       <div className={styles.left}>
         <button
           className={styles.menuButton}
@@ -23,12 +33,21 @@ export default function Header({ onMenuClick }: HeaderProps) {
         </Link>
       </div>
 
-      <div className={styles.right}>
-        <div className={styles.searchBox} aria-label="Campo de busca (visual)">
-          <SearchIcon size={16} color="var(--cor-cinza)" />
-          <span className={styles.searchPlaceholder}>Buscar por região ou crim...</span>
+      {!overlay && (
+        <div className={styles.right}>
+          <div className={styles.searchBox}>
+            <SearchIcon size={16} color="var(--cor-cinza)" />
+            <input
+              type="search"
+              className={styles.searchInput}
+              placeholder="Buscar por região ou crime"
+              aria-label="Buscar notícias"
+              value={searchQuery}
+              onChange={(event) => onSearchChange?.(event.target.value)}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }

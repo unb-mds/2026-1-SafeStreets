@@ -1,8 +1,12 @@
-# Spec — Feature 001: Página inicial estática + navegação
+# Spec — Feature 001: Página inicial + navegação
 
 > O **quê** e o **porquê**. Sem detalhes de implementação (isso vai no PLAN).
 > Referência obrigatória: `.2026-1-SafeStreets\frontend\Specs\Specs_pg_inicial\constitution.md`
 > Referência visual: protótipo de alta fidelidade do SafeStreets (telas: página inicial + menu).
+>
+> **Status:** entregue. Esta spec foi atualizada após a implementação para refletir
+> o estado real da feature (campo de busca funcional, cards sem imagem e sem fonte,
+> "Sobre nós" como link externo).
 
 ## Problema
 O cidadão do DF não tem um lugar único e claro para se informar sobre ocorrências
@@ -11,13 +15,18 @@ entrada do produto** — uma página inicial informativa e a navegação princip
 de qualquer integração com dados reais.
 
 ## Objetivos desta entrega
-- [ ] Exibir uma página inicial com seção hero + feed de notícias de segurança (dados de exemplo/estáticos).
-- [ ] Disponibilizar um menu de navegação (drawer lateral) para "Início", "Mapa de risco" e "Sobre nós".
-- [ ] Aplicar a identidade visual do protótipo (logo, paleta, tipografia, cards).
+- [x] Exibir uma página inicial com seção hero + feed de notícias de segurança (dados de exemplo/estáticos).
+- [x] Disponibilizar um menu de navegação (drawer lateral) para "Início", "Mapa de risco" e "Sobre nós".
+- [x] Permitir buscar/filtrar o feed de notícias pelo campo de busca da barra superior.
+- [x] Abrir o detalhamento de uma notícia ao clicar em "Ler notícia".
+- [x] Aplicar a identidade visual do protótipo (logo, paleta, tipografia, cards).
 
 ## Requisitos cobertos
 - **RF01 — Visualizar página de notícia:** a página inicial exibe um feed de notícias sobre segurança.
+- **RF02 — Detalhamento da notícia:** ao clicar em "Ler notícia", o usuário vê a descrição
+  detalhada da ocorrência, a data de publicação, a localização associada e um link para a fonte original.
 - **RF03 — Menu de navegação:** menu lateral com links diretos para "Início", "Mapa" e "Sobre nós".
+- **RF08 — Busca de notícias:** o campo da barra superior filtra o feed da home pelo termo digitado.
 
 ## User Stories
 - **US 1.1.1** — Como cidadão, quero acessar a página de informações sobre crimes na
@@ -27,31 +36,45 @@ de qualquer integração com dados reais.
 
 ## Layout de referência (protótipo)
 
-### Barra superior (em todas as páginas)
+### Barra superior (em todas as páginas, exceto sobre o mapa)
 - Fundo **claro** (off-white), fixa no topo, com divisória inferior sutil.
 - À esquerda: botão de menu (hambúrguer) + logo do escudo com a marca "SafeStreets"
-  ("Safe" em verde-escuro, "Streets" em amarelo). O logo está localizado em `.2026-1-SafeStreets\frontend\Specs\Specs_pg_inicial\imagens\logo-original.png`
+  ("Safe" em verde-escuro, "Streets" em amarelo). O escudo usado é `public/logo-escudo.png`.
 - À direita: campo de busca arredondado com ícone de lupa e placeholder
-  "Buscar" (**apenas visual nesta fase**).
+  "Buscar por região ou crime" — **funcional** (filtra o feed da home; ver RF08).
 
 ### Página inicial ("/")
 - **Hero:** etiqueta superior em destaque ("SEGURANÇA EM TEMPO REAL · DF" com ícone de pin),
   título grande em verde-escuro "Sua região, mais segura e transparente." e um parágrafo
   de apoio sobre acompanhar ocorrências e nível de risco.
-- **Seção "Notícias"**.
+- **Seção "Notícias"** com um contador de itens.
 - **Feed de cards.** Cada card contém, de cima para baixo:
-  - Área de imagem (por enquanto um *placeholder* com textura listrada e rótulo
-    "[ imagem · {região} ]"; sem imagem real nesta fase).
   - Badge de **região** (pílula amarela com ícone de pin) + badge de **data** (cinza, dd/mm/aaaa).
   - **Título** em negrito.
   - **Descrição** breve.
-  - Rodapé do card: **fonte** (ex.: "Boletim de Segurança · SSP-DF") + link "Ler notícia →".
+  - Rodapé do card: link "Ler notícia →" (alinhado à direita) que leva ao
+    detalhamento da notícia (`/noticia/{id}`).
+  - *Sem* área de imagem e *sem* rótulo de fonte (removidos do card).
+
+### Página de detalhe ("/noticia/{id}")
+- Link "← Voltar para notícias" no topo, que retorna para o feed (`/`).
+- Badge de **região** (localização associada) em pílula amarela com ícone de pin.
+- **Título** grande em verde-escuro.
+- **Data de publicação** (dd/mm/aaaa) em fonte mono.
+- **Resumo** em destaque, seguido do **corpo** da ocorrência (parágrafos da descrição detalhada).
+- Cartão "Acessar fonte original" com botão "Abrir link" que abre a **fonte de dados
+  original** em nova aba.
 
 ### Menu (drawer)
 - Abre **pela esquerda** ao clicar no hambúrguer, sobre um fundo escurecido (backdrop).
 - Topo: logo + botão de fechar (X).
 - Rótulo "NAVEGAÇÃO" e os itens, cada um com ícone à esquerda, rótulo e seta "→":
-  "Início", "Mapa de risco", "Sobre nós". O item da página atual aparece destacado (estado ativo).
+  - **Início** → rota interna `/`.
+  - **Mapa de risco** → rota interna `/mapa`.
+  - **Sobre nós** → **link externo** para `https://unb-mds.github.io/2026-1-SafeStreets/`
+    (abre em nova aba). Não é uma rota interna.
+- O item correspondente à rota interna atual aparece destacado (estado ativo). O link
+  externo "Sobre nós" nunca recebe estado ativo.
 - Rodapé do drawer com um texto curto descrevendo o produto.
 
 ## Critérios de aceitação
@@ -59,18 +82,40 @@ de qualquer integração com dados reais.
 ### RF01 — Feed de notícias
 - **Dado** que acesso "/", **quando** a página carrega, **então** vejo o hero, a seção
   "Notícias" e a lista de cards.
-- Cada card exibe placeholder de imagem, badge de região, data (dd/mm/aaaa), título,
-  descrição e fonte — na disposição do protótipo.
+- Cada card exibe badge de região, data (dd/mm/aaaa), título e descrição — na disposição
+  do protótipo, sem imagem e sem fonte.
 - O conteúdo vem de dados estáticos de exemplo (sem chamada de rede nesta fase).
 - A lista rola verticalmente quando há mais cards do que cabem na tela.
+
+### RF02 — Detalhamento da notícia
+- **Dado** que estou no feed, **quando** clico em "Ler notícia" de um card, **então** sou
+  levado à página de detalhe daquela notícia (`/noticia/{id}`), sem recarregar a aplicação.
+- A página de detalhe exibe título, data de publicação, localização associada (região),
+  resumo e o corpo detalhado da ocorrência.
+- **Quando** clico em "Abrir link" no cartão de fonte, **então** a fonte original abre em nova aba.
+- **Quando** clico em "Voltar para notícias", **então** retorno ao feed (`/`).
+- **Dado** um id inexistente, **quando** acesso `/noticia/{id}`, **então** vejo a página de
+  "não encontrado" (404).
 
 ### RF03 — Menu de navegação
 - **Dado** que estou em qualquer página, **quando** clico no hambúrguer, **então** o
   drawer abre pela esquerda mostrando "Início", "Mapa de risco" e "Sobre nós".
-- **Quando** clico em um item, **então** sou levado à rota correspondente sem recarregar
-  a aplicação (navegação client-side) e o drawer fecha.
+- **Quando** clico em "Início" ou "Mapa de risco", **então** sou levado à rota
+  correspondente sem recarregar a aplicação (navegação client-side) e o drawer fecha.
+- **Quando** clico em "Sobre nós", **então** o site institucional abre em nova aba e o
+  drawer fecha.
 - O drawer também fecha ao clicar no X ou no fundo escurecido.
-- O item correspondente à página atual aparece em estado ativo.
+- O item correspondente à rota interna atual aparece em estado ativo.
+
+### RF08 — Busca de notícias
+- **Dado** que estou em "/", **quando** digito um termo no campo de busca da barra
+  superior, **então** o feed passa a mostrar apenas as notícias que correspondem ao termo.
+- A correspondência considera o texto da notícia (título, resumo, região e fonte), é
+  insensível a maiúsculas/minúsculas e a acentos (ex.: "ceilandia" encontra "Ceilândia").
+- **Quando** nenhuma notícia corresponde, **então** vejo a mensagem
+  "Nenhuma notícia encontrada para a sua busca.".
+- **Quando** limpo o campo, **então** o feed volta a exibir todas as notícias.
+- O campo de busca não aparece sobre a rota `/mapa`.
 
 ### Identidade visual
 - Paleta restrita: verde `#016d01`, amarelo `#f8c311`, branco `#ffffff` + cinzas/off-white auxiliares.
@@ -78,10 +123,9 @@ de qualquer integração com dados reais.
 - Logo do escudo presente na barra superior e no topo do drawer.
 
 ## Fora de escopo (NÃO fazer agora)
-- Qualquer backend, API ou banco de dados.
-- Busca funcional (o campo aparece, mas não filtra) — RF08, fase posterior.
-- Mapa interativo funcional: a rota `/mapa` é só um *placeholder* estático ("Em breve").
-- Página de detalhe da notícia: o link "Ler notícia →" aparece, mas fica **inerte**
-  nesta fase (RF02 — fase posterior).
-- Resumo de IA (RF14), filtros (RF06+), badges de risco e dashboard de busca.
+- Qualquer backend, API ou banco de dados (busca e detalhe operam sobre os dados mockados;
+  a fonte original é um link externo real).
+- Mapa interativo: a rota `/mapa` é entregue por outra feature (dashboard de busca),
+  fora do escopo desta spec.
+- Resumo de IA (RF14), badges de risco.
 - Responsividade mobile.

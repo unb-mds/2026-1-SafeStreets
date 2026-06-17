@@ -182,13 +182,13 @@ O time adota **Scrum** com entregas semanais, quadro Kanban para gestão de tare
   </div>
 
   <div class="team-member">
-    <img src="https://github.com/jorgevasquez25.png" alt="Jorge Vasquez"/>
+    <img src="imagens/foto-jorge.jpeg" alt="Jorge Vasquez"/>
     <strong>Jorge Vasquez</strong>
     <a href="https://github.com/jorgevasquez25" target="_blank">@jorgevasquez25</a>
   </div>
 
   <div class="team-member">
-    <img src="https://github.com/Nic0laslc.png" alt="Nicolas Lopes"/>
+    <img src="imagens/nicolas foto.jpg" alt="Nicolas Lopes"/>
     <strong>Nicolas Lopes</strong>
     <a href="https://github.com/Nic0laslc" target="_blank">@Nic0laslc</a>
   </div>

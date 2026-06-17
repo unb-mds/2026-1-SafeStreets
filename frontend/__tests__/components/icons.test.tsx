@@ -9,6 +9,7 @@ import {
   InfoIcon,
   PinIcon,
   ArrowRightIcon,
+  ChevronDownIcon,
 } from "@/components/icons";
 
 const ICONS = [
@@ -20,6 +21,7 @@ const ICONS = [
   { name: "InfoIcon", Component: InfoIcon },
   { name: "PinIcon", Component: PinIcon },
   { name: "ArrowRightIcon", Component: ArrowRightIcon },
+  { name: "ChevronDownIcon", Component: ChevronDownIcon },
 ];
 
 describe("Icon components", () => {

@@ -11,6 +11,13 @@
   border-bottom: 1px solid var(--cor-linha);
 }
 
+.headerOverlay {
+  position: fixed;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: none;
+}
+
 .left {
   display: flex;
   align-items: center;
@@ -50,15 +57,31 @@
   border: 1.5px solid var(--cor-linha);
   border-radius: 999px;
   background-color: var(--cor-superficie);
-  cursor: default;
   min-width: 240px;
+  transition: border-color 0.15s;
 }
 
-.searchPlaceholder {
+.searchBox:focus-within {
+  border-color: var(--cor-verde);
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
   font-family: var(--font-body);
   font-size: 0.875rem;
+  color: var(--cor-texto);
+}
+
+.searchInput::placeholder {
   color: var(--cor-cinza);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+/* Remove o "x" nativo do input type=search para manter o visual do protótipo */
+.searchInput::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
 }

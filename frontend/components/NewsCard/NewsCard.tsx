@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Noticia } from "@/utils/noticias";
 import { PinIcon, ArrowRightIcon } from "@/components/icons";
 import styles from "./NewsCard.module.css";
@@ -9,11 +10,6 @@ interface NewsCardProps {
 export default function NewsCard({ noticia }: NewsCardProps) {
   return (
     <article className={styles.card}>
-      {/* Placeholder de imagem */}
-      <div className={styles.imagePlaceholder} aria-hidden="true">
-        <span className={styles.imageLabel}>[ imagem · {noticia.regiao} ]</span>
-      </div>
-
       <div className={styles.body}>
         {/* Badges */}
         <div className={styles.badges}>
@@ -32,11 +28,10 @@ export default function NewsCard({ noticia }: NewsCardProps) {
 
         {/* Rodapé */}
         <div className={styles.cardFooter}>
-          <span className={styles.fonte}>{noticia.fonte}</span>
-          <span className={styles.lerNoticia}>
+          <Link href={`/noticia/${noticia.id}`} className={styles.lerNoticia}>
             Ler notícia
             <ArrowRightIcon size={14} color="var(--cor-verde)" />
-          </span>
+          </Link>
         </div>
       </div>
     </article>

@@ -1,0 +1,147 @@
+.painel {
+  position: absolute;
+  top: 84px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 500;
+  width: 320px;
+  min-height: 540px;
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-superficie);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+  font-family: var(--font-body);
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titulo {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--cor-verde);
+  letter-spacing: 0.05em;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cor-amarelo);
+  cursor: pointer;
+}
+
+.chevronAberto {
+  transform: rotate(0deg);
+}
+
+.chevronFechado {
+  transform: rotate(-90deg);
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--cor-linha);
+  border-radius: 8px;
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+}
+
+.limparFiltros {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--cor-verde);
+  border-radius: 8px;
+  background: var(--cor-superficie);
+  color: var(--cor-verde);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.divisoria {
+  border: none;
+  border-top: 1px solid var(--cor-linha);
+  margin: 16px 0;
+}
+
+.buscaSection {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 16px;
+}
+
+.buscaContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.buscaInput {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: none;
+  border-radius: 24px;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+}
+
+.buscaIcone {
+  position: absolute;
+  right: 14px;
+}
+
+.resultados {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.semResultados {
+  text-align: center;
+  color: var(--cor-cinza);
+  font-size: 0.9rem;
+}
+
+.listaResultados {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
