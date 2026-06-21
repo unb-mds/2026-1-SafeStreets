@@ -95,7 +95,7 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 
 ---
 
-## 4. Critérios de Aceite das User Stories (Épicos 1 a 3)
+## 4. Critérios de Aceite das User Stories (Épicos 1 a 4)
 
 ### 🛠️ Épico 1: Visualização de Informações e Notícias
 
@@ -161,3 +161,30 @@ O projeto está dividido em **4 Épicos principais**, mapeados diretamente no St
 * Dado que a nova tela de detalhes é exibida, então o sistema deve apresentar um resumo gerado por inteligência artificial referente à ocorrência selecionada.
 * Dado que o resumo gerado por IA está sendo carregado, então o sistema deve indicar visualmente o estado de carregamento até que o conteúdo esteja disponível.
 * Dado que não seja possível gerar o resumo por IA para a ocorrência selecionada, então o sistema deve exibir uma mensagem informando a indisponibilidade do resumo.
+
+### ⚙️ Épico 4: Sistema (Backend/API)
+
+**US 4.4.1** — Como desenvolvedor, quero implementar a lógica de extração de localização geográfica (texto → RA + lat/long) e limpeza de conteúdo para enriquecer as ocorrências no pipeline de ingestão.
+* Dado que uma notícia bruta entra no pipeline de ingestão, então o sistema deve identificar no texto o nome da região administrativa e convertê-lo nas coordenadas (lat/long) do centroide da RA.
+* Dado que as coordenadas são geradas, então elas devem ser armazenadas dentro dos ranges válidos (latitude ∈ [-90, 90], longitude ∈ [-180, 180]) e com a precisão definida na arquitetura (6 casas decimais).
+* Dado que o conteúdo bruto contém marcação HTML e caracteres não normalizados, então o sistema deve remover as tags HTML e normalizar os caracteres antes de persistir a ocorrência.
+* Dado que não é possível identificar a região administrativa no texto, então o sistema deve registrar a ocorrência sem coordenadas (localização indefinida), sem interromper o processamento das demais notícias.
+* Dado que uma ocorrência é enriquecida, então o sistema **não** deve classificar nem atribuir tipo de crime (fora do escopo, conforme RF12).
+
+**US 4.4.2** — Como desenvolvedor, quero criar endpoints para disponibilizar dados ao sistema.
+* Dado que o frontend requisita a coleção de ocorrências, então a API deve expor um endpoint que retorna a lista de notícias de monitoramento urbano com seus marcadores.
+* Dado que o frontend requisita uma ocorrência específica pelo seu identificador, então a API deve expor um endpoint que retorna os detalhes daquela ocorrência.
+* Dado que o recurso solicitado não existe, então a API deve responder com status HTTP 404 e o envelope de erro padronizado.
+* Dado que a API está no ar, então a documentação automática (Swagger/OpenAPI) deve listar os endpoints disponíveis para consulta pelo time.
+
+**US 4.4.3** — Como desenvolvedor, quero que o sistema processe requisições do usuário para retornar os dados corretos.
+* Dado que o usuário aplica filtros (região administrativa e/ou período), então a API deve processar os parâmetros e retornar somente as ocorrências que atendem aos critérios.
+* Dado que o usuário combina filtro de região e período, então a API deve aplicar ambos os critérios simultaneamente (interseção).
+* Dado que os parâmetros da requisição são inválidos (ex.: `data_inicio` posterior a `data_fim`, ou RA fora do formato `RA-XXX`), então a API deve responder com status HTTP 400 e uma mensagem de erro descritiva.
+* Dado que nenhum registro atende aos critérios informados, então a API deve retornar uma lista vazia (`data: []`) com sucesso — não um erro.
+
+**US 4.4.4** — Como desenvolvedor, quero que o sistema retorne respostas em JSON para garantir integração com o front-end.
+* Dado que qualquer endpoint da API é chamado, então a resposta deve ter `Content-Type: application/json`.
+* Dado que a operação é bem-sucedida, então o corpo deve seguir o envelope padrão `{ "success": true, "data": ... }`.
+* Dado que ocorre um erro, então o corpo deve seguir o envelope `{ "success": false, "error": { "codigo", "mensagem", "detalhe" } }`.
+* Dado que o resumo gerado por IA (Gemini) não pôde ser produzido, então a resposta deve trazer `resumo_status = "ERRO"` e o campo de resumo nulo, sem falhar a requisição (conforme decisão do [ADR-001](../Arquitetura/ADR-001-Gemini-Fallback-Strategy.md), Opção A).
