@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-21T23:24:50.508600Z",
+  "generated_at": "2026-06-22T05:14:50.711853Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W25",
-      "opened": 8,
+      "opened": 9,
       "closed": 12
     },
     {
@@ -94,7 +94,7 @@
     {
       "day": 0,
       "hour": 23,
-      "count": 2
+      "count": 3
     },
     {
       "day": 0,
@@ -434,7 +434,7 @@
     {
       "day": 6,
       "hour": 16,
-      "count": 4
+      "count": 3
     },
     {
       "day": 3,
@@ -449,7 +449,7 @@
     },
     {
       "username": "IsraelSoares-25",
-      "commits": 43
+      "commits": 42
     },
     {
       "username": "Nic0laslc",
@@ -475,7 +475,7 @@
     },
     {
       "username": "IsraelSoares-25",
-      "prs_opened": 6
+      "prs_opened": 7
     },
     {
       "username": "EdsonToppzera",
@@ -527,19 +527,19 @@
     },
     {
       "label": "implementação",
-      "count": 46
+      "count": 47
     },
     {
       "label": "organização",
       "count": 32
     },
     {
-      "label": "requisitos",
+      "label": "back-end",
       "count": 30
     },
     {
-      "label": "back-end",
-      "count": 29
+      "label": "requisitos",
+      "count": 30
     },
     {
       "label": "arquitetura",
@@ -554,12 +554,12 @@
       "count": 15
     },
     {
-      "label": "enhancement",
+      "label": "feat/api🔌",
       "count": 14
     },
     {
-      "label": "feat/api🔌",
-      "count": 13
+      "label": "enhancement",
+      "count": 14
     },
     {
       "label": "banco de dados",
