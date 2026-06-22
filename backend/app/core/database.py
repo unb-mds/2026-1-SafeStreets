@@ -1,19 +1,27 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# A URL de conexão para o Docker rodando na sua máquina
-SQLALCHEMY_DATABASE_URL = "postgresql://admin:123@localhost:5432/safestreets"
+# Lê da variável de ambiente; fallback para desenvolvimento local
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://admin:123@localhost:5432/safestreets"
+)
 
-# conexao entre os comandos da database e o postgreSQL
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-# sessao criada para acessar o banco de dados quando um usuário acessar o site
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,   # testa conexão antes de usar (evita conexões mortas)
+    pool_size=10,         # conexões simultâneas no pool
+    max_overflow=20,      # conexões extras em pico
+    echo=False,           # True apenas em debug/dev
+)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 Base = declarative_base()
 
 
-# Dependência usada pelas rotas: abre uma sessão por requisição e fecha no fim.
 def get_db():
+    """Dependency Injection para rotas FastAPI."""
     db = SessionLocal()
     try:
         yield db

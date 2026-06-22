@@ -5,3 +5,4 @@ pytest
 #parte de banco de dados
 sqlalchemy
 psycopg2-binary
+alembic
