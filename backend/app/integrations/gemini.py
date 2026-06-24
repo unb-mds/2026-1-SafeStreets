@@ -14,7 +14,7 @@ Projeto testável sem chave/SDK/rede:
 import os
 from dataclasses import dataclass
 
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-3.5-flash"
 
 STATUS_COMPLETO = "COMPLETO"
 STATUS_ERRO = "ERRO"
