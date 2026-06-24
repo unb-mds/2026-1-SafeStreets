@@ -1,10 +1,15 @@
 {
-  "generated_at": "2026-06-21T05:04:46.753433Z",
+  "generated_at": "2026-06-24T04:13:43.280174Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
+      "week": "2026-W26",
+      "opened": 2,
+      "closed": 3
+    },
+    {
       "week": "2026-W25",
-      "opened": 8,
+      "opened": 9,
       "closed": 12
     },
     {
@@ -71,15 +76,15 @@
   "commit_message_histogram": [
     {
       "range": "0-20",
-      "count": 25
+      "count": 24
     },
     {
       "range": "21-40",
-      "count": 173
+      "count": 175
     },
     {
       "range": "41-60",
-      "count": 33
+      "count": 31
     },
     {
       "range": "61-80",
@@ -87,10 +92,35 @@
     },
     {
       "range": "81+",
-      "count": 57
+      "count": 58
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 2,
+      "hour": 4,
+      "count": 5
+    },
+    {
+      "day": 1,
+      "hour": 17,
+      "count": 6
+    },
+    {
+      "day": 1,
+      "hour": 5,
+      "count": 3
+    },
+    {
+      "day": 0,
+      "hour": 23,
+      "count": 3
+    },
+    {
+      "day": 0,
+      "hour": 5,
+      "count": 1
+    },
     {
       "day": 6,
       "hour": 4,
@@ -123,6 +153,11 @@
     },
     {
       "day": 2,
+      "hour": 6,
+      "count": 1
+    },
+    {
+      "day": 2,
       "hour": 5,
       "count": 1
     },
@@ -138,18 +173,8 @@
     },
     {
       "day": 1,
-      "hour": 17,
-      "count": 3
-    },
-    {
-      "day": 1,
       "hour": 15,
       "count": 3
-    },
-    {
-      "day": 1,
-      "hour": 5,
-      "count": 2
     },
     {
       "day": 0,
@@ -257,11 +282,6 @@
       "count": 6
     },
     {
-      "day": 2,
-      "hour": 4,
-      "count": 4
-    },
-    {
       "day": 1,
       "hour": 4,
       "count": 3
@@ -304,7 +324,7 @@
     {
       "day": 1,
       "hour": 23,
-      "count": 3
+      "count": 2
     },
     {
       "day": 1,
@@ -329,7 +349,7 @@
     {
       "day": 6,
       "hour": 17,
-      "count": 4
+      "count": 2
     },
     {
       "day": 6,
@@ -422,46 +442,31 @@
       "count": 1
     },
     {
-      "day": 0,
-      "hour": 23,
-      "count": 2
-    },
-    {
       "day": 6,
       "hour": 16,
-      "count": 4
-    },
-    {
-      "day": 3,
-      "hour": 1,
-      "count": 1
-    },
-    {
-      "day": 3,
-      "hour": 0,
       "count": 1
     }
   ],
   "top_committers": [
     {
       "username": "jorgevasquez25",
-      "commits": 52
+      "commits": 50
     },
     {
       "username": "IsraelSoares-25",
-      "commits": 42
+      "commits": 40
     },
     {
       "username": "Nic0laslc",
-      "commits": 34
+      "commits": 31
     },
     {
       "username": "matheusqsa",
-      "commits": 22
+      "commits": 21
     },
     {
       "username": "EdsonToppzera",
-      "commits": 17
+      "commits": 20
     },
     {
       "username": "ArthurFeitosa05",
@@ -474,15 +479,15 @@
       "prs_opened": 8
     },
     {
+      "username": "matheusqsa",
+      "prs_opened": 7
+    },
+    {
       "username": "IsraelSoares-25",
-      "prs_opened": 6
+      "prs_opened": 7
     },
     {
       "username": "EdsonToppzera",
-      "prs_opened": 6
-    },
-    {
-      "username": "matheusqsa",
       "prs_opened": 6
     },
     {
@@ -505,7 +510,7 @@
     },
     {
       "username": "matheusqsa",
-      "total": 8
+      "total": 9
     },
     {
       "username": "EdsonToppzera",
@@ -522,12 +527,16 @@
       "count": 55
     },
     {
+      "label": "implementação",
+      "count": 49
+    },
+    {
       "label": "front-end",
       "count": 48
     },
     {
-      "label": "implementação",
-      "count": 46
+      "label": "back-end",
+      "count": 32
     },
     {
       "label": "organização",
@@ -538,10 +547,6 @@
       "count": 30
     },
     {
-      "label": "back-end",
-      "count": 29
-    },
-    {
       "label": "arquitetura",
       "count": 27
     },
@@ -550,23 +555,23 @@
       "count": 21
     },
     {
-      "label": "testes",
-      "count": 15
+      "label": "enhancement",
+      "count": 16
     },
     {
-      "label": "enhancement",
-      "count": 14
+      "label": "testes",
+      "count": 16
     },
     {
       "label": "feat/api🔌",
-      "count": 13
-    },
-    {
-      "label": "banco de dados",
-      "count": 10
+      "count": 14
     },
     {
       "label": "git/github",
+      "count": 11
+    },
+    {
+      "label": "banco de dados",
       "count": 10
     },
     {
