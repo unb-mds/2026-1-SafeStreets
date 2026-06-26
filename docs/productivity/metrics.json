@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-25T04:13:49.849260Z",
+  "generated_at": "2026-06-26T04:20:19.545839Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W26",
-      "opened": 2,
-      "closed": 6
+      "opened": 5,
+      "closed": 9
     },
     {
       "week": "2026-W25",
@@ -80,7 +80,7 @@
     },
     {
       "range": "21-40",
-      "count": 177
+      "count": 178
     },
     {
       "range": "41-60",
@@ -92,10 +92,15 @@
     },
     {
       "range": "81+",
-      "count": 60
+      "count": 59
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 4,
+      "hour": 4,
+      "count": 6
+    },
     {
       "day": 4,
       "hour": 1,
@@ -149,11 +154,6 @@
     {
       "day": 4,
       "hour": 19,
-      "count": 5
-    },
-    {
-      "day": 4,
-      "hour": 4,
       "count": 5
     },
     {
@@ -314,7 +314,7 @@
     {
       "day": 3,
       "hour": 5,
-      "count": 6
+      "count": 5
     },
     {
       "day": 6,
@@ -457,7 +457,7 @@
     },
     {
       "username": "matheusqsa",
-      "commits": 18
+      "commits": 17
     },
     {
       "username": "EdsonToppzera",
@@ -470,15 +470,15 @@
   ],
   "top_pr_authors": [
     {
+      "username": "IsraelSoares-25",
+      "prs_opened": 8
+    },
+    {
       "username": "Nic0laslc",
       "prs_opened": 8
     },
     {
       "username": "matheusqsa",
-      "prs_opened": 7
-    },
-    {
-      "username": "IsraelSoares-25",
       "prs_opened": 7
     },
     {
@@ -493,7 +493,7 @@
   "top_issue_contributors": [
     {
       "username": "Nic0laslc",
-      "total": 27
+      "total": 29
     },
     {
       "username": "IsraelSoares-25",
@@ -519,23 +519,23 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 55
-    },
-    {
-      "label": "implementação",
-      "count": 49
+      "count": 56
     },
     {
       "label": "front-end",
-      "count": 48
+      "count": 50
     },
     {
-      "label": "back-end",
-      "count": 32
+      "label": "implementação",
+      "count": 50
     },
     {
       "label": "organização",
-      "count": 32
+      "count": 34
+    },
+    {
+      "label": "back-end",
+      "count": 33
     },
     {
       "label": "requisitos",
@@ -559,7 +559,7 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 14
+      "count": 15
     },
     {
       "label": "git/github",
