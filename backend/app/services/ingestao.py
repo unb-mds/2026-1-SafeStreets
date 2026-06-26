@@ -52,10 +52,38 @@ def _normalizar(s: str | None) -> str:
     return sem_acento.lower()
 
 
+# Camada 2: termos que indicam notícia de segurança pública.
+TERMOS_SEGURANCA: set[str] = {
+    "roubo", "furto", "assalto", "homicídio", "assassinato", "latrocínio",
+    "tráfico", "drogas", "crime", "polícia", "tiroteio", "estupro",
+    "violência", "preso", "apreensão", "arma", "morto", "baleado",
+}
+
+
+def eh_cidades_df(item) -> bool:
+    """Camada 1 — editoria pela URL. O link do Correio carrega a editoria
+    ('/cidades-df/...'); é o sinal mais confiável de notícia do DF, mais que
+    procurar palavra no texto."""
+    return "/cidades-df/" in (item.link or "")
+
+
+def eh_seguranca(item) -> bool:
+    """Camada 2 — termo de segurança pública no título/descrição."""
+    texto = _normalizar(f"{item.titulo} {item.descricao}")
+    return any(_normalizar(termo) in texto for termo in TERMOS_SEGURANCA)
+
+
+def eh_relevante(item) -> bool:
+    """Notícia de segurança urbana do DF = editoria cidades-df E termo de
+    segurança. É o filtro padrão da ingestão."""
+    return eh_cidades_df(item) and eh_seguranca(item)
+
+
 @dataclass
 class ResultadoIngestao:
     processadas: int = 0
     persistidas: int = 0
+    filtradas: int = 0      # descartadas pelo filtro de relevância (não é DF/segurança)
     sem_regiao: int = 0
     erros: int = 0
 
@@ -87,14 +115,18 @@ def ingerir(
     itens: list[correio_rss.ItemRSS] | None = None,
     geocodificar=None,
     gemini: GeminiClient | None = None,
+    filtro=None,
 ) -> ResultadoIngestao:
     """Executa o pipeline de ingestão e persiste as ocorrências.
 
-    `itens`, `geocodificar` e `gemini` são injetáveis (testes sem rede/chave).
+    `itens`, `geocodificar`, `gemini` e `filtro` são injetáveis (testes sem
+    rede/chave). `filtro(item) -> bool` decide o que é relevante; o padrão é
+    `eh_relevante` (editoria cidades-df + termo de segurança).
     """
     itens = itens if itens is not None else correio_rss.buscar_itens()
     geocode = geocodificar or nominatim.geocodificar
     gemini = gemini or GeminiClient()
+    aplicar_filtro = filtro if filtro is not None else eh_relevante
 
     pin_repo = LocalPinRepository(db)
     oc_repo = OcorrenciaRepository(db)
@@ -102,8 +134,13 @@ def ingerir(
 
     for item in itens:
         res.processadas += 1
-        texto = f"{item.titulo} {item.descricao}".strip()
 
+        # Camadas 1+2: só notícia de segurança urbana do DF segue no pipeline.
+        if not aplicar_filtro(item):
+            res.filtradas += 1
+            continue
+
+        texto = f"{item.titulo} {item.descricao}".strip()
         regiao = extrair_regiao(texto)
         if not regiao:
             res.sem_regiao += 1

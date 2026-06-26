@@ -6,10 +6,19 @@ description: Implementar, rodar e testar o pipeline de ingestão (app/services/i
 # Run: Pipeline de Ingestão (app/services/ingestao.py)
 
 O serviço de ingestão é o **motor que conecta as integrações** (RF12): para cada
-notícia do RSS, extrai a região administrativa do texto, geocodifica (Nominatim),
-resolve/cria o `LocalPin`, resume (Gemini) e persiste a `Ocorrencia`. O driver
-`driver.py` roda o pipeline inteiro contra um **SQLite em memória** com as
-integrações injetadas (sem rede, sem chave, sem Postgres) e depois o pytest.
+notícia do RSS, aplica o **filtro de relevância** (só segurança do DF), extrai a
+região administrativa do texto, geocodifica (Nominatim), resolve/cria o
+`LocalPin`, resume (Gemini) e persiste a `Ocorrencia`. O driver `driver.py` roda
+o pipeline inteiro contra um **SQLite em memória** com as integrações injetadas
+(sem rede, sem chave, sem Postgres) e depois o pytest.
+
+**Filtro de relevância (2 camadas):**
+- **Camada 1 — editoria pela URL**: `eh_cidades_df` mantém só itens cujo `link`
+  contém `/cidades-df/` (sinal estruturado, mais confiável que texto).
+- **Camada 2 — palavra-chave**: `eh_seguranca` exige um termo de segurança
+  (roubo, furto, homicídio, polícia…) no título/descrição.
+- `eh_relevante = Camada 1 E Camada 2` é o filtro padrão; injetável via
+  `ingerir(db, filtro=...)`.
 
 **Todos os caminhos abaixo são relativos a `backend/`.** Rode de `backend/`.
 
@@ -34,27 +43,32 @@ python .claude/skills/run-ingestao/driver.py
 Saída esperada (offline):
 
 ```
-PASS: processou os 3 itens
-PASS: persistiu 2 (1 sem regiao foi pulado)
-PASS: 2 ocorrencias no banco
+- Filtro de relevancia (Camadas 1+2) -
+PASS: eh_cidades_df pela URL
+PASS: eh_seguranca por keyword
+PASS: eh_relevante exige DF + seguranca
+PASS: ingerir filtra 2 de 3 (so o relevante persiste)
+- Pipeline (filtro bypassado) -
+PASS: persistiu 2 (1 sem regiao pulado)
+PASS: regiao virou codigo RA
+PASS: LocalPin por regiao distinta
 PASS: resumo COMPLETO gravado
-PASS: regiao extraida vira codigo RA
-PASS: LocalPin criado para cada regiao distinta
-PASS: Gemini falhou -> persiste com status ERRO (ADR-001 A)
+PASS: Gemini falhou -> persiste status ERRO (ADR-001 A)
 --- pytest tests/test_ingestao.py ---
-8 passed
-OK: ingestao validada (RSS->regiao->geocode->pin->gemini->persist)
+12 passed
+OK: ingestao validada (filtro DF/seguranca -> geocode -> pin -> gemini -> persist)
 ```
 
-Modo **--live** (feed RSS real + Nominatim real; Gemini continua falso; SQLite
-em memória; best-effort, não derruba o exit):
+Modo **--live** (feed RSS real + Nominatim real + filtro real; Gemini falso;
+SQLite em memória; best-effort, não derruba o exit):
 
 ```bash
 python .claude/skills/run-ingestao/driver.py --live
 ```
 
-Verificado nesta máquina: `LIVE OK: processadas=20 persistidas=1 sem_regiao=19 erros=0`
-— do feed geral, só 1 das 20 notícias mencionava uma RA do DF (ver Gotchas).
+Verificado nesta máquina: `LIVE OK: processadas=20 filtradas=19 persistidas=0 sem_regiao=1 erros=0`
+— o filtro descartou corretamente 19 itens não-DF/segurança; o 1 relevante citava
+"DF" genérico (sem RA específica), então caiu em `sem_regiao` (ver Gotchas).
 
 Flags: `--only-smoke`, `--only-tests`.
 
@@ -77,11 +91,19 @@ python -m pytest tests/test_ingestao.py -v
 
 ## Gotchas
 
-- **O feed geral do Correio (`/feed/`) descarta ~95% no filtro de região.**
-  Testado ao vivo: 20 notícias → **1 persistida, 19 sem_regiao**. O feed não é
-  focado em segurança do DF (vem celebridade, nacional, etc.), e a ingestão só
-  guarda o que menciona uma RA. Para volume real, o time precisa de um feed de
-  editoria do DF ou de um filtro de relevância melhor.
+- **O feed de editoria do Correio não existe pela via óbvia.** Testado:
+  `/feed/?secao=cidades-df` retorna 200 mas **ignora o parâmetro** (idêntico ao
+  geral); `/feed/cidades-df/` e `/feed/seguranca/` dão 404. Por isso o filtro é
+  feito **no conteúdo**, não na fonte — usando o `/cidades-df/` que vem no `link`
+  de cada item (Camada 1).
+- **Dois gargalos diferentes, não confundir.** `filtradas` = item não é
+  DF/segurança (Camada 1+2). `sem_regiao` = item é relevante mas o texto não
+  nomeia uma RA reconhecida. Ao vivo: 20 → 19 `filtradas` (corretas) → 1
+  relevante que citava "DF" genérico → 1 `sem_regiao`. Ou seja, com o filtro
+  ligado, o gargalo passou a ser a **extração de região**, não o ruído do feed.
+- **`TERMOS_SEGURANCA` e `REGIOES_DF` são listas iniciais.** Termo de segurança
+  ausente → `filtradas`; RA fora da lista → `sem_regiao`. Ambas são dados que o
+  time expande. Falso negativo de keyword é o trade-off conhecido da Camada 2.
 - **A extração de região ignora acento de propósito.** `extrair_regiao` normaliza
   (NFKD + lowercase), então "ceilandia" casa com "Ceilândia". Sem isso, texto sem
   acento era silenciosamente pulado — bug real pego pelo driver. Não remova o

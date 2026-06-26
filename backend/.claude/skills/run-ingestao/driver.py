@@ -1,11 +1,12 @@
 """Driver do servico de ingestao (app/services/ingestao.py).
 
-Padrao "import-and-call": roda o pipeline completo (RSS -> regiao -> geocode ->
-LocalPin -> Gemini -> persistir Ocorrencia) contra um SQLite em memoria, com as
-integracoes INJETADAS (sem rede, sem chave, sem Postgres). Depois roda o pytest.
+Padrao "import-and-call": roda o pipeline completo (filtro de relevancia ->
+regiao -> geocode -> LocalPin -> Gemini -> persistir Ocorrencia) contra um
+SQLite em memoria, com as integracoes INJETADAS (sem rede, sem chave, sem
+Postgres). Depois roda o pytest.
 
-Modo --live: usa o feed RSS real do Correio + Nominatim real (rede), mas ainda
-num SQLite em memoria e com Gemini falso (resumo nunca chama a API). Best-effort.
+Modo --live: usa o feed RSS real do Correio + Nominatim real (rede), com o
+filtro de relevancia real, mas Gemini falso. Best-effort.
 
 Uso (a partir de backend/):
     python .claude/skills/run-ingestao/driver.py
@@ -33,6 +34,9 @@ from app.integrations.gemini import GeminiClient  # noqa: E402
 from app.services import ingestao  # noqa: E402
 
 _results: list[bool] = []
+_GEOCODE = lambda local: Coordenada(latitude=-15.81, longitude=-48.10)  # noqa: E731
+_GEMINI = GeminiClient(generate_fn=lambda texto: "Resumo gerado.")
+_BYPASS = lambda item: True  # noqa: E731
 
 
 def check(nome: str, ok: bool) -> None:
@@ -48,46 +52,59 @@ def _db():
     return sessionmaker(bind=engine)()
 
 
-def smoke() -> None:
+def _item(titulo, descricao="", link="https://x/1"):
+    return ItemRSS(titulo, descricao, link, "2026-06-20 14:30:00", None)
+
+
+def smoke_filtro() -> None:
+    print("- Filtro de relevancia (Camadas 1+2) -", flush=True)
+    relevante = _item("Roubo em Taguatinga", "assalto", "https://cb.com/cidades-df/1.html")
+    df_sem_seg = _item("Obras na Ceilandia", "nova via", "https://cb.com/cidades-df/2.html")
+    seg_sem_df = _item("Roubo em Taguatinga", "assalto", "https://cb.com/politica/3.html")
+
+    check("eh_cidades_df pela URL", ingestao.eh_cidades_df(relevante) and not ingestao.eh_cidades_df(seg_sem_df))
+    check("eh_seguranca por keyword", ingestao.eh_seguranca(relevante) and not ingestao.eh_seguranca(df_sem_seg))
+    check("eh_relevante exige DF + seguranca", ingestao.eh_relevante(relevante)
+          and not ingestao.eh_relevante(df_sem_seg) and not ingestao.eh_relevante(seg_sem_df))
+
+    db = _db()
+    res = ingestao.ingerir(db, itens=[relevante, df_sem_seg, seg_sem_df],
+                           geocodificar=_GEOCODE, gemini=_GEMINI)  # filtro padrao
+    check("ingerir filtra 2 de 3 (so o relevante persiste)",
+          res.processadas == 3 and res.filtradas == 2 and res.persistidas == 1)
+
+
+def smoke_pipeline() -> None:
+    print("- Pipeline (filtro bypassado) -", flush=True)
     db = _db()
     itens = [
-        ItemRSS("Furto em Taguatinga", "Veiculo levado na QNL", "https://x/1", "2026-06-20 14:30:00", None),
-        ItemRSS("Roubo na Ceilandia", "Assalto a pedestre", "https://x/2", "2026-06-19 09:00:00", None),
-        ItemRSS("Noticia generica sem regiao", "nada aqui", "https://x/3", None, None),
+        _item("Furto em Taguatinga", "Veiculo levado"),
+        _item("Roubo na Ceilandia", "Assalto"),
+        _item("Noticia sem regiao", "nada"),
     ]
-    gemini = GeminiClient(generate_fn=lambda texto: "Resumo gerado.")
-    geocode = lambda local: Coordenada(latitude=-15.81, longitude=-48.10)  # noqa: E731
-
-    res = ingestao.ingerir(db, itens=itens, geocodificar=geocode, gemini=gemini)
-
-    check("processou os 3 itens", res.processadas == 3)
-    check("persistiu 2 (1 sem regiao foi pulado)", res.persistidas == 2 and res.sem_regiao == 1)
-    check("2 ocorrencias no banco", db.query(Ocorrencia).count() == 2)
+    res = ingestao.ingerir(db, itens=itens, geocodificar=_GEOCODE, gemini=_GEMINI, filtro=_BYPASS)
+    check("persistiu 2 (1 sem regiao pulado)", res.persistidas == 2 and res.sem_regiao == 1)
+    check("regiao virou codigo RA", {o.regiao_administrativa for o in db.query(Ocorrencia)} == {"RA-003", "RA-009"})
+    check("LocalPin por regiao distinta", db.query(LocalPin).count() == 2)
     check("resumo COMPLETO gravado", db.query(Ocorrencia).first().resumo_status == "COMPLETO")
-    check("regiao extraida vira codigo RA", {o.regiao_administrativa for o in db.query(Ocorrencia)} == {"RA-003", "RA-009"})
-    check("LocalPin criado para cada regiao distinta", db.query(LocalPin).count() == 2)
 
     # ADR-001 A: Gemini falha -> persiste com ERRO
     db2 = _db()
     def quebra(texto):  # noqa: E306
         raise RuntimeError("quota")
-    res2 = ingestao.ingerir(
-        db2, itens=[ItemRSS("Roubo na Ceilandia", "", "https://x/9", None, None)],
-        geocodificar=geocode, gemini=GeminiClient(generate_fn=quebra),
-    )
+    res2 = ingestao.ingerir(db2, itens=[_item("Roubo na Ceilandia")], geocodificar=_GEOCODE,
+                            gemini=GeminiClient(generate_fn=quebra), filtro=_BYPASS)
     o = db2.query(Ocorrencia).first()
-    check("Gemini falhou -> persiste com status ERRO (ADR-001 A)", res2.persistidas == 1 and o.resumo_status == "ERRO")
+    check("Gemini falhou -> persiste status ERRO (ADR-001 A)", res2.persistidas == 1 and o.resumo_status == "ERRO")
 
 
 def live() -> None:
-    print("--- live: feed real + Nominatim real (Gemini falso) ---", flush=True)
+    print("--- live: feed real + Nominatim real + filtro real (Gemini falso) ---", flush=True)
     try:
         db = _db()
-        res = ingestao.ingerir(
-            db, gemini=GeminiClient(generate_fn=lambda texto: "resumo offline")
-        )
-        print(f"LIVE OK: processadas={res.processadas} persistidas={res.persistidas} "
-              f"sem_regiao={res.sem_regiao} erros={res.erros}", flush=True)
+        res = ingestao.ingerir(db, gemini=GeminiClient(generate_fn=lambda texto: "resumo offline"))
+        print(f"LIVE OK: processadas={res.processadas} filtradas={res.filtradas} "
+              f"persistidas={res.persistidas} sem_regiao={res.sem_regiao} erros={res.erros}", flush=True)
     except Exception as e:  # noqa: BLE001
         print(f"LIVE SKIP: indisponivel ({type(e).__name__})", flush=True)
 
@@ -103,7 +120,8 @@ def main() -> int:
     only_tests = "--only-tests" in sys.argv
 
     if not only_tests:
-        smoke()
+        smoke_filtro()
+        smoke_pipeline()
     if "--live" in sys.argv:
         live()
 
@@ -113,7 +131,7 @@ def main() -> int:
 
     print("", flush=True)
     if all(_results) and pytest_ok:
-        print("OK: ingestao validada (RSS->regiao->geocode->pin->gemini->persist)", flush=True)
+        print("OK: ingestao validada (filtro DF/seguranca -> geocode -> pin -> gemini -> persist)", flush=True)
         return 0
     print("FALHA: revise os casos marcados como FAIL acima", flush=True)
     return 1
