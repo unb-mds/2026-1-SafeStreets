@@ -5,5 +5,6 @@ pytest
 #parte de banco de dados
 sqlalchemy
 psycopg2-binary
+alembic
 #integracao com IA (Google Gemini) — SDK novo; google-generativeai esta deprecado
 google-genai
