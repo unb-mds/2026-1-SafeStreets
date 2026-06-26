@@ -25,6 +25,16 @@ class OcorrenciaRepository:
             .first()
         )
 
+    def listar(self, limit: int = 100, offset: int = 0) -> list[Ocorrencia]:
+        """Lista ocorrências, mais recentes primeiro."""
+        return (
+            self.db.query(Ocorrencia)
+            .order_by(Ocorrencia.data_ocorrencia.desc())
+            .limit(limit)
+            .offset(offset)
+            .all()
+        )
+
     def buscar_por_regiao_e_periodo(
         self,
         regiao: str,
