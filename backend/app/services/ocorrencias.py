@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.models import Ocorrencia
-from app.repositories.ocorrencia_repository import OcorrenciaRepository
-from app.schemas.ocorrencia import OcorrenciaOut
+from app.repositories import ocorrencias as repo
+from app.schemas.ocorrencia import OcorrenciaCreate, OcorrenciaOut
 
 
 def _to_out(o: Ocorrencia) -> OcorrenciaOut:
@@ -9,17 +9,20 @@ def _to_out(o: Ocorrencia) -> OcorrenciaOut:
     return OcorrenciaOut(
         id=o.id,
         titulo=o.titulo_noticia,
-        latitude=float(o.latitude),
-        longitude=float(o.longitude),
+        latitude=o.latitude,
+        longitude=o.longitude,
     )
 
 
 def listar(db: Session) -> list[OcorrenciaOut]:
-    repo = OcorrenciaRepository(db)
-    return [_to_out(o) for o in repo.listar()]
+    return [_to_out(o) for o in repo.list_all(db)]
 
 
 def buscar(db: Session, ocorrencia_id: int) -> OcorrenciaOut | None:
-    repo = OcorrenciaRepository(db)
-    o = repo.buscar_por_id(ocorrencia_id)
+    o = repo.get_by_id(db, ocorrencia_id)
     return _to_out(o) if o else None
+
+
+def criar(db: Session, payload: OcorrenciaCreate) -> OcorrenciaOut:
+    o = repo.create(db, payload.titulo_noticia, payload.latitude, payload.longitude)
+    return _to_out(o)

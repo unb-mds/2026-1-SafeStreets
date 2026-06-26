@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-26T21:09:02.812547Z",
+  "generated_at": "2026-06-25T04:13:49.849260Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W26",
-      "opened": 7,
-      "closed": 10
+      "opened": 2,
+      "closed": 6
     },
     {
       "week": "2026-W25",
@@ -84,7 +84,7 @@
     },
     {
       "range": "41-60",
-      "count": 27
+      "count": 28
     },
     {
       "range": "61-80",
@@ -92,30 +92,10 @@
     },
     {
       "range": "81+",
-      "count": 61
+      "count": 60
     }
   ],
   "commit_heatmap": [
-    {
-      "day": 5,
-      "hour": 21,
-      "count": 8
-    },
-    {
-      "day": 5,
-      "hour": 4,
-      "count": 5
-    },
-    {
-      "day": 5,
-      "hour": 1,
-      "count": 3
-    },
-    {
-      "day": 4,
-      "hour": 4,
-      "count": 6
-    },
     {
       "day": 4,
       "hour": 1,
@@ -169,6 +149,11 @@
     {
       "day": 4,
       "hour": 19,
+      "count": 5
+    },
+    {
+      "day": 4,
+      "hour": 4,
       "count": 5
     },
     {
@@ -257,6 +242,11 @@
       "count": 17
     },
     {
+      "day": 5,
+      "hour": 4,
+      "count": 4
+    },
+    {
       "day": 4,
       "hour": 22,
       "count": 4
@@ -324,12 +314,17 @@
     {
       "day": 3,
       "hour": 5,
-      "count": 2
+      "count": 6
     },
     {
       "day": 6,
       "hour": 3,
       "count": 5
+    },
+    {
+      "day": 5,
+      "hour": 21,
+      "count": 7
     },
     {
       "day": 1,
@@ -385,6 +380,11 @@
       "day": 5,
       "hour": 13,
       "count": 6
+    },
+    {
+      "day": 5,
+      "hour": 1,
+      "count": 2
     },
     {
       "day": 4,
@@ -449,18 +449,18 @@
     },
     {
       "username": "IsraelSoares-25",
-      "commits": 48
+      "commits": 46
     },
     {
       "username": "Nic0laslc",
       "commits": 29
     },
     {
-      "username": "EdsonToppzera",
-      "commits": 16
+      "username": "matheusqsa",
+      "commits": 18
     },
     {
-      "username": "matheusqsa",
+      "username": "EdsonToppzera",
       "commits": 16
     },
     {
@@ -470,15 +470,15 @@
   ],
   "top_pr_authors": [
     {
-      "username": "IsraelSoares-25",
-      "prs_opened": 10
-    },
-    {
       "username": "Nic0laslc",
       "prs_opened": 8
     },
     {
       "username": "matheusqsa",
+      "prs_opened": 7
+    },
+    {
+      "username": "IsraelSoares-25",
       "prs_opened": 7
     },
     {
@@ -493,7 +493,7 @@
   "top_issue_contributors": [
     {
       "username": "Nic0laslc",
-      "total": 29
+      "total": 27
     },
     {
       "username": "IsraelSoares-25",
@@ -519,23 +519,23 @@
   "label_distribution": [
     {
       "label": "documentation",
-      "count": 56
+      "count": 55
     },
     {
       "label": "implementação",
-      "count": 52
+      "count": 49
     },
     {
       "label": "front-end",
-      "count": 50
+      "count": 48
     },
     {
       "label": "back-end",
-      "count": 35
+      "count": 32
     },
     {
       "label": "organização",
-      "count": 34
+      "count": 32
     },
     {
       "label": "requisitos",
@@ -550,16 +550,16 @@
       "count": 21
     },
     {
-      "label": "feat/api🔌",
-      "count": 17
-    },
-    {
       "label": "enhancement",
       "count": 16
     },
     {
       "label": "testes",
       "count": 16
+    },
+    {
+      "label": "feat/api🔌",
+      "count": 14
     },
     {
       "label": "git/github",
