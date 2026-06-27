@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
@@ -18,9 +20,17 @@ _DB_OFF = "Banco de dados indisponível. Suba o Postgres com 'docker compose up 
 
 
 @router.get("", response_model=OcorrenciaListResponse)
-def listar_ocorrencias(db: Session = Depends(get_db)):
+def listar_ocorrencias(
+    regiao: str | None = None,
+    data_inicio: date | None = None,
+    data_fim: date | None = None,
+    db: Session = Depends(get_db),
+):
     try:
-        return {"success": True, "data": service.listar(db)}
+        return {
+            "success": True,
+            "data": service.listar(db, regiao, data_inicio, data_fim),
+        }
     except OperationalError:
         raise HTTPException(status_code=503, detail=_DB_OFF)
 
