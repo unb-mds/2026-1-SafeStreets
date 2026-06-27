@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-27T00:57:11.637497Z",
+  "generated_at": "2026-06-27T01:13:52.011612Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W26",
       "opened": 11,
-      "closed": 15
+      "closed": 16
     },
     {
       "week": "2026-W25",
@@ -84,27 +84,32 @@
     },
     {
       "range": "41-60",
-      "count": 26
+      "count": 24
     },
     {
       "range": "61-80",
-      "count": 10
+      "count": 11
     },
     {
       "range": "81+",
-      "count": 60
+      "count": 61
     }
   ],
   "commit_heatmap": [
     {
       "day": 6,
+      "hour": 1,
+      "count": 5
+    },
+    {
+      "day": 6,
       "hour": 0,
-      "count": 4
+      "count": 6
     },
     {
       "day": 5,
       "hour": 23,
-      "count": 5
+      "count": 2
     },
     {
       "day": 5,
@@ -440,11 +445,6 @@
       "day": 6,
       "hour": 12,
       "count": 2
-    },
-    {
-      "day": 6,
-      "hour": 1,
-      "count": 4
     }
   ],
   "top_committers": [
@@ -470,7 +470,7 @@
     },
     {
       "username": "matheusqsa",
-      "commits": 11
+      "commits": 10
     }
   ],
   "top_pr_authors": [
