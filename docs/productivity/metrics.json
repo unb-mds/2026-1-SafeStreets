@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-27T01:13:52.011612Z",
+  "generated_at": "2026-06-27T04:06:46.933304Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W26",
-      "opened": 11,
+      "opened": 13,
       "closed": 16
     },
     {
@@ -80,7 +80,7 @@
     },
     {
       "range": "21-40",
-      "count": 180
+      "count": 181
     },
     {
       "range": "41-60",
@@ -92,19 +92,19 @@
     },
     {
       "range": "81+",
-      "count": 61
+      "count": 60
     }
   ],
   "commit_heatmap": [
     {
       "day": 6,
       "hour": 1,
-      "count": 5
+      "count": 6
     },
     {
       "day": 6,
       "hour": 0,
-      "count": 6
+      "count": 5
     },
     {
       "day": 5,
@@ -470,7 +470,7 @@
     },
     {
       "username": "matheusqsa",
-      "commits": 10
+      "commits": 9
     }
   ],
   "top_pr_authors": [
@@ -479,12 +479,12 @@
       "prs_opened": 12
     },
     {
-      "username": "matheusqsa",
+      "username": "Nic0laslc",
       "prs_opened": 9
     },
     {
-      "username": "Nic0laslc",
-      "prs_opened": 8
+      "username": "matheusqsa",
+      "prs_opened": 9
     },
     {
       "username": "EdsonToppzera",
@@ -498,7 +498,7 @@
   "top_issue_contributors": [
     {
       "username": "Nic0laslc",
-      "total": 29
+      "total": 30
     },
     {
       "username": "IsraelSoares-25",
@@ -524,7 +524,7 @@
   "label_distribution": [
     {
       "label": "implementação",
-      "count": 56
+      "count": 58
     },
     {
       "label": "documentation",
@@ -532,7 +532,7 @@
     },
     {
       "label": "front-end",
-      "count": 50
+      "count": 52
     },
     {
       "label": "back-end",
@@ -571,12 +571,12 @@
       "count": 13
     },
     {
-      "label": "banco de dados",
-      "count": 10
+      "label": "docker",
+      "count": 11
     },
     {
-      "label": "docker",
-      "count": 9
+      "label": "banco de dados",
+      "count": 10
     },
     {
       "label": "prototipação",
