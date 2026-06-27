@@ -119,7 +119,7 @@ describe("MapaInterativo", () => {
 
       const detalhes = screen.getByLabelText("Detalhes da ocorrência");
       expect(detalhes).toHaveTextContent(noticia.titulo);
-      expect(detalhes).toHaveTextContent(noticia.resumo);
+      expect(detalhes).not.toHaveTextContent(noticia.resumo);
     });
 
     it("calls onFecharDetalhes when the close button is clicked", async () => {

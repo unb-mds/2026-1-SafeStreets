@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { Noticia } from "@/utils/noticias";
 import { gerarResumoIA } from "@/utils/iaResumo";
+import { PinIcon } from "@/components/icons";
 import styles from "./DetalhesOcorrencia.module.css";
 
 interface DetalhesOcorrenciaProps {
@@ -50,22 +51,14 @@ export default function DetalhesOcorrencia({ noticia, onFechar }: DetalhesOcorre
       </button>
       <span className={`${styles.badgeRisco} ${RISCO_CLASSNAME[noticia.risco]}`}>{noticia.risco}</span>
       <h2 className={styles.titulo}>{noticia.titulo}</h2>
-      <dl className={styles.detalhes}>
-        <div className={styles.linha}>
-          <dt>RA</dt>
-          <dd>{noticia.ra}</dd>
+      <div className={styles.detalhes}>
+        <div className={styles.infoBloco}>RA — {noticia.ra}</div>
+        <div className={`${styles.infoBloco} ${styles.infoBlocoLocalizacao}`}>
+          <PinIcon size={12} />
+          {noticia.regiao}
         </div>
-        <div className={styles.linha}>
-          <dt>Localização</dt>
-          <dd>{noticia.regiao}</dd>
-        </div>
-        <div className={styles.linha}>
-          <dt>Data</dt>
-          <dd>{noticia.data}</dd>
-        </div>
-      </dl>
-
-      <p className={styles.resumo}>{noticia.resumo}</p>
+        <div className={styles.infoBloco}>{noticia.data}</div>
+      </div>
 
       <section className={styles.resumoIA} aria-label="Resumo gerado por IA">
         <h3 className={styles.resumoIATitulo}>Resumo gerado por IA</h3>
