@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-26T23:50:53.521814Z",
+  "generated_at": "2026-06-27T00:57:11.637497Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W26",
-      "opened": 9,
-      "closed": 14
+      "opened": 11,
+      "closed": 15
     },
     {
       "week": "2026-W25",
@@ -80,7 +80,7 @@
     },
     {
       "range": "21-40",
-      "count": 178
+      "count": 180
     },
     {
       "range": "41-60",
@@ -88,7 +88,7 @@
     },
     {
       "range": "61-80",
-      "count": 12
+      "count": 10
     },
     {
       "range": "81+",
@@ -97,14 +97,19 @@
   ],
   "commit_heatmap": [
     {
+      "day": 6,
+      "hour": 0,
+      "count": 4
+    },
+    {
       "day": 5,
       "hour": 23,
-      "count": 6
+      "count": 5
     },
     {
       "day": 5,
       "hour": 22,
-      "count": 3
+      "count": 2
     },
     {
       "day": 5,
@@ -440,21 +445,16 @@
       "day": 6,
       "hour": 1,
       "count": 4
-    },
-    {
-      "day": 6,
-      "hour": 0,
-      "count": 2
     }
   ],
   "top_committers": [
     {
-      "username": "jorgevasquez25",
-      "commits": 50
+      "username": "IsraelSoares-25",
+      "commits": 51
     },
     {
-      "username": "IsraelSoares-25",
-      "commits": 49
+      "username": "jorgevasquez25",
+      "commits": 50
     },
     {
       "username": "Nic0laslc",
@@ -465,22 +465,22 @@
       "commits": 15
     },
     {
-      "username": "matheusqsa",
-      "commits": 14
-    },
-    {
       "username": "ArthurFeitosa05",
       "commits": 13
+    },
+    {
+      "username": "matheusqsa",
+      "commits": 11
     }
   ],
   "top_pr_authors": [
     {
       "username": "IsraelSoares-25",
-      "prs_opened": 11
+      "prs_opened": 12
     },
     {
       "username": "matheusqsa",
-      "prs_opened": 8
+      "prs_opened": 9
     },
     {
       "username": "Nic0laslc",
@@ -523,12 +523,12 @@
   ],
   "label_distribution": [
     {
-      "label": "documentation",
+      "label": "implementação",
       "count": 56
     },
     {
-      "label": "implementação",
-      "count": 54
+      "label": "documentation",
+      "count": 56
     },
     {
       "label": "front-end",
@@ -536,7 +536,7 @@
     },
     {
       "label": "back-end",
-      "count": 37
+      "count": 39
     },
     {
       "label": "organização",
@@ -551,24 +551,24 @@
       "count": 27
     },
     {
+      "label": "feat/api🔌",
+      "count": 21
+    },
+    {
       "label": "estudar",
       "count": 21
     },
     {
-      "label": "feat/api🔌",
-      "count": 19
+      "label": "enhancement",
+      "count": 17
     },
     {
       "label": "testes",
       "count": 17
     },
     {
-      "label": "enhancement",
-      "count": 16
-    },
-    {
       "label": "git/github",
-      "count": 12
+      "count": 13
     },
     {
       "label": "banco de dados",
