@@ -3,9 +3,9 @@
   flex-direction: column;
   gap: 6px;
   width: 220px;
-  padding: 12px;
-  border: 1px solid var(--cor-verde);
-  border-radius: 12px;
+  padding: 12px 12px 12px 16px;
+  border-left: 4px solid var(--cor-verde);
+  border-radius: 0 12px 12px 0;
   background: var(--cor-superficie);
   font-family: var(--font-body);
 }
@@ -42,23 +42,24 @@
 .detalhes {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: flex-start;
+  gap: 4px;
 }
 
-.linha {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 0.75rem;
-  color: var(--cor-cinza);
-}
-
-.linha dt {
+.infoBloco {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: var(--cor-fundo);
+  font-size: 0.7rem;
   font-weight: 600;
+  color: var(--cor-texto);
 }
 
-.linha dd {
-  text-align: right;
+.infoBlocoLocalizacao {
+  background: var(--cor-amarelo);
 }
 
 .verDetalhes {

@@ -11,7 +11,7 @@ describe("CardResumo", () => {
     render(<CardResumo noticia={noticia} onVerDetalhes={() => {}} />);
     expect(screen.getByText(noticia.risco)).toBeInTheDocument();
     expect(screen.getByText(noticia.titulo)).toBeInTheDocument();
-    expect(screen.getByText(noticia.ra)).toBeInTheDocument();
+    expect(screen.getByText(`RA — ${noticia.ra}`)).toBeInTheDocument();
     expect(screen.getByText(noticia.regiao)).toBeInTheDocument();
     expect(screen.getByText(noticia.data)).toBeInTheDocument();
   });

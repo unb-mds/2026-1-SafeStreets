@@ -1,4 +1,5 @@
 import type { Noticia } from "@/utils/noticias";
+import { PinIcon } from "@/components/icons";
 import styles from "./CardResumo.module.css";
 
 interface CardResumoProps {
@@ -17,20 +18,14 @@ export default function CardResumo({ noticia, onVerDetalhes }: CardResumoProps) 
     <article className={styles.card} aria-label="Card resumo da ocorrência">
       <span className={`${styles.badgeRisco} ${RISCO_CLASSNAME[noticia.risco]}`}>{noticia.risco}</span>
       <h3 className={styles.titulo}>{noticia.titulo}</h3>
-      <dl className={styles.detalhes}>
-        <div className={styles.linha}>
-          <dt>RA</dt>
-          <dd>{noticia.ra}</dd>
+      <div className={styles.detalhes}>
+        <div className={styles.infoBloco}>RA — {noticia.ra}</div>
+        <div className={`${styles.infoBloco} ${styles.infoBlocoLocalizacao}`}>
+          <PinIcon size={10} />
+          {noticia.regiao}
         </div>
-        <div className={styles.linha}>
-          <dt>Localização</dt>
-          <dd>{noticia.regiao}</dd>
-        </div>
-        <div className={styles.linha}>
-          <dt>Data</dt>
-          <dd>{noticia.data}</dd>
-        </div>
-      </dl>
+        <div className={styles.infoBloco}>{noticia.data}</div>
+      </div>
       <button type="button" className={styles.verDetalhes} onClick={onVerDetalhes}>
         Ver detalhes
       </button>
