@@ -11,6 +11,10 @@ def _to_out(o: Ocorrencia) -> OcorrenciaOut:
         titulo=o.titulo_noticia,
         latitude=float(o.latitude),
         longitude=float(o.longitude),
+        regiao=o.regiao_administrativa,
+        risco=o.risco_nivel,
+        resumo=o.resumo_gemini,
+        data=o.data_ocorrencia,
     )
 
 

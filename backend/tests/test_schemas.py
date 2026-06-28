@@ -53,7 +53,16 @@ def test_create_rejeita_campo_faltando():
 def test_out_serializa_campos():
     out = OcorrenciaOut(id=1, titulo="Teste", latitude=-15.79, longitude=-47.88)
     dump = out.model_dump()
-    assert dump == {"id": 1, "titulo": "Teste", "latitude": -15.79, "longitude": -47.88}
+    assert dump == {
+        "id": 1,
+        "titulo": "Teste",
+        "latitude": -15.79,
+        "longitude": -47.88,
+        "regiao": None,
+        "risco": None,
+        "resumo": None,
+        "data": None,
+    }
 
 
 # ---- Envelopes: defaults ----
