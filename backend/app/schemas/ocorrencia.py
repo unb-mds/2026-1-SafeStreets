@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel, field_validator
 
 
@@ -26,6 +28,10 @@ class OcorrenciaOut(BaseModel):
     titulo: str
     latitude: float
     longitude: float
+    regiao: str | None = None
+    risco: str | None = None
+    resumo: str | None = None
+    data: datetime | None = None
 
 
 class OcorrenciaListResponse(BaseModel):
