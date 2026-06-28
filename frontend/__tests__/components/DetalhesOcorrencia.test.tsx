@@ -18,16 +18,22 @@ describe("DetalhesOcorrencia", () => {
     mockGerarResumoIA.mockReset();
   });
 
-  it("renders título, risco, RA, região, data and resumo", () => {
+  it("renders título, risco, RA, região e data", () => {
     mockGerarResumoIA.mockReturnValue(new Promise(() => {}));
     render(<DetalhesOcorrencia noticia={noticia} onFechar={() => {}} />);
 
     expect(screen.getByText(noticia.titulo)).toBeInTheDocument();
     expect(screen.getByText(noticia.risco)).toBeInTheDocument();
-    expect(screen.getByText(noticia.ra)).toBeInTheDocument();
+    expect(screen.getByText(`RA — ${noticia.ra}`)).toBeInTheDocument();
     expect(screen.getByText(noticia.regiao)).toBeInTheDocument();
     expect(screen.getByText(noticia.data)).toBeInTheDocument();
-    expect(screen.getByText(noticia.resumo)).toBeInTheDocument();
+  });
+
+  it("não exibe o resumo breve da notícia", () => {
+    mockGerarResumoIA.mockReturnValue(new Promise(() => {}));
+    render(<DetalhesOcorrencia noticia={noticia} onFechar={() => {}} />);
+
+    expect(screen.queryByText(noticia.resumo)).not.toBeInTheDocument();
   });
 
   it("shows a loading indicator while the AI summary is being generated", () => {
