@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-27T04:06:46.933304Z",
+  "generated_at": "2026-06-28T04:09:13.853077Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W26",
-      "opened": 13,
-      "closed": 16
+      "opened": 16,
+      "closed": 20
     },
     {
       "week": "2026-W25",
@@ -80,7 +80,7 @@
     },
     {
       "range": "21-40",
-      "count": 181
+      "count": 179
     },
     {
       "range": "41-60",
@@ -92,19 +92,29 @@
     },
     {
       "range": "81+",
-      "count": 60
+      "count": 62
     }
   ],
   "commit_heatmap": [
     {
+      "day": 0,
+      "hour": 4,
+      "count": 7
+    },
+    {
+      "day": 6,
+      "hour": 4,
+      "count": 8
+    },
+    {
       "day": 6,
       "hour": 1,
-      "count": 6
+      "count": 2
     },
     {
       "day": 6,
       "hour": 0,
-      "count": 5
+      "count": 4
     },
     {
       "day": 5,
@@ -182,11 +192,6 @@
       "count": 1
     },
     {
-      "day": 6,
-      "hour": 4,
-      "count": 5
-    },
-    {
       "day": 5,
       "hour": 5,
       "count": 1
@@ -250,11 +255,6 @@
       "day": 0,
       "hour": 14,
       "count": 1
-    },
-    {
-      "day": 0,
-      "hour": 4,
-      "count": 5
     },
     {
       "day": 0,
@@ -458,7 +458,7 @@
     },
     {
       "username": "Nic0laslc",
-      "commits": 29
+      "commits": 33
     },
     {
       "username": "EdsonToppzera",
@@ -470,7 +470,7 @@
     },
     {
       "username": "matheusqsa",
-      "commits": 9
+      "commits": 6
     }
   ],
   "top_pr_authors": [
@@ -480,11 +480,11 @@
     },
     {
       "username": "Nic0laslc",
-      "prs_opened": 9
+      "prs_opened": 11
     },
     {
       "username": "matheusqsa",
-      "prs_opened": 9
+      "prs_opened": 10
     },
     {
       "username": "EdsonToppzera",
@@ -524,7 +524,7 @@
   "label_distribution": [
     {
       "label": "implementação",
-      "count": 58
+      "count": 59
     },
     {
       "label": "documentation",
@@ -532,11 +532,11 @@
     },
     {
       "label": "front-end",
-      "count": 52
+      "count": 54
     },
     {
       "label": "back-end",
-      "count": 39
+      "count": 40
     },
     {
       "label": "organização",
@@ -552,23 +552,23 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 21
+      "count": 22
     },
     {
       "label": "estudar",
       "count": 21
     },
     {
-      "label": "enhancement",
-      "count": 17
+      "label": "testes",
+      "count": 19
     },
     {
-      "label": "testes",
-      "count": 17
+      "label": "enhancement",
+      "count": 18
     },
     {
       "label": "git/github",
-      "count": 13
+      "count": 14
     },
     {
       "label": "docker",
