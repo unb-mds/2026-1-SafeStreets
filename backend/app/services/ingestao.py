@@ -85,6 +85,7 @@ class ResultadoIngestao:
     persistidas: int = 0
     filtradas: int = 0      # descartadas pelo filtro de relevância (não é DF/segurança)
     sem_regiao: int = 0
+    duplicadas: int = 0     # notícias já persistidas anteriormente no banco
     erros: int = 0
 
 
@@ -138,6 +139,11 @@ def ingerir(
         # Camadas 1+2: só notícia de segurança urbana do DF segue no pipeline.
         if not aplicar_filtro(item):
             res.filtradas += 1
+            continue
+
+        # Evita a duplicação: se a URL do link já existe no banco, ignora o item.
+        if item.link and oc_repo.buscar_por_url(item.link):
+            res.duplicadas += 1
             continue
 
         texto = f"{item.titulo} {item.descricao}".strip()

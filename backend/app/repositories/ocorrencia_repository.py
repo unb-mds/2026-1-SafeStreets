@@ -25,6 +25,14 @@ class OcorrenciaRepository:
             .first()
         )
 
+    def buscar_por_url(self, fonte_url: str) -> Optional[Ocorrencia]:
+        """Busca uma ocorrência pela URL de origem."""
+        return (
+            self.db.query(Ocorrencia)
+            .filter(Ocorrencia.fonte_url == fonte_url)
+            .first()
+        )
+
     def listar(self, limit: int = 100, offset: int = 0) -> list[Ocorrencia]:
         """Lista ocorrências, mais recentes primeiro."""
         return (

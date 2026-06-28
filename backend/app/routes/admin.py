@@ -31,6 +31,7 @@ def disparar_ingestao(db: Session = Depends(get_db)):
             "persistidas": resultado.persistidas,
             "filtradas": resultado.filtradas,
             "sem_regiao": resultado.sem_regiao,
+            "duplicadas": resultado.duplicadas,
             "erros": resultado.erros,
         },
     }
