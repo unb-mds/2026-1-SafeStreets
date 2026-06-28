@@ -1,3 +1,5 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 export type Risco = "Alto" | "Médio" | "Baixo";
 
 export type Noticia = {
@@ -15,124 +17,78 @@ export type Noticia = {
   lng: number;
 };
 
-export const noticias: Noticia[] = [
-  {
-    id: "1",
-    titulo: "Furtos a pedestres aumentam 14% na quadra comercial da 304 Sul",
-    resumo:
-      "Câmeras e patrulhamento a pé serão reforçados após série de ocorrências no fim de tarde.",
-    regiao: "Plano Piloto",
-    ra: "RA-I",
-    data: "02/06/2026",
-    fonte: "Boletim de Segurança · SSP-DF",
-    corpo: [
-      "A Administração Regional do Plano Piloto confirmou um aumento de 14% nos registros de furto a pedestres na quadra comercial da 304 Sul durante o último mês, concentrados no período entre 17h e 20h.",
-      "Segundo o boletim consolidado, a maior parte das ocorrências envolve celulares e bolsas subtraídos em pontos de ônibus e na saída de estabelecimentos comerciais. Não há registro de violência física na maioria dos casos.",
-      "Como resposta, a Secretaria de Segurança Pública anunciou o reforço do patrulhamento a pé no horário de pico e a instalação de quatro novas câmeras com leitura noturna. Moradores podem acompanhar a evolução dos índices pelo mapa interativo do SafeStreets.",
-    ],
-    fonteUrl: "https://www.ssp.df.gov.br/",
-    risco: "Médio",
-    lat: -15.7942,
-    lng: -47.8822,
-  },
-  {
-    id: "2",
-    titulo: "Operação Taguatinga Segura reduz roubos de veículos em 22%",
-    resumo:
-      "Ação conjunta da PMDF e PCDF resultou em 8 prisões e apreensão de dois carros adulterados.",
-    regiao: "Taguatinga",
-    ra: "RA-III",
-    data: "01/06/2026",
-    fonte: "Nota oficial · PMDF",
-    corpo: [
-      "A Operação Taguatinga Segura, deflagrada no início de maio, reduziu em 22% os roubos de veículos na região em comparação com o mesmo período do ano anterior.",
-      "A ação conjunta da Polícia Militar e da Polícia Civil resultou em oito prisões e na apreensão de dois veículos com sinais identificadores adulterados.",
-      "As forças de segurança informaram que o policiamento ostensivo nas principais vias de acesso será mantido pelos próximos meses.",
-    ],
-    fonteUrl: "https://www.pmdf.df.gov.br/",
-    risco: "Baixo",
-    lat: -15.833,
-    lng: -48.057,
-  },
-  {
-    id: "3",
-    titulo: "Ceilândia registra queda de 18% nos crimes violentos no mês de maio",
-    resumo:
-      "Delegacia especializada atribui resultado ao aumento do efetivo e à videomonitoramento ampliado.",
-    regiao: "Ceilândia",
-    ra: "RA-IX",
-    data: "31/05/2026",
-    fonte: "Relatório Mensal · PCDF",
-    corpo: [
-      "Os crimes violentos contra a pessoa caíram 18% em Ceilândia no mês de maio, segundo o relatório mensal da Polícia Civil do Distrito Federal.",
-      "A delegacia especializada atribui o resultado ao aumento do efetivo nas regiões administrativas e à ampliação do videomonitoramento integrado.",
-      "O órgão ressalta que a tendência precisa ser confirmada nos próximos meses antes de ser considerada estrutural.",
-    ],
-    fonteUrl: "https://www.pcdf.df.gov.br/",
-    risco: "Baixo",
-    lat: -15.815,
-    lng: -48.114,
-  },
-  {
-    id: "4",
-    titulo: "Novo posto da PM é inaugurado no Gama para atender quadrantes rurais",
-    resumo:
-      "Estrutura atende comunidades rurais da região e reforça presença policial em áreas de baixa cobertura.",
-    regiao: "Gama",
-    ra: "RA-II",
-    data: "30/05/2026",
-    fonte: "Comunicado · GDF",
-    corpo: [
-      "Um novo posto policial foi inaugurado no Gama com foco no atendimento das comunidades rurais da região, historicamente com menor cobertura de policiamento.",
-      "A estrutura conta com equipes dedicadas ao patrulhamento das áreas de chácaras e assentamentos, além de um canal direto para denúncias.",
-      "O Governo do Distrito Federal afirma que outras unidades semelhantes estão previstas para regiões periféricas ao longo do ano.",
-    ],
-    fonteUrl: "https://www.df.gov.br/",
-    risco: "Baixo",
-    lat: -16.0181,
-    lng: -48.066,
-  },
-  {
-    id: "5",
-    titulo: "Alerta: aumento de golpes do Pix em Sobradinho durante o fim de semana",
-    resumo:
-      "PCDF orienta população a não transferir valores para desconhecidos e a ativar dupla autenticação.",
-    regiao: "Sobradinho",
-    ra: "RA-V",
-    data: "29/05/2026",
-    fonte: "Alerta de Segurança · PCDF",
-    corpo: [
-      "A Polícia Civil emitiu um alerta sobre o aumento de golpes envolvendo transferências via Pix em Sobradinho durante os fins de semana.",
-      "Os golpistas têm se passado por parentes e por funcionários de instituições financeiras para induzir vítimas a transferir valores rapidamente.",
-      "A orientação é não realizar transferências para desconhecidos, desconfiar de pedidos urgentes e ativar a dupla autenticação nos aplicativos bancários.",
-    ],
-    fonteUrl: "https://www.pcdf.df.gov.br/",
-    risco: "Alto",
-    lat: -15.653,
-    lng: -47.789,
-  },
-  {
-    id: "6",
-    titulo: "Samambaia tem reforço policial após série de arrombamentos em comércios",
-    resumo:
-      "Câmeras flagraram suspeitos; duas pessoas foram detidas para averiguação na madrugada de sábado.",
-    regiao: "Samambaia",
-    ra: "RA-XII",
-    data: "28/05/2026",
-    fonte: "Boletim de Segurança · SSP-DF",
-    corpo: [
-      "Uma série de arrombamentos a comércios em Samambaia motivou o reforço do policiamento na região nas últimas semanas.",
-      "Câmeras de segurança flagraram os suspeitos, e duas pessoas foram detidas para averiguação na madrugada de sábado.",
-      "A Secretaria de Segurança Pública informou que as investigações seguem em andamento para identificar os demais envolvidos.",
-    ],
-    fonteUrl: "https://www.ssp.df.gov.br/",
-    risco: "Médio",
-    lat: -15.874,
-    lng: -48.089,
-  },
-];
+// Formato exato do JSON retornado pela API (OcorrenciaOut)
+type ApiOcorrencia = {
+  id: number;
+  titulo: string;
+  latitude: number;
+  longitude: number;
+  ra: string | null;
+  regiao: string | null;
+  risco: string | null;
+  resumo: string | null;
+  resumo_status: string | null;
+  data: string | null;
+  descricao_detalhada: string | null;
+  fonte_url: string | null;
+};
 
-/** Busca uma notícia pelo seu id. Retorna `undefined` se não existir. */
-export function getNoticiaPorId(id: string): Noticia | undefined {
-  return noticias.find((noticia) => noticia.id === id);
+/** Converte o objeto da API para o tipo Noticia esperado pelos componentes. */
+function toNoticia(o: ApiOcorrencia): Noticia {
+  // Deriva o label "hostname" da fonte a partir da URL (ex: "www.ssp.df.gov.br")
+  let fonte = "";
+  if (o.fonte_url) {
+    try {
+      fonte = new URL(o.fonte_url).hostname;
+    } catch {
+      fonte = o.fonte_url;
+    }
+  }
+
+  return {
+    id: String(o.id),
+    titulo: o.titulo ?? "",
+    resumo: o.resumo ?? "",
+    regiao: o.regiao ?? o.ra ?? "",
+    ra: o.ra ?? "",
+    data: o.data ?? "",
+    fonte,
+    corpo: o.descricao_detalhada ? [o.descricao_detalhada] : [],
+    fonteUrl: o.fonte_url ?? "",
+    risco: (o.risco as Risco) ?? "Baixo",
+    lat: o.latitude,
+    lng: o.longitude,
+  };
+}
+
+/**
+ * Busca a lista de ocorrências na API.
+ * Aceita filtros opcionais de região e período (passados como query params).
+ */
+export async function fetchNoticias(params?: {
+  regiao?: string;
+  data_inicio?: string;
+  data_fim?: string;
+}): Promise<Noticia[]> {
+  const url = new URL(`${API_URL}/ocorrencias`);
+  if (params?.regiao) url.searchParams.set("regiao", params.regiao);
+  if (params?.data_inicio) url.searchParams.set("data_inicio", params.data_inicio);
+  if (params?.data_fim) url.searchParams.set("data_fim", params.data_fim);
+
+  const res = await fetch(url.toString(), { cache: "no-store" });
+  if (!res.ok) throw new Error(`Falha ao buscar ocorrências: ${res.status}`);
+  const json = await res.json();
+  return (json.data as ApiOcorrencia[]).map(toNoticia);
+}
+
+/**
+ * Busca uma única ocorrência pelo id numérico (string porque o frontend usa string).
+ * Retorna null se não encontrada (404).
+ */
+export async function fetchNoticiaPorId(id: string): Promise<Noticia | null> {
+  const res = await fetch(`${API_URL}/ocorrencias/${id}`, { cache: "no-store" });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Falha ao buscar ocorrência ${id}: ${res.status}`);
+  const json = await res.json();
+  return toNoticia(json.data as ApiOcorrencia);
 }

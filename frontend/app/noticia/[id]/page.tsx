@@ -1,19 +1,18 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { noticias, getNoticiaPorId } from "@/utils/noticias";
+import { fetchNoticiaPorId } from "@/utils/noticias";
 import NoticiaDetalhe from "@/view/NoticiaDetalhe/NoticiaDetalhe";
 
 type PageProps = {
   params: Promise<{ id: string }>;
 };
 
-export function generateStaticParams() {
-  return noticias.map((noticia) => ({ id: noticia.id }));
-}
+// Rota dinâmica: IDs vêm do banco, não são conhecidos em build time.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const noticia = getNoticiaPorId(id);
+  const noticia = await fetchNoticiaPorId(id);
   if (!noticia) {
     return { title: "Notícia não encontrada — SafeStreets" };
   }
@@ -25,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function NoticiaPage({ params }: PageProps) {
   const { id } = await params;
-  const noticia = getNoticiaPorId(id);
+  const noticia = await fetchNoticiaPorId(id);
 
   if (!noticia) {
     notFound();

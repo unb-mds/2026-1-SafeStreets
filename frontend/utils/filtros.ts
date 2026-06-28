@@ -1,8 +1,4 @@
-import { noticias, type Noticia } from "./noticias";
-
-export const REGIOES_ADMINISTRATIVAS: string[] = Array.from(
-  new Set(noticias.map((noticia) => noticia.regiao))
-).sort((a, b) => a.localeCompare(b));
+import type { Noticia } from "./noticias";
 
 export type Periodo = {
   value: string;
@@ -39,6 +35,7 @@ function parseDataBr(data: string): Date {
 }
 
 function dentroDoPeriodo(data: string, periodo: string): boolean {
+  if (!data) return false;
   const dias = PERIODO_EM_DIAS[periodo];
   if (!dias) return true;
 
@@ -63,4 +60,14 @@ export function filtrarNoticias(lista: Noticia[], filtros: FiltrosBusca): Notici
     }
     return true;
   });
+}
+
+/**
+ * Extrai a lista única de regiões a partir das notícias carregadas.
+ * Substitui REGIOES_ADMINISTRATIVAS que antes dependia do array mockado.
+ */
+export function getRegioes(noticias: Noticia[]): string[] {
+  return Array.from(
+    new Set(noticias.map((n) => n.regiao).filter(Boolean))
+  ).sort((a, b) => a.localeCompare(b, "pt-BR"));
 }

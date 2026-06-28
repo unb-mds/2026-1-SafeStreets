@@ -5,18 +5,38 @@ from app.models import Ocorrencia
 from app.repositories.ocorrencia_repository import OcorrenciaRepository
 from app.schemas.ocorrencia import OcorrenciaOut
 
+# Mapeamento de risco do banco (minúsculo) para o frontend (capitalizado)
+_RISCO_MAP: dict[str, str] = {
+    "baixo": "Baixo",
+    "medio": "Médio",
+    "alto":  "Alto",
+}
+
 
 def _to_out(o: Ocorrencia) -> OcorrenciaOut:
-    # No banco o campo é titulo_noticia; o frontend consome como "titulo".
+    # Formata data como "DD/MM/YYYY" para exibição direta no frontend
+    data_str: str | None = None
+    if o.data_ocorrencia:
+        data_str = o.data_ocorrencia.strftime("%d/%m/%Y")
+
+    # Nome completo da RA vem do LocalPin relacionado (ex: "Ceilândia")
+    regiao_nome: str | None = None
+    if o.local_pin and o.local_pin.nome_regiao:
+        regiao_nome = o.local_pin.nome_regiao
+
     return OcorrenciaOut(
         id=o.id,
         titulo=o.titulo_noticia,
         latitude=float(o.latitude),
         longitude=float(o.longitude),
-        regiao=o.regiao_administrativa,
-        risco=o.risco_nivel,
+        ra=o.regiao_administrativa,
+        regiao=regiao_nome,
+        risco=_RISCO_MAP.get(o.risco_nivel or "", None),
         resumo=o.resumo_gemini,
-        data=o.data_ocorrencia,
+        resumo_status=o.resumo_status,
+        data=data_str,
+        descricao_detalhada=o.descricao_detalhada,
+        fonte_url=o.fonte_url,
     )
 
 
