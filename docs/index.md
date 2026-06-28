@@ -1,3 +1,7 @@
+---
+title: SafeStreets
+---
+
 # SafeStreets — Monitor de Segurança Urbana
 
 **SafeStreets** é uma aplicação voltada ao monitoramento inteligente de riscos urbanos a partir da análise de notícias e dados públicos de segurança pública do Distrito Federal.
