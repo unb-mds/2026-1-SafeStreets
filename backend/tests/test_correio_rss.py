@@ -5,10 +5,12 @@ do feed do Correio Braziliense (link relativo, pubDate "YYYY-MM-DD HH:MM:SS",
 entidades HTML e tags na descrição).
 """
 from app.integrations.correio_rss import (
+    FonteRSS,
     ItemRSS,
     limpar_html,
     parse_feed,
     buscar_itens,
+    buscar_todos,
 )
 
 SAMPLE = """<?xml version="1.0" encoding="UTF-8"?>
@@ -84,3 +86,39 @@ def test_buscar_itens_usa_fetch_injetado_sem_rede():
     assert chamado["url"] == "http://exemplo/feed"
     assert len(itens) == 2
     assert itens[0].titulo == "Roubo & furto na Ceilândia"
+
+
+# ---- multi-fonte (buscar_todos + tag de origem) ----
+
+def test_parse_feed_marca_a_fonte():
+    # default é "correio"; o parâmetro fonte rotula a origem
+    assert parse_feed(SAMPLE)[0].fonte == "correio"
+    assert parse_feed(SAMPLE, fonte="g1-df")[0].fonte == "g1-df"
+
+
+def test_buscar_todos_agrega_fontes_e_rotula_origem():
+    fontes = [
+        FonteRSS("correio", "http://correio/feed", "https://www.correiobraziliense.com.br"),
+        FonteRSS("g1-df", "http://g1/feed", "https://g1.globo.com"),
+    ]
+    itens = buscar_todos(fontes, fetch_fn=lambda url: SAMPLE)
+    # 2 itens por feed x 2 feeds = 4
+    assert len(itens) == 4
+    assert {i.fonte for i in itens} == {"correio", "g1-df"}
+
+
+def test_buscar_todos_ignora_fonte_fora_do_ar():
+    fontes = [
+        FonteRSS("correio", "http://correio/feed", "https://www.correiobraziliense.com.br"),
+        FonteRSS("g1-df", "http://g1/feed", "https://g1.globo.com"),
+    ]
+
+    def fetch_com_falha(url):
+        if "g1" in url:
+            raise RuntimeError("feed fora do ar")
+        return SAMPLE
+
+    itens = buscar_todos(fontes, fetch_fn=fetch_com_falha)
+    # só o Correio respondeu; G1 caiu mas não derrubou o lote
+    assert len(itens) == 2
+    assert {i.fonte for i in itens} == {"correio"}

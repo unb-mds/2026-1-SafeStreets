@@ -28,8 +28,9 @@ def _db():
     return sessionmaker(bind=engine)()
 
 
-def _item(titulo, descricao="", link="https://x/1", data="2026-06-20 14:30:00"):
-    return ItemRSS(titulo=titulo, descricao=descricao, link=link, data_publicacao=data, autor=None)
+def _item(titulo, descricao="", link="https://x/1", data="2026-06-20 14:30:00", fonte="correio"):
+    return ItemRSS(titulo=titulo, descricao=descricao, link=link,
+                   data_publicacao=data, autor=None, fonte=fonte)
 
 
 def _geocode_fixo(local):
@@ -56,6 +57,28 @@ def test_extrair_regiao_ignora_acento():
     assert ingestao.extrair_regiao("roubo na ceilandia") == ("Ceilândia", "RA-009")
 
 
+# ---- geocodificar_regiao (tabela estática + fallback) ----
+
+def test_geocodificar_regiao_usa_tabela_estatica_sem_rede():
+    # RA conhecida -> coordenada do centroide pré-computado, sem tocar a rede
+    coord = ingestao.geocodificar_regiao("Ceilândia")
+    assert coord is not None
+    assert (coord.latitude, coord.longitude) == ingestao.COORDENADAS_RA["RA-009"]
+
+
+def test_geocodificar_regiao_nome_fora_da_tabela_cai_no_fallback(monkeypatch):
+    # nome não mapeado -> cai no Nominatim (aqui mockado, sem rede)
+    chamado = {}
+
+    def fake_nominatim(nome):
+        chamado["nome"] = nome
+        return None
+
+    monkeypatch.setattr(ingestao.nominatim, "geocodificar", fake_nominatim)
+    assert ingestao.geocodificar_regiao("Lugar Inexistente") is None
+    assert chamado["nome"] == "Lugar Inexistente"
+
+
 # ---- filtro de relevância (Camadas 1+2, puro) ----
 
 def test_eh_cidades_df_pela_url():
@@ -68,6 +91,23 @@ def test_eh_seguranca_por_palavra_chave():
     assert ingestao.eh_seguranca(_item("Festival de música")) is False
 
 
+def test_eh_saude_descarta_escorpiao_mas_inclui_upa():
+    # escorpião continua sendo saúde (filtrado)
+    assert ingestao.eh_saude(_item("Menina picada por escorpião é internada")) is True
+    # UPA agora NÃO é saúde — morte em UPA é de interesse de segurança/negligência
+    assert ingestao.eh_saude(_item("Homem morre na antessala de UPA no DF")) is False
+    # crime de rua não é marcado como saúde
+    assert ingestao.eh_saude(_item("Homem é esfaqueado em ponto de ônibus")) is False
+
+
+def test_eh_relevante_descarta_saude_mesmo_com_termo_seguranca():
+    # "escorpião" é saúde -> descarta mesmo casando termo de segurança ("polícia")
+    saude = _item("Polícia apura morte de menina picada por escorpião no DF",
+                  link="https://g1.globo.com/df/x.ghtml", fonte="g1-df")
+    assert ingestao.eh_seguranca(saude) is True
+    assert ingestao.eh_relevante(saude) is False
+
+
 def test_eh_relevante_exige_df_e_seguranca():
     df_seg = _item("Roubo", link="https://cb.com/cidades-df/1.html")
     df_sem_seg = _item("Obras na via", link="https://cb.com/cidades-df/2.html")
@@ -75,6 +115,15 @@ def test_eh_relevante_exige_df_e_seguranca():
     assert ingestao.eh_relevante(df_seg) is True
     assert ingestao.eh_relevante(df_sem_seg) is False
     assert ingestao.eh_relevante(seg_sem_df) is False
+
+
+def test_eh_relevante_g1_df_dispensa_editoria():
+    # G1 DF já é feed exclusivo do DF: basta o termo de segurança, mesmo sem
+    # "/cidades-df/" na URL (que só existe no Correio).
+    g1_seg = _item("Roubo na Ceilândia", link="https://g1.globo.com/df/x.ghtml", fonte="g1-df")
+    g1_sem_seg = _item("Festival cultural em Brasília", link="https://g1.globo.com/df/y.ghtml", fonte="g1-df")
+    assert ingestao.eh_relevante(g1_seg) is True
+    assert ingestao.eh_relevante(g1_sem_seg) is False
 
 
 def test_ingerir_filtra_nao_relevantes():

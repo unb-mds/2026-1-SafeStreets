@@ -53,6 +53,20 @@ services:
       - ../frontend:/app
       - /app/node_modules
 
+  # Contêiner 4 (one-shot): dispara a ingestão assim que a API responde, para
+  # o mapa já abrir com dados. É idempotente (dedup por URL) e roda uma única
+  # vez por "up" (restart: no). Remova este serviço se não quiser auto-popular.
+  ingest:
+    image: curlimages/curl:latest
+    container_name: safestreets_ingest
+    depends_on:
+      - api
+    command: >
+      sh -c "until curl -sf -X POST http://api:8000/admin/ingerir;
+             do echo 'aguardando a API subir...'; sleep 3; done;
+             echo 'ingestao disparada com sucesso.'"
+    restart: "no"
+
 # criacao do volume para o banco de dados
 volumes:
   postgres_data:

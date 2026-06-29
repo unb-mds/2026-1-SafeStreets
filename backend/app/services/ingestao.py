@@ -11,6 +11,7 @@ de tipo de crime (fora do escopo, RF12).
 Comportamento do resumo segue o ADR-001 (Opção A): se o Gemini falhar, a
 ocorrência é persistida mesmo assim com `resumo_status="ERRO"` e resumo nulo.
 """
+import re
 import unicodedata
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -43,6 +44,25 @@ REGIOES_DF: dict[str, str] = {
 # um nome maior antes de tentar o nome específico.
 _NOMES_ORDENADOS = sorted(REGIOES_DF, key=len, reverse=True)
 
+# Centroide (lat, lon) de cada RA. Como o conjunto de RAs é fixo, guardamos as
+# coordenadas aqui em vez de consultar o Nominatim a cada notícia no disparo —
+# o geocode vira um lookup instantâneo (sem rede, sem rate-limit). O Nominatim
+# fica só como fallback para um nome que não esteja nesta tabela.
+COORDENADAS_RA: dict[str, tuple[float, float]] = {
+    "RA-001": (-15.7939, -47.8828),  # Plano Piloto / Brasília
+    "RA-002": (-16.0149, -48.0640),  # Gama
+    "RA-003": (-15.8311, -48.0552),  # Taguatinga
+    "RA-004": (-15.6794, -48.2010),  # Brazlândia
+    "RA-005": (-15.6535, -47.7896),  # Sobradinho
+    "RA-006": (-15.6173, -47.6478),  # Planaltina
+    "RA-009": (-15.8159, -48.1102),  # Ceilândia
+    "RA-010": (-15.8197, -47.9817),  # Guará
+    "RA-012": (-15.8767, -48.0939),  # Samambaia
+    "RA-013": (-16.0089, -48.0153),  # Santa Maria
+    "RA-015": (-15.9026, -48.0658),  # Recanto das Emas
+    "RA-020": (-15.8344, -48.0260),  # Águas Claras
+}
+
 
 def _normalizar(s: str | None) -> str:
     """Minúsculas + remove acentos — o matcher de região não pode depender de
@@ -52,11 +72,37 @@ def _normalizar(s: str | None) -> str:
     return sem_acento.lower()
 
 
-# Camada 2: termos que indicam notícia de segurança pública.
+# Camada 2: termos que indicam notícia de segurança urbana — crime E também
+# incidentes não-criminais (defesa civil/emergência), para encher o mapa.
 TERMOS_SEGURANCA: set[str] = {
+    # crime / violência
     "roubo", "furto", "assalto", "homicídio", "assassinato", "latrocínio",
     "tráfico", "drogas", "crime", "polícia", "tiroteio", "estupro",
     "violência", "preso", "apreensão", "arma", "morto", "baleado",
+    # incidentes urbanos NÃO-criminais (defesa civil/emergência):
+    # acidentes de trânsito
+    "acidente", "colisão", "capotamento", "capotou", "engavetamento",
+    "tombou", "batida", "atropelado", "atropelada", "atropelamento",
+    # fogo / explosão
+    "incêndio", "incendiou", "chamas", "explosão", "explodiu", "queimada",
+    # resgate / desastre / defesa civil
+    "resgate", "resgatado", "soterrado", "desabamento", "desabou",
+    "afogamento", "afogado", "afogou", "alagamento", "enchente",
+    "deslizamento", "bombeiros",
+}
+
+
+# Termos de SAÚDE pública — notícia de saúde que vaza por casar "morto/morte"
+# (ex.: criança picada por escorpião, surto de dengue). Não é segurança urbana;
+# descarta. Lista enxuta e claramente médica para não derrubar crime real.
+# Ficam de FORA de propósito: "hospital"/"internado" (vítima de tiro vai pro
+# hospital) e "UPA" (morte por falta de atendimento em UPA é de interesse de
+# segurança/negligência — fica no mapa). Checado só no TÍTULO — a descrição do
+# G1 traz links relacionados que poluiriam o sinal.
+TERMOS_SAUDE: set[str] = {
+    "escorpião", "dengue", "covid", "coronavírus", "vírus", "vacina",
+    "vacinação", "surto", "epidemia", "sarampo", "h1n1", "leito de uti",
+    "vigilância sanitária",
 }
 
 
@@ -73,10 +119,33 @@ def eh_seguranca(item) -> bool:
     return any(_normalizar(termo) in texto for termo in TERMOS_SEGURANCA)
 
 
+def eh_saude(item) -> bool:
+    """Termo de saúde pública no TÍTULO — fora do escopo de segurança urbana.
+    Usa fronteira de palavra (\\b) para nomes curtos não casarem dentro de
+    outra palavra (ex.: 'upa' não pode casar em 'ocupada')."""
+    titulo = _normalizar(item.titulo)
+    return any(
+        re.search(r"\b" + re.escape(_normalizar(termo)) + r"\b", titulo)
+        for termo in TERMOS_SAUDE
+    )
+
+
 def eh_relevante(item) -> bool:
-    """Notícia de segurança urbana do DF = editoria cidades-df E termo de
-    segurança. É o filtro padrão da ingestão."""
-    return eh_cidades_df(item) and eh_seguranca(item)
+    """Filtro padrão da ingestão, por origem do item:
+
+    - Descarta notícia de saúde (Camada saúde), mesmo casando termo de segurança.
+    - Correio `/feed/` é o feed geral (Brasil) -> exige editoria cidades-df
+      (URL) E termo de segurança.
+    - G1 DF (e demais fontes DF-only) já são exclusivas do Distrito Federal
+      -> basta o termo de segurança; não há editoria na URL para checar.
+    """
+    if not eh_seguranca(item):
+        return False
+    if eh_saude(item):
+        return False
+    if getattr(item, "fonte", "correio") == "correio":
+        return eh_cidades_df(item)
+    return True
 
 
 @dataclass
@@ -97,6 +166,18 @@ def extrair_regiao(texto: str) -> tuple[str, str] | None:
         if _normalizar(nome) in t:
             return nome, REGIOES_DF[nome]
     return None
+
+
+def geocodificar_regiao(nome: str) -> nominatim.Coordenada | None:
+    """Geocoder padrão da ingestão: usa o centroide pré-computado da RA
+    (COORDENADAS_RA) — lookup instantâneo, sem rede. Só consulta o Nominatim se
+    o nome não estiver na tabela estática (fallback). É o que torna o disparo
+    rápido e imune ao rate-limit do Nominatim."""
+    codigo = REGIOES_DF.get(nome)
+    if codigo and codigo in COORDENADAS_RA:
+        lat, lon = COORDENADAS_RA[codigo]
+        return nominatim.Coordenada(latitude=lat, longitude=lon)
+    return nominatim.geocodificar(nome)
 
 
 def _parse_data(valor: str | None) -> datetime:
@@ -124,8 +205,8 @@ def ingerir(
     rede/chave). `filtro(item) -> bool` decide o que é relevante; o padrão é
     `eh_relevante` (editoria cidades-df + termo de segurança).
     """
-    itens = itens if itens is not None else correio_rss.buscar_itens()
-    geocode = geocodificar or nominatim.geocodificar
+    itens = itens if itens is not None else correio_rss.buscar_todos()
+    geocode = geocodificar or geocodificar_regiao
     gemini = gemini or GeminiClient()
     aplicar_filtro = filtro if filtro is not None else eh_relevante
 
