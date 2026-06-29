@@ -37,6 +37,22 @@ services:
     # Aplica as migrations (cria as tabelas) antes de subir o servidor.
     command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
 
+  # Contêiner 3: Frontend Next.js
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: safestreets_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - api
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+
 # criacao do volume para o banco de dados
 volumes:
   postgres_data:
