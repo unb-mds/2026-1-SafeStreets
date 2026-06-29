@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-29T03:16:13.751562Z",
+  "generated_at": "2026-06-29T04:48:20.564314Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
+    {
+      "week": "2026-W27",
+      "opened": 1,
+      "closed": 3
+    },
     {
       "week": "2026-W26",
       "opened": 17,
       "closed": 21
-    },
-    {
-      "week": "2026-W27",
-      "opened": 0,
-      "closed": 3
     },
     {
       "week": "2026-W25",
@@ -104,7 +104,7 @@
     {
       "day": 1,
       "hour": 3,
-      "count": 4
+      "count": 5
     },
     {
       "day": 1,
@@ -364,7 +364,7 @@
     {
       "day": 6,
       "hour": 19,
-      "count": 4
+      "count": 3
     },
     {
       "day": 5,
@@ -481,7 +481,7 @@
   "top_pr_authors": [
     {
       "username": "IsraelSoares-25",
-      "prs_opened": 12
+      "prs_opened": 13
     },
     {
       "username": "Nic0laslc",
@@ -529,7 +529,7 @@
   "label_distribution": [
     {
       "label": "implementação",
-      "count": 60
+      "count": 61
     },
     {
       "label": "documentation",
@@ -541,7 +541,7 @@
     },
     {
       "label": "back-end",
-      "count": 41
+      "count": 42
     },
     {
       "label": "organização",
@@ -557,19 +557,19 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 23
+      "count": 24
     },
     {
       "label": "estudar",
       "count": 21
     },
     {
-      "label": "testes",
+      "label": "enhancement",
       "count": 19
     },
     {
-      "label": "enhancement",
-      "count": 18
+      "label": "testes",
+      "count": 19
     },
     {
       "label": "git/github",
