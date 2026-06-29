@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-29T13:25:22.145289Z",
+  "generated_at": "2026-06-29T23:50:36.083564Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 1,
-      "closed": 4
+      "opened": 2,
+      "closed": 5
     },
     {
       "week": "2026-W26",
@@ -85,7 +85,7 @@
     },
     {
       "range": "21-40",
-      "count": 178
+      "count": 176
     },
     {
       "range": "41-60",
@@ -97,14 +97,19 @@
     },
     {
       "range": "81+",
-      "count": 67
+      "count": 69
     }
   ],
   "commit_heatmap": [
     {
       "day": 1,
+      "hour": 23,
+      "count": 4
+    },
+    {
+      "day": 1,
       "hour": 13,
-      "count": 1
+      "count": 2
     },
     {
       "day": 1,
@@ -114,7 +119,7 @@
     {
       "day": 1,
       "hour": 4,
-      "count": 5
+      "count": 4
     },
     {
       "day": 1,
@@ -214,12 +219,12 @@
     {
       "day": 3,
       "hour": 4,
-      "count": 5
+      "count": 4
     },
     {
       "day": 2,
       "hour": 4,
-      "count": 5
+      "count": 4
     },
     {
       "day": 1,
@@ -393,11 +398,6 @@
     },
     {
       "day": 1,
-      "hour": 23,
-      "count": 2
-    },
-    {
-      "day": 1,
       "hour": 21,
       "count": 8
     },
@@ -472,7 +472,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "commits": 19
+      "commits": 21
     },
     {
       "username": "matheusqsa",
@@ -498,7 +498,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "prs_opened": 7
+      "prs_opened": 8
     },
     {
       "username": "jorgevasquez25",
@@ -537,12 +537,12 @@
       "count": 61
     },
     {
-      "label": "documentation",
+      "label": "front-end",
       "count": 56
     },
     {
-      "label": "front-end",
-      "count": 55
+      "label": "documentation",
+      "count": 56
     },
     {
       "label": "back-end",
@@ -589,7 +589,7 @@
       "count": 11
     },
     {
-      "label": "prototipação",
+      "label": "bug",
       "count": 4
     }
   ]
