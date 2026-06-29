@@ -1,0 +1,22 @@
+name: Ingestão agendada
+
+# Dispara o pipeline de ingestão (POST /admin/ingerir) de hora em hora.
+# O dedup da ingestão garante que rodar de novo só adiciona notícias novas,
+# então o banco acumula muito além do teto de ~120 itens de um snapshot do RSS.
+on:
+  schedule:
+    - cron: "0 * * * *"   # toda hora cheia (UTC)
+  workflow_dispatch: {}    # permite disparar manualmente pela aba Actions
+
+jobs:
+  ingerir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disparar /admin/ingerir
+        run: |
+          curl -fsS --max-time 180 -X POST "$API_URL/admin/ingerir" \
+            -H "X-Ingest-Token: $INGEST_TOKEN"
+        env:
+          # Configurar em: repo > Settings > Secrets and variables > Actions
+          API_URL: ${{ secrets.API_URL }}            # ex.: https://safestreets-api.onrender.com
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}  # mesmo valor da env no Render

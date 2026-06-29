@@ -18,5 +18,7 @@ COPY . .
 # Porta exposta pelo FastAPI
 EXPOSE 8000
 
-# Comando padrão (sobrescrito pelo docker-compose.yml)
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Comando padrão (sobrescrito pelo docker-compose.yml no dev local).
+# Aplica as migrations e sobe na porta que o host injeta ($PORT no Render),
+# com fallback 8000 fora dele. Shell form para o ${PORT} expandir.
+CMD sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"
