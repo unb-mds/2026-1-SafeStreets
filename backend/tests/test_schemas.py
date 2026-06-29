@@ -58,10 +58,14 @@ def test_out_serializa_campos():
         "titulo": "Teste",
         "latitude": -15.79,
         "longitude": -47.88,
+        "ra": None,
         "regiao": None,
         "risco": None,
         "resumo": None,
+        "resumo_status": None,
         "data": None,
+        "descricao_detalhada": None,
+        "fonte_url": None,
     }
 
 

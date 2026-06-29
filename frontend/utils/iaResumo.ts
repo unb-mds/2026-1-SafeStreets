@@ -1,14 +1,13 @@
 import type { Noticia } from "./noticias";
 
-const ID_SEM_RESUMO = "5";
-const LATENCIA_MS = 600;
-
+/**
+ * Retorna o resumo de IA armazenado na ocorrência (campo resumo_gemini do banco).
+ * Lança erro se o resumo não estiver disponível — o componente DetalhesOcorrencia
+ * já trata esse caso exibindo mensagem de indisponibilidade (ADR-001, Opção A).
+ */
 export async function gerarResumoIA(noticia: Noticia): Promise<string> {
-  await new Promise((resolve) => setTimeout(resolve, LATENCIA_MS));
-
-  if (noticia.id === ID_SEM_RESUMO) {
+  if (!noticia.resumo) {
     throw new Error("Resumo de IA indisponível para esta ocorrência.");
   }
-
-  return `Resumo gerado por IA: ${noticia.resumo}`;
+  return noticia.resumo;
 }

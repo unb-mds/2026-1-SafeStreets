@@ -52,6 +52,7 @@ def test_disparo_retorna_resultado_no_envelope(monkeypatch):
         "persistidas": 2,
         "filtradas": 17,
         "sem_regiao": 1,
+        "duplicadas": 0,
         "erros": 0,
     }
 

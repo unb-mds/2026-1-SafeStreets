@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDownIcon, SearchIcon } from "@/components/icons";
-import { REGIOES_ADMINISTRATIVAS, PERIODOS, algumFiltroAplicado, filtrarNoticias } from "@/utils/filtros";
-import { noticias, type Noticia } from "@/utils/noticias";
+import { PERIODOS, algumFiltroAplicado, filtrarNoticias, getRegioes } from "@/utils/filtros";
+import { fetchNoticias, type Noticia } from "@/utils/noticias";
 import ResultadoBusca from "@/components/ResultadoBusca/ResultadoBusca";
 import styles from "./PainelFiltros.module.css";
 
@@ -26,6 +26,19 @@ export default function PainelFiltros({
   const [periodo, setPeriodo] = useState(INITIAL_STATE.periodo);
   const [busca, setBusca] = useState(INITIAL_STATE.busca);
   const [expandido, setExpandido] = useState(true);
+
+  // Notícias e regiões carregadas da API
+  const [noticias, setNoticias] = useState<Noticia[]>([]);
+  const [regioes, setRegioes] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetchNoticias()
+      .then((data) => {
+        setNoticias(data);
+        setRegioes(getRegioes(data));
+      })
+      .catch(() => {});
+  }, []);
 
   function handleLimparFiltros() {
     setRegiao(INITIAL_STATE.regiao);
@@ -69,7 +82,7 @@ export default function PainelFiltros({
               onChange={(event) => setRegiao(event.target.value)}
             >
               <option value="">Escolha uma opção</option>
-              {REGIOES_ADMINISTRATIVAS.map((regiaoOpcao) => (
+              {regioes.map((regiaoOpcao) => (
                 <option key={regiaoOpcao} value={regiaoOpcao}>
                   {regiaoOpcao}
                 </option>

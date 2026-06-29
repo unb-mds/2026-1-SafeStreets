@@ -28,10 +28,24 @@ class OcorrenciaOut(BaseModel):
     titulo: str
     latitude: float
     longitude: float
-    regiao: str | None = None
+
+    # Campos geográficos separados: código RA e nome completo da região
+    ra: str | None = None          # ex: "RA-009"
+    regiao: str | None = None      # ex: "Ceilândia"
+
+    # Risco capitalizado para o frontend: "Baixo" | "Médio" | "Alto"
     risco: str | None = None
+
+    # Resumo e seu status (ADR-001: COMPLETO | PENDENTE | ERRO | FALLBACK_GENERICO)
     resumo: str | None = None
-    data: datetime | None = None
+    resumo_status: str | None = None
+
+    # Data formatada como string "DD/MM/YYYY" para exibição direta
+    data: str | None = None
+
+    # Conteúdo completo da notícia e link original (RF02)
+    descricao_detalhada: str | None = None
+    fonte_url: str | None = None
 
 
 class OcorrenciaListResponse(BaseModel):

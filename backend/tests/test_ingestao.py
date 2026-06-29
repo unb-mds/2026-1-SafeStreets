@@ -141,7 +141,10 @@ def test_ingerir_gemini_falha_persiste_com_status_erro():
 def test_ingerir_reaproveita_pin_para_mesma_regiao():
     db = _db()
     gemini = GeminiClient(generate_fn=lambda texto: "r")
-    itens = [_item("Roubo na Ceilândia A"), _item("Furto na Ceilândia B")]
+    itens = [
+        _item("Roubo na Ceilândia A", link="https://x/1"),
+        _item("Furto na Ceilândia B", link="https://x/2"),
+    ]
 
     res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo, gemini=gemini, filtro=_sem_filtro)
 
@@ -162,3 +165,23 @@ def test_ingerir_sem_geocode_pula():
     )
     assert res.sem_regiao == 1
     assert db.query(Ocorrencia).count() == 0
+
+
+def test_ingerir_evita_duplicacao_de_noticias():
+    """Valida que notícias com a mesma URL não são duplicadas no banco."""
+    db = _db()
+    gemini = GeminiClient(generate_fn=lambda t: "r")
+    
+    # 1. Ingerir o item pela primeira vez (deve persistir)
+    item = _item("Roubo no Gama", link="https://x/gama")
+    res1 = ingestao.ingerir(db, itens=[item], geocodificar=_geocode_fixo, gemini=gemini, filtro=_sem_filtro)
+    assert res1.persistidas == 1
+    assert res1.duplicadas == 0
+    assert db.query(Ocorrencia).count() == 1
+
+    # 2. Ingerir o mesmo item de novo (deve ser considerado duplicado e pulado)
+    res2 = ingestao.ingerir(db, itens=[item], geocodificar=_geocode_fixo, gemini=gemini, filtro=_sem_filtro)
+    assert res2.persistidas == 0
+    assert res2.duplicadas == 1
+    assert db.query(Ocorrencia).count() == 1
+
