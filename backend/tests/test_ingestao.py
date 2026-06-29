@@ -28,8 +28,9 @@ def _db():
     return sessionmaker(bind=engine)()
 
 
-def _item(titulo, descricao="", link="https://x/1", data="2026-06-20 14:30:00"):
-    return ItemRSS(titulo=titulo, descricao=descricao, link=link, data_publicacao=data, autor=None)
+def _item(titulo, descricao="", link="https://x/1", data="2026-06-20 14:30:00", fonte="correio"):
+    return ItemRSS(titulo=titulo, descricao=descricao, link=link,
+                   data_publicacao=data, autor=None, fonte=fonte)
 
 
 def _geocode_fixo(local):
@@ -56,6 +57,49 @@ def test_extrair_regiao_ignora_acento():
     assert ingestao.extrair_regiao("roubo na ceilandia") == ("Ceilândia", "RA-009")
 
 
+def test_extrair_regiao_reconhece_ras_novas_e_aliases():
+    assert ingestao.extrair_regiao("Tiroteio em São Sebastião") == ("São Sebastião", "RA-014")
+    assert ingestao.extrair_regiao("Apreensão no Itapoã") == ("Itapoã", "RA-028")
+    # alias: "Estrutural" mapeia para SCIA (RA-025)
+    assert ingestao.extrair_regiao("Incêndio na Estrutural") == ("Estrutural", "RA-025")
+
+
+def test_extrair_regiao_sigla_curta_nao_casa_dentro_de_palavra():
+    # "SIA" (RA-029) não pode casar dentro de "agência"/"polícia" (fronteira \\b)
+    assert ingestao.extrair_regiao("Caso resolvido pela agência da polícia") is None
+    # mas casa quando é a RA de fato
+    assert ingestao.extrair_regiao("Roubo no SIA") == ("SIA", "RA-029")
+
+
+def test_toda_ra_tem_coordenada():
+    # consistência: todo código mapeado em REGIOES_DF tem centroide em COORDENADAS_RA
+    codigos = set(ingestao.REGIOES_DF.values())
+    assert codigos == set(ingestao.COORDENADAS_RA)
+    assert len(ingestao.COORDENADAS_RA) == 35
+
+
+# ---- geocodificar_regiao (tabela estática + fallback) ----
+
+def test_geocodificar_regiao_usa_tabela_estatica_sem_rede():
+    # RA conhecida -> coordenada do centroide pré-computado, sem tocar a rede
+    coord = ingestao.geocodificar_regiao("Ceilândia")
+    assert coord is not None
+    assert (coord.latitude, coord.longitude) == ingestao.COORDENADAS_RA["RA-009"]
+
+
+def test_geocodificar_regiao_nome_fora_da_tabela_cai_no_fallback(monkeypatch):
+    # nome não mapeado -> cai no Nominatim (aqui mockado, sem rede)
+    chamado = {}
+
+    def fake_nominatim(nome):
+        chamado["nome"] = nome
+        return None
+
+    monkeypatch.setattr(ingestao.nominatim, "geocodificar", fake_nominatim)
+    assert ingestao.geocodificar_regiao("Lugar Inexistente") is None
+    assert chamado["nome"] == "Lugar Inexistente"
+
+
 # ---- filtro de relevância (Camadas 1+2, puro) ----
 
 def test_eh_cidades_df_pela_url():
@@ -68,6 +112,62 @@ def test_eh_seguranca_por_palavra_chave():
     assert ingestao.eh_seguranca(_item("Festival de música")) is False
 
 
+def test_eh_saude_descarta_escorpiao_mas_inclui_upa():
+    # escorpião continua sendo saúde (filtrado)
+    assert ingestao.eh_saude(_item("Menina picada por escorpião é internada")) is True
+    # UPA agora NÃO é saúde — morte em UPA é de interesse de segurança/negligência
+    assert ingestao.eh_saude(_item("Homem morre na antessala de UPA no DF")) is False
+    # crime de rua não é marcado como saúde
+    assert ingestao.eh_saude(_item("Homem é esfaqueado em ponto de ônibus")) is False
+
+
+def test_eh_relevante_descarta_saude_mesmo_com_termo_seguranca():
+    # "escorpião" é saúde -> descarta mesmo casando termo de segurança ("polícia")
+    saude = _item("Polícia apura morte de menina picada por escorpião no DF",
+                  link="https://g1.globo.com/df/x.ghtml", fonte="g1-df")
+    assert ingestao.eh_seguranca(saude) is True
+    assert ingestao.eh_relevante(saude) is False
+
+
+def test_eh_politica_descarta_arena_institucional_mas_mantem_crime():
+    assert ingestao.eh_politica(_item("PGR recusa delação de ex-presidente do BRB")) is True
+    assert ingestao.eh_politica(_item("Bolsonaro depõe à polícia sobre arma apreendida")) is True
+    assert ingestao.eh_politica(_item("Vorcaro é transferido para a Papudinha")) is True
+    # crime de rua não é marcado como política
+    assert ingestao.eh_politica(_item("Mulher é esfaqueada dentro de ônibus no DF")) is False
+
+
+def test_eh_relevante_descarta_politica_mesmo_com_termo_seguranca():
+    # "preso"/"arma" casam segurança, mas é a arena político-judicial -> descarta
+    pol = _item("Bolsonaro é ouvido pela polícia sobre arma apreendida",
+                link="https://g1.globo.com/df/x.ghtml", fonte="g1-df")
+    assert ingestao.eh_seguranca(pol) is True
+    assert ingestao.eh_relevante(pol) is False
+
+
+def test_fraude_e_crime_e_deve_passar():
+    # fraude não é "política": descontos irregulares com prisão é crime mapeável
+    fraude = _item("Grupo é preso suspeito de descontos irregulares em contas",
+                   link="https://g1.globo.com/df/x.ghtml", fonte="g1-df")
+    assert ingestao.eh_politica(fraude) is False
+    assert ingestao.eh_relevante(fraude) is True
+
+
+def test_eh_esporte_cultura_descarta_agenda_mas_mantem_crime():
+    assert ingestao.eh_esporte_cultura(_item("Copa do Mundo altera horários no DF")) is True
+    assert ingestao.eh_esporte_cultura(_item("Djavan e Emicida são atrações do festival")) is True
+    # crime de rua não é esporte/cultura
+    assert ingestao.eh_esporte_cultura(_item("Homem é esfaqueado em ônibus no DF")) is False
+
+
+def test_eh_relevante_descarta_esporte_mesmo_com_termo_seguranca():
+    # caso real: nota de Copa do Mundo que casaria "polícia" no corpo -> descarta
+    esp = _item("Copa do Mundo: esquema de polícia reforça segurança no DF",
+                link="https://g1.globo.com/df/x.ghtml", fonte="g1-df")
+    assert ingestao.eh_seguranca(esp) is True
+    assert ingestao.eh_relevante(esp) is False
+
+
 def test_eh_relevante_exige_df_e_seguranca():
     df_seg = _item("Roubo", link="https://cb.com/cidades-df/1.html")
     df_sem_seg = _item("Obras na via", link="https://cb.com/cidades-df/2.html")
@@ -75,6 +175,15 @@ def test_eh_relevante_exige_df_e_seguranca():
     assert ingestao.eh_relevante(df_seg) is True
     assert ingestao.eh_relevante(df_sem_seg) is False
     assert ingestao.eh_relevante(seg_sem_df) is False
+
+
+def test_eh_relevante_g1_df_dispensa_editoria():
+    # G1 DF já é feed exclusivo do DF: basta o termo de segurança, mesmo sem
+    # "/cidades-df/" na URL (que só existe no Correio).
+    g1_seg = _item("Roubo na Ceilândia", link="https://g1.globo.com/df/x.ghtml", fonte="g1-df")
+    g1_sem_seg = _item("Festival cultural em Brasília", link="https://g1.globo.com/df/y.ghtml", fonte="g1-df")
+    assert ingestao.eh_relevante(g1_seg) is True
+    assert ingestao.eh_relevante(g1_sem_seg) is False
 
 
 def test_ingerir_filtra_nao_relevantes():
