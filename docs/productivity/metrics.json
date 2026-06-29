@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-29T04:48:20.564314Z",
+  "generated_at": "2026-06-29T13:25:22.145289Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
       "opened": 1,
-      "closed": 3
+      "closed": 4
     },
     {
       "week": "2026-W26",
@@ -81,11 +81,11 @@
   "commit_message_histogram": [
     {
       "range": "0-20",
-      "count": 19
+      "count": 18
     },
     {
       "range": "21-40",
-      "count": 179
+      "count": 178
     },
     {
       "range": "41-60",
@@ -93,14 +93,29 @@
     },
     {
       "range": "61-80",
-      "count": 11
+      "count": 12
     },
     {
       "range": "81+",
-      "count": 66
+      "count": 67
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 1,
+      "hour": 13,
+      "count": 1
+    },
+    {
+      "day": 1,
+      "hour": 12,
+      "count": 1
+    },
+    {
+      "day": 1,
+      "hour": 4,
+      "count": 5
+    },
     {
       "day": 1,
       "hour": 3,
@@ -124,7 +139,7 @@
     {
       "day": 0,
       "hour": 4,
-      "count": 11
+      "count": 10
     },
     {
       "day": 0,
@@ -352,11 +367,6 @@
       "count": 6
     },
     {
-      "day": 1,
-      "hour": 4,
-      "count": 3
-    },
-    {
       "day": 0,
       "hour": 15,
       "count": 7
@@ -364,7 +374,7 @@
     {
       "day": 6,
       "hour": 19,
-      "count": 3
+      "count": 1
     },
     {
       "day": 5,
@@ -445,17 +455,12 @@
       "day": 3,
       "hour": 15,
       "count": 1
-    },
-    {
-      "day": 6,
-      "hour": 22,
-      "count": 1
     }
   ],
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 53
+      "commits": 55
     },
     {
       "username": "jorgevasquez25",
@@ -470,11 +475,11 @@
       "commits": 19
     },
     {
-      "username": "ArthurFeitosa05",
-      "commits": 8
+      "username": "matheusqsa",
+      "commits": 7
     },
     {
-      "username": "matheusqsa",
+      "username": "ArthurFeitosa05",
       "commits": 7
     }
   ],
