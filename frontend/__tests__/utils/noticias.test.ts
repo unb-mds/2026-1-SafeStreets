@@ -1,133 +1,138 @@
-import { noticias, getNoticiaPorId, type Noticia } from "@/utils/noticias";
+import { fetchNoticias, fetchNoticiaPorId } from "@/utils/noticias";
 
-describe("noticias data", () => {
-  describe("array structure", () => {
-    it("should export a non-empty array", () => {
-      expect(Array.isArray(noticias)).toBe(true);
-      expect(noticias.length).toBeGreaterThan(0);
+describe("noticias API client", () => {
+  const originalFetch = global.fetch;
+  const mockFetch = jest.fn();
+
+  beforeAll(() => {
+    global.fetch = mockFetch;
+  });
+
+  afterAll(() => {
+    global.fetch = originalFetch;
+  });
+
+  beforeEach(() => {
+    mockFetch.mockReset();
+  });
+
+  const apiOcorrenciaExemplo = {
+    id: 42,
+    titulo: "Ocorrência de teste",
+    latitude: -15.7797,
+    longitude: -47.9297,
+    ra: "RA-I",
+    regiao: "Plano Piloto",
+    risco: "Alto",
+    resumo: "Resumo da ocorrência de teste",
+    resumo_status: "done",
+    data: "01/01/2026",
+    descricao_detalhada: "Detalhe completo da ocorrência.",
+    fonte_url: "https://www.ssp.df.gov.br/noticia.html",
+  };
+
+  describe("fetchNoticias", () => {
+    it("deve buscar notícias com sucesso e converter o formato da API", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          data: [apiOcorrenciaExemplo],
+        }),
+      });
+
+      const resultado = await fetchNoticias();
+
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/ocorrencias"),
+        expect.anything()
+      );
+
+      expect(resultado).toHaveLength(1);
+      expect(resultado[0]).toEqual({
+        id: "42",
+        titulo: "Ocorrência de teste",
+        resumo: "Resumo da ocorrência de teste",
+        regiao: "Plano Piloto",
+        ra: "RA-I",
+        data: "01/01/2026",
+        fonte: "www.ssp.df.gov.br",
+        corpo: ["Detalhe completo da ocorrência."],
+        fonteUrl: "https://www.ssp.df.gov.br/noticia.html",
+        risco: "Alto",
+        lat: -15.7797,
+        lng: -47.9297,
+      });
     });
 
-    it("should have at least 6 articles", () => {
-      expect(noticias.length).toBeGreaterThanOrEqual(6);
+    it("deve propagar os parâmetros de busca corretos na URL", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          data: [],
+        }),
+      });
+
+      await fetchNoticias({
+        regiao: "Gama",
+        data_inicio: "2026-01-01",
+        data_fim: "2026-01-07",
+      });
+
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      const urlChamada = mockFetch.mock.calls[0][0] as string;
+      expect(urlChamada).toContain("regiao=Gama");
+      expect(urlChamada).toContain("data_inicio=2026-01-01");
+      expect(urlChamada).toContain("data_fim=2026-01-07");
+    });
+
+    it("deve lançar erro caso a resposta não seja ok", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+      });
+
+      await expect(fetchNoticias()).rejects.toThrow("Falha ao buscar ocorrências: 500");
     });
   });
 
-  describe("Noticia fields", () => {
-    it("should have all required fields on every item", () => {
-      const requiredFields: Array<"id" | "titulo" | "resumo" | "regiao" | "ra" | "data" | "fonte"> = [
-        "id",
-        "titulo",
-        "resumo",
-        "regiao",
-        "ra",
-        "data",
-        "fonte",
-      ];
-
-      noticias.forEach((n) => {
-        requiredFields.forEach((field) => {
-          expect(n).toHaveProperty(field);
-          expect(typeof n[field]).toBe("string");
-          expect(n[field].trim().length).toBeGreaterThan(0);
-        });
+  describe("fetchNoticiaPorId", () => {
+    it("deve buscar uma única notícia por ID e convertê-la", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          data: apiOcorrenciaExemplo,
+        }),
       });
+
+      const resultado = await fetchNoticiaPorId("42");
+
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/ocorrencias/42"),
+        expect.anything()
+      );
+      expect(resultado).not.toBeNull();
+      expect(resultado?.id).toBe("42");
     });
 
-    it("should reject articles with empty strings (edge: empty string vs missing)", () => {
-      // Verifica que nenhum campo está em branco (string vazia ou só espaços)
-      noticias.forEach((n) => {
-        expect(n.id.trim()).not.toBe("");
-        expect(n.titulo.trim()).not.toBe("");
-        expect(n.resumo.trim()).not.toBe("");
-        expect(n.regiao.trim()).not.toBe("");
-        expect(n.ra.trim()).not.toBe("");
-        expect(n.data.trim()).not.toBe("");
-        expect(n.fonte.trim()).not.toBe("");
+    it("deve retornar null caso o status seja 404", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 404,
       });
+
+      const resultado = await fetchNoticiaPorId("999");
+      expect(resultado).toBeNull();
     });
 
-    it("should have a non-empty corpo (array of paragraphs) on every item (RF02)", () => {
-      noticias.forEach((n) => {
-        expect(Array.isArray(n.corpo)).toBe(true);
-        expect(n.corpo.length).toBeGreaterThan(0);
-        n.corpo.forEach((paragrafo) => {
-          expect(typeof paragrafo).toBe("string");
-          expect(paragrafo.trim().length).toBeGreaterThan(0);
-        });
+    it("deve lançar erro caso ocorra outra falha na requisição", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 403,
       });
-    });
 
-    it("should have a valid http(s) fonteUrl on every item (RF02)", () => {
-      noticias.forEach((n) => {
-        expect(typeof n.fonteUrl).toBe("string");
-        expect(n.fonteUrl).toMatch(/^https?:\/\/.+/);
-      });
-    });
-  });
-
-  describe("getNoticiaPorId", () => {
-    it("returns the matching notícia for an existing id (happy path)", () => {
-      const primeira = noticias[0];
-      const encontrada = getNoticiaPorId(primeira.id);
-      expect(encontrada).toBeDefined();
-      expect(encontrada?.id).toBe(primeira.id);
-      expect(encontrada?.titulo).toBe(primeira.titulo);
-    });
-
-    it("returns undefined for an unknown id (edge: not found)", () => {
-      expect(getNoticiaPorId("id-inexistente")).toBeUndefined();
-    });
-
-    it("returns undefined for an empty id (edge: empty string)", () => {
-      expect(getNoticiaPorId("")).toBeUndefined();
-    });
-  });
-
-  describe("id uniqueness", () => {
-    it("should have unique ids across all articles", () => {
-      const ids = noticias.map((n) => n.id);
-      const uniqueIds = new Set(ids);
-      expect(uniqueIds.size).toBe(noticias.length);
-    });
-
-    it("should not have empty or whitespace-only ids (edge: id collision risk)", () => {
-      noticias.forEach((n) => {
-        expect(n.id.trim()).not.toBe("");
-      });
-    });
-  });
-
-  describe("data (date) format", () => {
-    it("should match DD/MM/YYYY format for all articles", () => {
-      const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
-      noticias.forEach((n) => {
-        expect(n.data).toMatch(dateRegex);
-      });
-    });
-
-    it("should have valid calendar values (edge: day/month out of range)", () => {
-      noticias.forEach((n) => {
-        const [day, month] = n.data.split("/").map(Number);
-        expect(day).toBeGreaterThanOrEqual(1);
-        expect(day).toBeLessThanOrEqual(31);
-        expect(month).toBeGreaterThanOrEqual(1);
-        expect(month).toBeLessThanOrEqual(12);
-      });
-    });
-  });
-
-  describe("ra (administrative region code)", () => {
-    it("should follow RA-<roman> pattern for all articles", () => {
-      const raRegex = /^RA-[IVXLCDM]+$/;
-      noticias.forEach((n) => {
-        expect(n.ra).toMatch(raRegex);
-      });
-    });
-
-    it("should not accept lowercase ra codes (edge: case sensitivity)", () => {
-      noticias.forEach((n) => {
-        expect(n.ra).toBe(n.ra.toUpperCase());
-      });
+      await expect(fetchNoticiaPorId("42")).rejects.toThrow("Falha ao buscar ocorrência 42: 403");
     });
   });
 });

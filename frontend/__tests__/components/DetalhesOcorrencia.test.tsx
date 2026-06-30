@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import DetalhesOcorrencia from "@/components/DetalhesOcorrencia/DetalhesOcorrencia";
-import { noticias } from "@/utils/noticias";
+import type { Noticia } from "@/utils/noticias";
 import { gerarResumoIA } from "@/utils/iaResumo";
 
 jest.mock("@/utils/iaResumo", () => ({
@@ -11,7 +11,22 @@ jest.mock("@/utils/iaResumo", () => ({
 
 const mockGerarResumoIA = gerarResumoIA as jest.MockedFunction<typeof gerarResumoIA>;
 
-const noticia = noticias[0];
+const noticia: Noticia = {
+  id: "1",
+  titulo: "Furtos a pedestres aumentam 14% na quadra comercial da 304 Sul",
+  resumo: "Câmeras e patrulhamento a pé serão reforçados após série de ocorrências no fim de tarde.",
+  regiao: "Plano Piloto",
+  ra: "RA-I",
+  data: "02/06/2026",
+  fonte: "Boletim de Segurança · SSP-DF",
+  corpo: [
+    "Primeiro parágrafo de teste.",
+  ],
+  fonteUrl: "https://www.ssp.df.gov.br/",
+  risco: "Médio",
+  lat: -15.7942,
+  lng: -47.8822,
+};
 
 describe("DetalhesOcorrencia", () => {
   beforeEach(() => {

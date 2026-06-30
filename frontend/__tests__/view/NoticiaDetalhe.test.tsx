@@ -16,6 +16,9 @@ const noticia: Noticia = {
     "Segundo parágrafo com mais contexto sobre o caso.",
   ],
   fonteUrl: "https://www.ssp.df.gov.br/",
+  risco: "Médio",
+  lat: -15.7942,
+  lng: -47.8822,
 };
 
 describe("NoticiaDetalhe (RF02)", () => {
