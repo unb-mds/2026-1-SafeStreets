@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-29T23:50:36.083564Z",
+  "generated_at": "2026-06-30T00:01:16.345262Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 2,
-      "closed": 5
+      "opened": 3,
+      "closed": 6
     },
     {
       "week": "2026-W26",
@@ -85,7 +85,7 @@
     },
     {
       "range": "21-40",
-      "count": 176
+      "count": 175
     },
     {
       "range": "41-60",
@@ -97,14 +97,19 @@
     },
     {
       "range": "81+",
-      "count": 69
+      "count": 70
     }
   ],
   "commit_heatmap": [
     {
+      "day": 2,
+      "hour": 0,
+      "count": 2
+    },
+    {
       "day": 1,
       "hour": 23,
-      "count": 4
+      "count": 6
     },
     {
       "day": 1,
@@ -277,11 +282,6 @@
       "count": 1
     },
     {
-      "day": 2,
-      "hour": 0,
-      "count": 1
-    },
-    {
       "day": 1,
       "hour": 15,
       "count": 3
@@ -449,12 +449,7 @@
     {
       "day": 4,
       "hour": 0,
-      "count": 4
-    },
-    {
-      "day": 3,
-      "hour": 15,
-      "count": 1
+      "count": 2
     }
   ],
   "top_committers": [
@@ -472,15 +467,15 @@
     },
     {
       "username": "EdsonToppzera",
-      "commits": 21
-    },
-    {
-      "username": "matheusqsa",
-      "commits": 7
+      "commits": 23
     },
     {
       "username": "ArthurFeitosa05",
       "commits": 7
+    },
+    {
+      "username": "matheusqsa",
+      "commits": 6
     }
   ],
   "top_pr_authors": [
@@ -498,7 +493,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "prs_opened": 8
+      "prs_opened": 9
     },
     {
       "username": "jorgevasquez25",
@@ -538,7 +533,7 @@
     },
     {
       "label": "front-end",
-      "count": 56
+      "count": 57
     },
     {
       "label": "documentation",
@@ -546,7 +541,7 @@
     },
     {
       "label": "back-end",
-      "count": 42
+      "count": 43
     },
     {
       "label": "organização",
@@ -590,7 +585,7 @@
     },
     {
       "label": "bug",
-      "count": 4
+      "count": 5
     }
   ]
 }
