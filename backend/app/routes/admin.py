@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+import os
+
+from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
 from app.core.database import get_db
@@ -8,11 +10,18 @@ router = APIRouter(prefix="/admin", tags=["Admin"])
 
 _DB_OFF = "Banco de dados indisponível. Suba o Postgres com 'docker compose up -d'."
 
-# Endpoint administrativo/interno: dispara o pipeline de ingestão sob demanda.
-# Ainda sem autenticação (RNF07 / auth é trabalho futuro) — proteger depois.
+# Token de proteção da ingestão. Se INGEST_TOKEN estiver setado (produção), o
+# disparo exige o header 'X-Ingest-Token' correspondente; sem a env (dev local),
+# o endpoint segue aberto — não atrapalha o docker-compose nem os testes.
+_INGEST_TOKEN = os.getenv("INGEST_TOKEN")
 
 
-@router.post("/ingerir")
+def verificar_token(x_ingest_token: str | None = Header(default=None)) -> None:
+    if _INGEST_TOKEN and x_ingest_token != _INGEST_TOKEN:
+        raise HTTPException(status_code=401, detail="Token de ingestão inválido.")
+
+
+@router.post("/ingerir", dependencies=[Depends(verificar_token)])
 def disparar_ingestao(db: Session = Depends(get_db)):
     """Dispara a ingestão (RSS → filtro → geocode → Gemini → persiste).
 
