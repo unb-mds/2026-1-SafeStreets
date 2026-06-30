@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-30T23:27:22.998463Z",
+  "generated_at": "2026-06-30T23:49:30.619869Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 13,
-      "closed": 10
+      "opened": 15,
+      "closed": 11
     },
     {
       "week": "2026-W26",
@@ -104,12 +104,12 @@
     {
       "day": 2,
       "hour": 23,
-      "count": 1
+      "count": 4
     },
     {
       "day": 2,
       "hour": 22,
-      "count": 8
+      "count": 13
     },
     {
       "day": 2,
@@ -229,12 +229,12 @@
     {
       "day": 5,
       "hour": 4,
-      "count": 5
+      "count": 4
     },
     {
       "day": 5,
       "hour": 1,
-      "count": 3
+      "count": 1
     },
     {
       "day": 4,
@@ -449,22 +449,17 @@
     {
       "day": 5,
       "hour": 13,
-      "count": 6
-    },
-    {
-      "day": 4,
-      "hour": 23,
-      "count": 4
+      "count": 5
     }
   ],
   "top_committers": [
     {
-      "username": "IsraelSoares-25",
-      "commits": 49
+      "username": "jorgevasquez25",
+      "commits": 55
     },
     {
-      "username": "jorgevasquez25",
-      "commits": 48
+      "username": "IsraelSoares-25",
+      "commits": 46
     },
     {
       "username": "Nic0laslc",
@@ -480,7 +475,7 @@
     },
     {
       "username": "matheusqsa",
-      "commits": 6
+      "commits": 5
     }
   ],
   "top_pr_authors": [
@@ -494,7 +489,7 @@
     },
     {
       "username": "Nic0laslc",
-      "prs_opened": 11
+      "prs_opened": 12
     },
     {
       "username": "matheusqsa",
@@ -502,7 +497,7 @@
     },
     {
       "username": "jorgevasquez25",
-      "prs_opened": 5
+      "prs_opened": 6
     }
   ],
   "top_issue_contributors": [
@@ -533,24 +528,24 @@
   ],
   "label_distribution": [
     {
+      "label": "front-end",
+      "count": 63
+    },
+    {
       "label": "implementação",
       "count": 63
     },
     {
-      "label": "front-end",
+      "label": "documentation",
       "count": 62
     },
     {
-      "label": "documentation",
-      "count": 61
-    },
-    {
       "label": "back-end",
-      "count": 43
+      "count": 44
     },
     {
       "label": "organização",
-      "count": 39
+      "count": 40
     },
     {
       "label": "requisitos",
@@ -565,12 +560,12 @@
       "count": 24
     },
     {
-      "label": "estudar",
+      "label": "testes",
       "count": 21
     },
     {
-      "label": "testes",
-      "count": 20
+      "label": "estudar",
+      "count": 21
     },
     {
       "label": "enhancement",
@@ -582,7 +577,7 @@
     },
     {
       "label": "banco de dados",
-      "count": 11
+      "count": 12
     },
     {
       "label": "docker",
@@ -590,7 +585,7 @@
     },
     {
       "label": "bug",
-      "count": 6
+      "count": 7
     }
   ]
 }
