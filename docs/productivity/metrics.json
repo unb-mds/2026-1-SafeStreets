@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-30T00:39:09.002367Z",
+  "generated_at": "2026-06-30T01:22:43.151201Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 4,
-      "closed": 7
+      "opened": 5,
+      "closed": 8
     },
     {
       "week": "2026-W26",
@@ -85,7 +85,7 @@
     },
     {
       "range": "21-40",
-      "count": 174
+      "count": 173
     },
     {
       "range": "41-60",
@@ -93,7 +93,7 @@
     },
     {
       "range": "61-80",
-      "count": 13
+      "count": 14
     },
     {
       "range": "81+",
@@ -103,8 +103,13 @@
   "commit_heatmap": [
     {
       "day": 2,
+      "hour": 1,
+      "count": 2
+    },
+    {
+      "day": 2,
       "hour": 0,
-      "count": 5
+      "count": 7
     },
     {
       "day": 1,
@@ -277,11 +282,6 @@
       "count": 1
     },
     {
-      "day": 2,
-      "hour": 1,
-      "count": 1
-    },
-    {
       "day": 1,
       "hour": 15,
       "count": 3
@@ -354,7 +354,7 @@
     {
       "day": 4,
       "hour": 16,
-      "count": 3
+      "count": 1
     },
     {
       "day": 4,
@@ -444,13 +444,13 @@
     {
       "day": 4,
       "hour": 18,
-      "count": 5
+      "count": 4
     }
   ],
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 54
+      "commits": 52
     },
     {
       "username": "jorgevasquez25",
@@ -462,7 +462,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "commits": 25
+      "commits": 27
     },
     {
       "username": "ArthurFeitosa05",
@@ -479,12 +479,12 @@
       "prs_opened": 13
     },
     {
-      "username": "Nic0laslc",
+      "username": "EdsonToppzera",
       "prs_opened": 11
     },
     {
-      "username": "EdsonToppzera",
-      "prs_opened": 10
+      "username": "Nic0laslc",
+      "prs_opened": 11
     },
     {
       "username": "matheusqsa",
@@ -528,7 +528,7 @@
     },
     {
       "label": "front-end",
-      "count": 57
+      "count": 59
     },
     {
       "label": "documentation",
@@ -552,7 +552,7 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 24
+      "count": 25
     },
     {
       "label": "estudar",
@@ -580,7 +580,7 @@
     },
     {
       "label": "bug",
-      "count": 5
+      "count": 6
     }
   ]
 }
