@@ -78,11 +78,11 @@ export default function PainelFiltros({
         <div className={styles.corpo}>
           <div className={styles.campo}>
             <label className={styles.label} htmlFor="filtro-regiao">
-              Região Administrativa
+              Região
             </label>
             <select
               id="filtro-regiao"
-              aria-label="Região Administrativa"
+              aria-label="Região"
               className={styles.select}
               value={regiao}
               onChange={(event) => setRegiao(event.target.value)}
