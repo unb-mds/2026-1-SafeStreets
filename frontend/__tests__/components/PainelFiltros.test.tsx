@@ -11,12 +11,12 @@ describe("PainelFiltros", () => {
       expect(screen.getByText("FILTROS")).toBeInTheDocument();
     });
 
-    it("renders the 'Região Administrativa' select with placeholder and known regions", () => {
+    it("renders the 'Região' select with placeholder and known regions", () => {
       render(<PainelFiltros />);
-      const select = screen.getByLabelText("Região Administrativa");
+      const select = screen.getByLabelText("Região");
       expect(select).toBeInTheDocument();
       expect((select as HTMLSelectElement).value).toBe("");
-      expect(screen.getByText("Escolha uma opção", { selector: "select[aria-label='Região Administrativa'] option" })).toBeInTheDocument();
+      expect(screen.getByText("Escolha uma opção", { selector: "select[aria-label='Região'] option" })).toBeInTheDocument();
       REGIOES_ADMINISTRATIVAS.forEach((regiao) => {
         expect(screen.getByRole("option", { name: regiao })).toBeInTheDocument();
       });
@@ -42,7 +42,7 @@ describe("PainelFiltros", () => {
   describe("filter interactions", () => {
     it("updates the selected região administrativa", () => {
       render(<PainelFiltros />);
-      const select = screen.getByLabelText("Região Administrativa") as HTMLSelectElement;
+      const select = screen.getByLabelText("Região") as HTMLSelectElement;
       fireEvent.change(select, { target: { value: REGIOES_ADMINISTRATIVAS[0] } });
       expect(select.value).toBe(REGIOES_ADMINISTRATIVAS[0]);
     });
@@ -65,7 +65,7 @@ describe("PainelFiltros", () => {
   describe("Limpar filtros (RF08)", () => {
     it("resets região, período and busca to their initial state (edge: clear after filling)", () => {
       render(<PainelFiltros />);
-      const regiaoSelect = screen.getByLabelText("Região Administrativa") as HTMLSelectElement;
+      const regiaoSelect = screen.getByLabelText("Região") as HTMLSelectElement;
       const periodoSelect = screen.getByLabelText("Período") as HTMLSelectElement;
       const buscaInput = screen.getByPlaceholderText("Buscar") as HTMLInputElement;
 
@@ -98,7 +98,7 @@ describe("PainelFiltros", () => {
     it("shows a list of matching results when a região filter is applied", () => {
       const onSelecionarNoticia = jest.fn();
       render(<PainelFiltros onSelecionarNoticia={onSelecionarNoticia} />);
-      const select = screen.getByLabelText("Região Administrativa") as HTMLSelectElement;
+      const select = screen.getByLabelText("Região") as HTMLSelectElement;
       const regiao = "Ceilândia";
       fireEvent.change(select, { target: { value: regiao } });
 
@@ -116,14 +116,14 @@ describe("PainelFiltros", () => {
   describe("expand/collapse (RNF05 - adherence to prototype)", () => {
     it("starts expanded, showing the filter body", () => {
       render(<PainelFiltros />);
-      expect(screen.getByLabelText("Região Administrativa")).toBeInTheDocument();
+      expect(screen.getByLabelText("Região")).toBeInTheDocument();
       expect(screen.getByRole("button", { name: "Recolher filtros" })).toBeInTheDocument();
     });
 
     it("hides the filter body when the collapse button is clicked", () => {
       render(<PainelFiltros />);
       fireEvent.click(screen.getByRole("button", { name: "Recolher filtros" }));
-      expect(screen.queryByLabelText("Região Administrativa")).not.toBeInTheDocument();
+      expect(screen.queryByLabelText("Região")).not.toBeInTheDocument();
       expect(screen.queryByLabelText("Período")).not.toBeInTheDocument();
       expect(screen.getByRole("button", { name: "Expandir filtros" })).toBeInTheDocument();
     });
@@ -140,7 +140,7 @@ describe("PainelFiltros", () => {
         fireEvent.click(screen.getByRole("button", { name: /^(Recolher|Expandir) filtros$/ }));
       toggle();
       toggle();
-      expect(screen.getByLabelText("Região Administrativa")).toBeInTheDocument();
+      expect(screen.getByLabelText("Região")).toBeInTheDocument();
     });
   });
 });
