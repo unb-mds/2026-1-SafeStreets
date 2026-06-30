@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-30T01:22:43.151201Z",
+  "generated_at": "2026-06-30T02:13:20.677925Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 5,
-      "closed": 8
+      "opened": 7,
+      "closed": 9
     },
     {
       "week": "2026-W26",
@@ -89,22 +89,27 @@
     },
     {
       "range": "41-60",
-      "count": 25
+      "count": 23
     },
     {
       "range": "61-80",
-      "count": 14
+      "count": 15
     },
     {
       "range": "81+",
-      "count": 70
+      "count": 71
     }
   ],
   "commit_heatmap": [
     {
       "day": 2,
+      "hour": 2,
+      "count": 3
+    },
+    {
+      "day": 2,
       "hour": 1,
-      "count": 2
+      "count": 3
     },
     {
       "day": 2,
@@ -440,17 +445,12 @@
       "day": 4,
       "hour": 23,
       "count": 10
-    },
-    {
-      "day": 4,
-      "hour": 18,
-      "count": 4
     }
   ],
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 52
+      "commits": 51
     },
     {
       "username": "jorgevasquez25",
@@ -462,7 +462,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "commits": 27
+      "commits": 29
     },
     {
       "username": "ArthurFeitosa05",
@@ -475,12 +475,12 @@
   ],
   "top_pr_authors": [
     {
-      "username": "IsraelSoares-25",
+      "username": "EdsonToppzera",
       "prs_opened": 13
     },
     {
-      "username": "EdsonToppzera",
-      "prs_opened": 11
+      "username": "IsraelSoares-25",
+      "prs_opened": 13
     },
     {
       "username": "Nic0laslc",
@@ -524,11 +524,11 @@
   "label_distribution": [
     {
       "label": "implementação",
-      "count": 61
+      "count": 62
     },
     {
       "label": "front-end",
-      "count": 59
+      "count": 61
     },
     {
       "label": "documentation",
@@ -552,18 +552,18 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 25
+      "count": 24
     },
     {
       "label": "estudar",
       "count": 21
     },
     {
-      "label": "enhancement",
-      "count": 19
+      "label": "testes",
+      "count": 20
     },
     {
-      "label": "testes",
+      "label": "enhancement",
       "count": 19
     },
     {
