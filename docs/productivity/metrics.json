@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-30T21:11:40.985445Z",
+  "generated_at": "2026-06-30T22:31:28.667223Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 8,
+      "opened": 13,
       "closed": 10
     },
     {
@@ -85,7 +85,7 @@
     },
     {
       "range": "21-40",
-      "count": 172
+      "count": 171
     },
     {
       "range": "41-60",
@@ -93,7 +93,7 @@
     },
     {
       "range": "61-80",
-      "count": 16
+      "count": 17
     },
     {
       "range": "81+",
@@ -103,8 +103,13 @@
   "commit_heatmap": [
     {
       "day": 2,
+      "hour": 22,
+      "count": 7
+    },
+    {
+      "day": 2,
       "hour": 21,
-      "count": 1
+      "count": 2
     },
     {
       "day": 2,
@@ -377,11 +382,6 @@
       "count": 1
     },
     {
-      "day": 2,
-      "hour": 22,
-      "count": 6
-    },
-    {
       "day": 0,
       "hour": 15,
       "count": 7
@@ -449,7 +449,7 @@
     {
       "day": 4,
       "hour": 23,
-      "count": 8
+      "count": 6
     }
   ],
   "top_committers": [
@@ -506,12 +506,12 @@
       "total": 30
     },
     {
-      "username": "IsraelSoares-25",
-      "total": 20
+      "username": "jorgevasquez25",
+      "total": 21
     },
     {
-      "username": "jorgevasquez25",
-      "total": 16
+      "username": "IsraelSoares-25",
+      "total": 20
     },
     {
       "username": "matheusqsa",
@@ -537,7 +537,7 @@
     },
     {
       "label": "documentation",
-      "count": 56
+      "count": 61
     },
     {
       "label": "back-end",
@@ -545,7 +545,7 @@
     },
     {
       "label": "organização",
-      "count": 34
+      "count": 39
     },
     {
       "label": "requisitos",
