@@ -106,7 +106,10 @@ describe("MapaInterativo", () => {
       const popup = screen.getByTestId("popup");
       expect(popup).toHaveTextContent(noticia.titulo);
       expect(popup).toHaveTextContent(noticia.risco);
-      expect(popup).toHaveTextContent(noticia.ra);
+      const raEsperada = noticia.ra.toUpperCase().startsWith("RA")
+        ? noticia.ra.replace(/^RA[-—\s]*/i, "RA — ")
+        : `RA — ${noticia.ra}`;
+      expect(popup).toHaveTextContent(raEsperada);
     });
   });
 
