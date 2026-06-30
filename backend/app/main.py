@@ -7,10 +7,11 @@ app = FastAPI(
     description="API para o projeto SafeStreets."
 )
 
-# CORS: permite que o frontend (Next.js dev em localhost:3000) consuma a API.
+# CORS: permite que o frontend (Next.js dev em localhost:3000 ou 3001) consuma a API.
+# A porta 3001 é usada automaticamente pelo Next.js quando a 3000 está ocupada.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://localhost:3001"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
