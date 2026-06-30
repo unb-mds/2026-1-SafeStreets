@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-30T02:13:20.677925Z",
+  "generated_at": "2026-06-30T02:54:54.025069Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 7,
-      "closed": 9
+      "opened": 8,
+      "closed": 10
     },
     {
       "week": "2026-W26",
@@ -85,26 +85,26 @@
     },
     {
       "range": "21-40",
-      "count": 173
+      "count": 172
     },
     {
       "range": "41-60",
-      "count": 23
+      "count": 22
     },
     {
       "range": "61-80",
-      "count": 15
+      "count": 16
     },
     {
       "range": "81+",
-      "count": 71
+      "count": 72
     }
   ],
   "commit_heatmap": [
     {
       "day": 2,
       "hour": 2,
-      "count": 3
+      "count": 6
     },
     {
       "day": 2,
@@ -269,7 +269,7 @@
     {
       "day": 4,
       "hour": 19,
-      "count": 4
+      "count": 2
     },
     {
       "day": 3,
@@ -344,7 +344,7 @@
     {
       "day": 4,
       "hour": 21,
-      "count": 5
+      "count": 4
     },
     {
       "day": 4,
@@ -450,7 +450,7 @@
   "top_committers": [
     {
       "username": "IsraelSoares-25",
-      "commits": 51
+      "commits": 49
     },
     {
       "username": "jorgevasquez25",
@@ -462,7 +462,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "commits": 29
+      "commits": 31
     },
     {
       "username": "ArthurFeitosa05",
@@ -476,7 +476,7 @@
   "top_pr_authors": [
     {
       "username": "EdsonToppzera",
-      "prs_opened": 13
+      "prs_opened": 14
     },
     {
       "username": "IsraelSoares-25",
@@ -524,11 +524,11 @@
   "label_distribution": [
     {
       "label": "implementação",
-      "count": 62
+      "count": 63
     },
     {
       "label": "front-end",
-      "count": 61
+      "count": 62
     },
     {
       "label": "documentation",
