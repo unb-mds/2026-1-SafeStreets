@@ -1,133 +1,124 @@
-import { noticias, getNoticiaPorId, type Noticia } from "@/utils/noticias";
+import { fetchNoticias, fetchNoticiaPorId } from "@/utils/noticias";
 
-describe("noticias data", () => {
-  describe("array structure", () => {
-    it("should export a non-empty array", () => {
-      expect(Array.isArray(noticias)).toBe(true);
-      expect(noticias.length).toBeGreaterThan(0);
-    });
+/**
+ * Reescrito após a migração de `utils/noticias.ts` de um array mockado
+ * estático (`noticias`/`getNoticiaPorId`) para chamadas reais à API
+ * (`fetchNoticias`/`fetchNoticiaPorId`). Aqui mockamos `global.fetch` para
+ * validar o mapeamento `ApiOcorrencia -> Noticia` e os contratos de erro,
+ * sem depender do backend rodando.
+ */
 
-    it("should have at least 6 articles", () => {
-      expect(noticias.length).toBeGreaterThanOrEqual(6);
+const apiOcorrencia = {
+  id: 1,
+  titulo: "Furtos a pedestres aumentam 14% na quadra comercial da 304 Sul",
+  latitude: -15.7942,
+  longitude: -47.8822,
+  ra: "RA-I",
+  regiao: "Plano Piloto",
+  risco: "Médio",
+  resumo: "Câmeras e patrulhamento a pé serão reforçados.",
+  resumo_status: "COMPLETO",
+  data: "02/06/2026",
+  descricao_detalhada: "Texto detalhado da ocorrência.",
+  fonte_url: "https://www.ssp.df.gov.br/noticia/1",
+};
+
+function mockFetchOnce(body: unknown, init?: { ok?: boolean; status?: number }) {
+  (global.fetch as jest.Mock).mockResolvedValueOnce({
+    ok: init?.ok ?? true,
+    status: init?.status ?? 200,
+    json: async () => body,
+  });
+}
+
+beforeEach(() => {
+  global.fetch = jest.fn();
+});
+
+afterEach(() => {
+  jest.resetAllMocks();
+});
+
+describe("fetchNoticias", () => {
+  it("maps the API response into Noticia objects (happy path)", async () => {
+    mockFetchOnce({ success: true, data: [apiOcorrencia] });
+
+    const resultado = await fetchNoticias();
+
+    expect(resultado).toHaveLength(1);
+    expect(resultado[0]).toMatchObject({
+      id: "1",
+      titulo: apiOcorrencia.titulo,
+      resumo: apiOcorrencia.resumo,
+      regiao: "Plano Piloto",
+      ra: "RA-I",
+      data: "02/06/2026",
+      fonte: "www.ssp.df.gov.br",
+      corpo: ["Texto detalhado da ocorrência."],
+      fonteUrl: apiOcorrencia.fonte_url,
+      risco: "Médio",
+      lat: -15.7942,
+      lng: -47.8822,
     });
   });
 
-  describe("Noticia fields", () => {
-    it("should have all required fields on every item", () => {
-      const requiredFields: Array<"id" | "titulo" | "resumo" | "regiao" | "ra" | "data" | "fonte"> = [
-        "id",
-        "titulo",
-        "resumo",
-        "regiao",
-        "ra",
-        "data",
-        "fonte",
-      ];
-
-      noticias.forEach((n) => {
-        requiredFields.forEach((field) => {
-          expect(n).toHaveProperty(field);
-          expect(typeof n[field]).toBe("string");
-          expect(n[field].trim().length).toBeGreaterThan(0);
-        });
-      });
+  it("falls back regiao to ra and risco to Baixo when missing (edge)", async () => {
+    mockFetchOnce({
+      success: true,
+      data: [{ ...apiOcorrencia, regiao: null, risco: null }],
     });
 
-    it("should reject articles with empty strings (edge: empty string vs missing)", () => {
-      // Verifica que nenhum campo está em branco (string vazia ou só espaços)
-      noticias.forEach((n) => {
-        expect(n.id.trim()).not.toBe("");
-        expect(n.titulo.trim()).not.toBe("");
-        expect(n.resumo.trim()).not.toBe("");
-        expect(n.regiao.trim()).not.toBe("");
-        expect(n.ra.trim()).not.toBe("");
-        expect(n.data.trim()).not.toBe("");
-        expect(n.fonte.trim()).not.toBe("");
-      });
-    });
-
-    it("should have a non-empty corpo (array of paragraphs) on every item (RF02)", () => {
-      noticias.forEach((n) => {
-        expect(Array.isArray(n.corpo)).toBe(true);
-        expect(n.corpo.length).toBeGreaterThan(0);
-        n.corpo.forEach((paragrafo) => {
-          expect(typeof paragrafo).toBe("string");
-          expect(paragrafo.trim().length).toBeGreaterThan(0);
-        });
-      });
-    });
-
-    it("should have a valid http(s) fonteUrl on every item (RF02)", () => {
-      noticias.forEach((n) => {
-        expect(typeof n.fonteUrl).toBe("string");
-        expect(n.fonteUrl).toMatch(/^https?:\/\/.+/);
-      });
-    });
+    const [noticia] = await fetchNoticias();
+    expect(noticia.regiao).toBe("RA-I");
+    expect(noticia.risco).toBe("Baixo");
   });
 
-  describe("getNoticiaPorId", () => {
-    it("returns the matching notícia for an existing id (happy path)", () => {
-      const primeira = noticias[0];
-      const encontrada = getNoticiaPorId(primeira.id);
-      expect(encontrada).toBeDefined();
-      expect(encontrada?.id).toBe(primeira.id);
-      expect(encontrada?.titulo).toBe(primeira.titulo);
+  it("returns an empty corpo when descricao_detalhada is missing (edge)", async () => {
+    mockFetchOnce({
+      success: true,
+      data: [{ ...apiOcorrencia, descricao_detalhada: null }],
     });
 
-    it("returns undefined for an unknown id (edge: not found)", () => {
-      expect(getNoticiaPorId("id-inexistente")).toBeUndefined();
-    });
-
-    it("returns undefined for an empty id (edge: empty string)", () => {
-      expect(getNoticiaPorId("")).toBeUndefined();
-    });
+    const [noticia] = await fetchNoticias();
+    expect(noticia.corpo).toEqual([]);
   });
 
-  describe("id uniqueness", () => {
-    it("should have unique ids across all articles", () => {
-      const ids = noticias.map((n) => n.id);
-      const uniqueIds = new Set(ids);
-      expect(uniqueIds.size).toBe(noticias.length);
-    });
+  it("appends regiao/data_inicio/data_fim as query params when provided", async () => {
+    mockFetchOnce({ success: true, data: [] });
 
-    it("should not have empty or whitespace-only ids (edge: id collision risk)", () => {
-      noticias.forEach((n) => {
-        expect(n.id.trim()).not.toBe("");
-      });
-    });
+    await fetchNoticias({ regiao: "Ceilândia", data_inicio: "2026-05-01", data_fim: "2026-06-01" });
+
+    const calledUrl = (global.fetch as jest.Mock).mock.calls[0][0] as string;
+    const url = new URL(calledUrl);
+    expect(url.pathname).toBe("/ocorrencias");
+    expect(url.searchParams.get("regiao")).toBe("Ceilândia");
+    expect(url.searchParams.get("data_inicio")).toBe("2026-05-01");
+    expect(url.searchParams.get("data_fim")).toBe("2026-06-01");
   });
 
-  describe("data (date) format", () => {
-    it("should match DD/MM/YYYY format for all articles", () => {
-      const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
-      noticias.forEach((n) => {
-        expect(n.data).toMatch(dateRegex);
-      });
-    });
+  it("throws when the API responds with a non-ok status (edge)", async () => {
+    mockFetchOnce({}, { ok: false, status: 503 });
+    await expect(fetchNoticias()).rejects.toThrow("Falha ao buscar ocorrências: 503");
+  });
+});
 
-    it("should have valid calendar values (edge: day/month out of range)", () => {
-      noticias.forEach((n) => {
-        const [day, month] = n.data.split("/").map(Number);
-        expect(day).toBeGreaterThanOrEqual(1);
-        expect(day).toBeLessThanOrEqual(31);
-        expect(month).toBeGreaterThanOrEqual(1);
-        expect(month).toBeLessThanOrEqual(12);
-      });
-    });
+describe("fetchNoticiaPorId", () => {
+  it("returns the mapped Noticia for an existing id (happy path)", async () => {
+    mockFetchOnce({ success: true, data: apiOcorrencia });
+
+    const noticia = await fetchNoticiaPorId("1");
+    expect(noticia?.id).toBe("1");
+    expect(noticia?.titulo).toBe(apiOcorrencia.titulo);
   });
 
-  describe("ra (administrative region code)", () => {
-    it("should follow RA-<roman> pattern for all articles", () => {
-      const raRegex = /^RA-[IVXLCDM]+$/;
-      noticias.forEach((n) => {
-        expect(n.ra).toMatch(raRegex);
-      });
-    });
+  it("returns null for a 404 (edge: not found)", async () => {
+    mockFetchOnce({}, { ok: false, status: 404 });
+    const noticia = await fetchNoticiaPorId("id-inexistente");
+    expect(noticia).toBeNull();
+  });
 
-    it("should not accept lowercase ra codes (edge: case sensitivity)", () => {
-      noticias.forEach((n) => {
-        expect(n.ra).toBe(n.ra.toUpperCase());
-      });
-    });
+  it("throws for other non-ok statuses (edge)", async () => {
+    mockFetchOnce({}, { ok: false, status: 500 });
+    await expect(fetchNoticiaPorId("1")).rejects.toThrow("Falha ao buscar ocorrência 1: 500");
   });
 });

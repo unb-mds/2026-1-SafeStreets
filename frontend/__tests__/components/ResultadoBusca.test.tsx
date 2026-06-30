@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ResultadoBusca from "@/components/ResultadoBusca/ResultadoBusca";
-import { noticias } from "@/utils/noticias";
+import { noticiasFixture } from "../fixtures/noticias";
 
-const noticia = noticias[0];
+const noticia = noticiasFixture[0];
 
 describe("ResultadoBusca", () => {
   it("renders the title, RA code and região of the noticia", () => {

@@ -2,9 +2,9 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CardResumo from "@/components/CardResumo/CardResumo";
-import { noticias } from "@/utils/noticias";
+import { noticiasFixture } from "../fixtures/noticias";
 
-const noticia = noticias[0];
+const noticia = noticiasFixture[0];
 
 describe("CardResumo", () => {
   it("renders risco, título, RA, região and data", () => {
