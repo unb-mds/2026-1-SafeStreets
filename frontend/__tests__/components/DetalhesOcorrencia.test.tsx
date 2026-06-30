@@ -24,7 +24,10 @@ describe("DetalhesOcorrencia", () => {
 
     expect(screen.getByText(noticia.titulo)).toBeInTheDocument();
     expect(screen.getByText(noticia.risco)).toBeInTheDocument();
-    expect(screen.getByText(`RA — ${noticia.ra}`)).toBeInTheDocument();
+    const raEsperada = noticia.ra.toUpperCase().startsWith("RA")
+      ? noticia.ra.replace(/^RA[-—\s]*/i, "RA — ")
+      : `RA — ${noticia.ra}`;
+    expect(screen.getByText(raEsperada)).toBeInTheDocument();
     expect(screen.getByText(noticia.regiao)).toBeInTheDocument();
     expect(screen.getByText(noticia.data)).toBeInTheDocument();
   });
