@@ -11,6 +11,53 @@ interface NoticiaDetalheProps {
   noticia: Noticia;
 }
 
+function formatarParagrafos(corpo: string[]): string[] {
+  if (corpo.length !== 1) {
+    return corpo;
+  }
+
+  const texto = corpo[0];
+  
+  // Adiciona divisores antes/depois de palavras de legenda comuns (case-insensitive)
+  let processado = texto.replace(/(Reprodução|Foto:|Crédito:)/gi, "\n$1\n");
+  
+  // Adiciona divisor antes de emojis como ✅
+  processado = processado.replace(/(✅)/g, "\n$1");
+  
+  // Adiciona divisores após pontos finais (quando seguidos de espaço)
+  processado = processado.replace(/\.\s+/g, ".\n");
+  
+  const linhas = processado.split("\n").map((l) => l.trim()).filter(Boolean);
+  
+  const novosParagrafos: string[] = [];
+  let bufferFrases: string[] = [];
+  
+  for (const linha of linhas) {
+    const ehLegenda = /^(Reprodução|Foto:|Crédito:)/i.test(linha);
+    const ehCta = /^✅/.test(linha);
+    
+    if (ehLegenda || ehCta) {
+      if (bufferFrases.length > 0) {
+        novosParagrafos.push(bufferFrases.join(" "));
+        bufferFrases = [];
+      }
+      novosParagrafos.push(linha);
+    } else {
+      bufferFrases.push(linha);
+      if (bufferFrases.length >= 2) {
+        novosParagrafos.push(bufferFrases.join(" "));
+        bufferFrases = [];
+      }
+    }
+  }
+  
+  if (bufferFrases.length > 0) {
+    novosParagrafos.push(bufferFrases.join(" "));
+  }
+  
+  return novosParagrafos;
+}
+
 export default function NoticiaDetalhe({ noticia }: NoticiaDetalheProps) {
   return (
     <article className={styles.page}>
@@ -31,7 +78,7 @@ export default function NoticiaDetalhe({ noticia }: NoticiaDetalheProps) {
       <p className={styles.resumo}>{noticia.resumo}</p>
 
       <div className={styles.corpo}>
-        {noticia.corpo.map((paragrafo, indice) => (
+        {formatarParagrafos(noticia.corpo).map((paragrafo, indice) => (
           <p key={indice}>{paragrafo}</p>
         ))}
       </div>
