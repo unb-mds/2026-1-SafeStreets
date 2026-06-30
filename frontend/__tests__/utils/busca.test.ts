@@ -11,6 +11,9 @@ const makeNoticia = (over: Partial<Noticia>): Noticia => ({
   fonte: "SSP-DF",
   corpo: ["Parágrafo padrão."],
   fonteUrl: "https://exemplo.df.gov.br/",
+  risco: "Baixo",
+  lat: -15.7797,
+  lng: -47.9297,
   ...over,
 });
 

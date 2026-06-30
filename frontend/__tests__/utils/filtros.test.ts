@@ -1,9 +1,9 @@
-import { noticias, type Noticia } from "@/utils/noticias";
+import type { Noticia } from "@/utils/noticias";
 import {
-  REGIOES_ADMINISTRATIVAS,
   PERIODOS,
   algumFiltroAplicado,
   filtrarNoticias,
+  getRegioes,
   type FiltrosBusca,
 } from "@/utils/filtros";
 
@@ -33,34 +33,44 @@ function criarNoticia(overrides: Partial<Noticia>): Noticia {
     risco: "Baixo",
     lat: -15.7797,
     lng: -47.9297,
+    corpo: ["Parágrafo de teste."],
+    fonteUrl: "https://www.ssp.df.gov.br/",
     ...overrides,
   };
 }
 
+const mockNoticias: Noticia[] = [
+  criarNoticia({ id: "1", regiao: "Plano Piloto", titulo: "Furtos a pedestres" }),
+  criarNoticia({ id: "2", regiao: "Taguatinga", titulo: "Operação Taguatinga" }),
+  criarNoticia({ id: "3", regiao: "Ceilândia", titulo: "Crimes violentos" }),
+];
+
 describe("filtros data", () => {
-  describe("REGIOES_ADMINISTRATIVAS", () => {
-    it("should be a non-empty array of strings", () => {
-      expect(Array.isArray(REGIOES_ADMINISTRATIVAS)).toBe(true);
-      expect(REGIOES_ADMINISTRATIVAS.length).toBeGreaterThan(0);
-      REGIOES_ADMINISTRATIVAS.forEach((regiao) => {
+  describe("getRegioes", () => {
+    it("should return a non-empty array of strings when given noticias", () => {
+      const regioes = getRegioes(mockNoticias);
+      expect(Array.isArray(regioes)).toBe(true);
+      expect(regioes.length).toBeGreaterThan(0);
+      regioes.forEach((regiao: string) => {
         expect(typeof regiao).toBe("string");
         expect(regiao.trim().length).toBeGreaterThan(0);
       });
     });
 
-    it("should contain known regions referenced in noticias", () => {
-      expect(REGIOES_ADMINISTRATIVAS).toContain("Ceilândia");
-      expect(REGIOES_ADMINISTRATIVAS).toContain("Taguatinga");
+    it("should contain regions present in given noticias", () => {
+      const regioes = getRegioes(mockNoticias);
+      expect(regioes).toContain("Ceilândia");
+      expect(regioes).toContain("Taguatinga");
     });
 
-    it("should not contain duplicate regions (edge: deduplication)", () => {
-      const unique = new Set(REGIOES_ADMINISTRATIVAS);
-      expect(unique.size).toBe(REGIOES_ADMINISTRATIVAS.length);
-    });
-
-    it("should match exactly the set of regions present in noticias", () => {
-      const regioesFromNoticias = new Set(noticias.map((n) => n.regiao));
-      expect(new Set(REGIOES_ADMINISTRATIVAS)).toEqual(regioesFromNoticias);
+    it("should return sorted and unique regions", () => {
+      const duplicatedNoticias = [
+        criarNoticia({ regiao: "Taguatinga" }),
+        criarNoticia({ regiao: "Ceilândia" }),
+        criarNoticia({ regiao: "Taguatinga" }),
+      ];
+      const regioes = getRegioes(duplicatedNoticias);
+      expect(regioes).toEqual(["Ceilândia", "Taguatinga"]);
     });
   });
 
@@ -100,19 +110,19 @@ describe("filtros data", () => {
 
   describe("filtrarNoticias", () => {
     it("returns the full list when no filter is applied", () => {
-      expect(filtrarNoticias(noticias, SEM_FILTRO)).toEqual(noticias);
+      expect(filtrarNoticias(mockNoticias, SEM_FILTRO)).toEqual(mockNoticias);
     });
 
     it("filters by regiao", () => {
-      const resultado = filtrarNoticias(noticias, { ...SEM_FILTRO, regiao: "Ceilândia" });
+      const resultado = filtrarNoticias(mockNoticias, { ...SEM_FILTRO, regiao: "Ceilândia" });
       expect(resultado.length).toBeGreaterThan(0);
-      resultado.forEach((n) => expect(n.regiao).toBe("Ceilândia"));
+      resultado.forEach((n: Noticia) => expect(n.regiao).toBe("Ceilândia"));
     });
 
     it("filters by free-text busca matching title, resumo or regiao (case-insensitive)", () => {
-      const resultado = filtrarNoticias(noticias, { ...SEM_FILTRO, busca: "ceilândia" });
+      const resultado = filtrarNoticias(mockNoticias, { ...SEM_FILTRO, busca: "ceilândia" });
       expect(resultado.length).toBeGreaterThan(0);
-      resultado.forEach((n) =>
+      resultado.forEach((n: Noticia) =>
         expect(
           n.titulo.toLowerCase().includes("ceilândia") ||
             n.resumo.toLowerCase().includes("ceilândia") ||
@@ -128,11 +138,11 @@ describe("filtros data", () => {
         criarNoticia({ id: "c", regiao: "Gama", titulo: "Roubo no Gama" }),
       ];
       const resultado = filtrarNoticias(lista, { ...SEM_FILTRO, regiao: "Ceilândia", busca: "roubo" });
-      expect(resultado.map((n) => n.id)).toEqual(["a"]);
+      expect(resultado.map((n: Noticia) => n.id)).toEqual(["a"]);
     });
 
     it("returns an empty array when no item matches the combined filters (edge)", () => {
-      const resultado = filtrarNoticias(noticias, { ...SEM_FILTRO, regiao: "Gama", busca: "ceilândia" });
+      const resultado = filtrarNoticias(mockNoticias, { ...SEM_FILTRO, regiao: "Gama", busca: "ceilândia" });
       expect(resultado).toEqual([]);
     });
 
@@ -142,7 +152,7 @@ describe("filtros data", () => {
         criarNoticia({ id: "antigo", data: diasAtras(40) }),
       ];
       const resultado = filtrarNoticias(lista, { ...SEM_FILTRO, periodo: "7d" });
-      expect(resultado.map((n) => n.id)).toEqual(["recente"]);
+      expect(resultado.map((n: Noticia) => n.id)).toEqual(["recente"]);
     });
   });
 });
