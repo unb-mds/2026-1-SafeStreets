@@ -90,3 +90,20 @@ data e localização, e o resumo aparece como indisponível.
 ## Referências
 - [definir-fluxo-de-dados.md#4-processamento-por-ia](./definir-fluxo-de-dados.md#4-processamento-por-ia)
 - [CONTEXT.md#fallback-strategy-gemini](./CONTEXT.md#fallback-strategy-gemini)
+
+## Adendo (2026-06-30): retry síncrono para erro transitório (5xx)
+
+Em produção, observamos que o Gemini retorna `503 UNAVAILABLE` ("model is
+currently experiencing high demand") de forma intermitente — em torno de 40%
+das chamadas em um teste com 8 notícias seguidas. Sem retry, cada uma dessas
+falhas transitórias virava `status="ERRO"` permanente (a ingestão não
+reprocessa notícia já persistida, por dedup de URL).
+
+Isso **não muda a decisão da Opção A**: o sistema continua sem fila de retry
+assíncrona (Opção B) e sem circuit breaker (Opção D). O que foi adicionado é
+só a parte de retry com backoff que já estava na proposta original da Opção D
+(1s → 2s → 4s), aplicada **dentro da mesma chamada síncrona** em
+`GeminiClient._gerar_real`, e só para `ServerError` (5xx) — erros permanentes
+(`ClientError`: chave inválida, input rejeitado) continuam falhando na
+primeira tentativa, sem retry. Esgotados os retries, o comportamento volta a
+ser exatamente o da Opção A: `resumo=None`, `status="ERRO"`.
