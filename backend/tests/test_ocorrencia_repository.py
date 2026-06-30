@@ -3,17 +3,17 @@ Testes para OcorrenciaRepository.
 
 Usa banco SQLite em memória para evitar dependência do PostgreSQL nos testes.
 """
-import pytest
 from datetime import datetime, timedelta
+
+import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from app.core.database import Base
+from app.models.historico_consulta import HistoricoConsulta  # noqa: F401
 from app.models.local_pin import LocalPin
 from app.models.ocorrencia import Ocorrencia
-from app.models.historico_consulta import HistoricoConsulta  # noqa: F401
 from app.repositories.ocorrencia_repository import OcorrenciaRepository
-
 
 # ── Fixtures ─────────────────────────────────────────────────────────────────
 

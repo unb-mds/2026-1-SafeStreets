@@ -4,15 +4,14 @@ A rota é fina: chama `ingestao.ingerir(db)` e devolve o resultado num envelope.
 Os testes substituem (`monkeypatch`) o `ingerir` por um fake, então a rota é
 exercitada sem rede, sem chave e sem o pipeline real. O get_db usa SQLite.
 """
-import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
-from sqlalchemy.exc import OperationalError
 
-from app.main import app
 from app.core.database import Base, get_db
+from app.main import app
 from app.models import Ocorrencia  # noqa: F401 — registra tabelas em Base.metadata
 from app.services import ingestao
 from app.services.ingestao import ResultadoIngestao

@@ -1,0 +1,16 @@
+# Ruff — linter + formatador do backend Python (substitui flake8/isort/black).
+# Rodar:  ruff check .   (lint)  |  ruff check . --fix   |  ruff format .
+line-length = 88
+target-version = "py311"
+
+# Migrations autogeradas do Alembic não seguem o padrão do código-fonte.
+extend-exclude = ["alembic/versions"]
+
+[lint]
+select = [
+    "E",   # pycodestyle — estilo
+    "F",   # pyflakes — bugs (imports/vars não usados, nomes indefinidos)
+    "I",   # isort — ordenação de imports
+    "B",   # flake8-bugbear — armadilhas comuns
+    "UP",  # pyupgrade — sintaxe moderna do Python
+]

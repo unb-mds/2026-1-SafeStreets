@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+
 from app.repositories.ocorrencia_repository import OcorrenciaRepository
 
 # Limiares de contagem de ocorrências por Região Administrativa

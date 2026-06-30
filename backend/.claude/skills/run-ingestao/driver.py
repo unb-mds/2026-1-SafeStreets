@@ -27,10 +27,10 @@ from sqlalchemy.orm import sessionmaker  # noqa: E402
 from sqlalchemy.pool import StaticPool  # noqa: E402
 
 from app.core.database import Base  # noqa: E402
-from app.models import LocalPin, Ocorrencia  # noqa: E402
 from app.integrations.correio_rss import ItemRSS  # noqa: E402
-from app.integrations.nominatim import Coordenada  # noqa: E402
 from app.integrations.gemini import GeminiClient  # noqa: E402
+from app.integrations.nominatim import Coordenada  # noqa: E402
+from app.models import LocalPin, Ocorrencia  # noqa: E402
 from app.services import ingestao  # noqa: E402
 
 _results: list[bool] = []

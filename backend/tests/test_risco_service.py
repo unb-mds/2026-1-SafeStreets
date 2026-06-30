@@ -3,10 +3,11 @@ Testes para risco_service.calcular_risco.
 
 Usa mock de OcorrenciaRepository para testar os limiares sem banco.
 """
-import pytest
 from unittest.mock import MagicMock, patch
 
-from app.services.risco_service import calcular_risco, LIMIARES_RISCO
+import pytest
+
+from app.services.risco_service import LIMIARES_RISCO, calcular_risco
 
 
 @pytest.fixture

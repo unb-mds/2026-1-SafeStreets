@@ -30,9 +30,9 @@ from pydantic import ValidationError
 
 from app.schemas.ocorrencia import (
     OcorrenciaCreate,
-    OcorrenciaOut,
-    OcorrenciaListResponse,
     OcorrenciaDetailResponse,
+    OcorrenciaListResponse,
+    OcorrenciaOut,
 )
 
 _results: list[bool] = []

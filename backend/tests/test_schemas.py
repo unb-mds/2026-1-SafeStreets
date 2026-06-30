@@ -9,11 +9,10 @@ from pydantic import ValidationError
 
 from app.schemas.ocorrencia import (
     OcorrenciaCreate,
-    OcorrenciaOut,
-    OcorrenciaListResponse,
     OcorrenciaDetailResponse,
+    OcorrenciaListResponse,
+    OcorrenciaOut,
 )
-
 
 # ---- OcorrenciaCreate: entrada válida ----
 

@@ -21,8 +21,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from app.integrations.nominatim import Coordenada, geocodificar, parse_resposta  # noqa: E402
 from app.integrations.gemini import GeminiClient  # noqa: E402
+from app.integrations.nominatim import (  # noqa: E402
+    Coordenada,
+    geocodificar,
+    parse_resposta,
+)
 
 _results: list[bool] = []
 

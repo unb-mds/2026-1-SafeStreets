@@ -1,6 +1,7 @@
 from datetime import date, datetime, time
 
 from sqlalchemy.orm import Session
+
 from app.models import Ocorrencia
 from app.repositories.ocorrencia_repository import OcorrenciaRepository
 from app.schemas.ocorrencia import OcorrenciaOut

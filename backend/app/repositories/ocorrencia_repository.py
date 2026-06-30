@@ -1,8 +1,9 @@
-from sqlalchemy.orm import Session
-from sqlalchemy import func
-from app.models.ocorrencia import Ocorrencia
 from datetime import datetime
-from typing import Optional
+
+from sqlalchemy import func
+from sqlalchemy.orm import Session
+
+from app.models.ocorrencia import Ocorrencia
 
 
 class OcorrenciaRepository:
@@ -17,7 +18,7 @@ class OcorrenciaRepository:
         self.db.refresh(ocorrencia)
         return ocorrencia
 
-    def buscar_por_id(self, ocorrencia_id: int) -> Optional[Ocorrencia]:
+    def buscar_por_id(self, ocorrencia_id: int) -> Ocorrencia | None:
         """Retorna uma ocorrência pelo id ou None."""
         return (
             self.db.query(Ocorrencia)
@@ -25,7 +26,7 @@ class OcorrenciaRepository:
             .first()
         )
 
-    def buscar_por_url(self, fonte_url: str) -> Optional[Ocorrencia]:
+    def buscar_por_url(self, fonte_url: str) -> Ocorrencia | None:
         """Busca uma ocorrência pela URL de origem."""
         return (
             self.db.query(Ocorrencia)

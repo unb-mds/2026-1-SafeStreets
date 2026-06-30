@@ -1,12 +1,13 @@
 from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
+from sqlalchemy.orm import Session
+
 from app.core.database import get_db
 from app.schemas.ocorrencia import (
-    OcorrenciaListResponse,
     OcorrenciaDetailResponse,
+    OcorrenciaListResponse,
 )
 from app.services import ocorrencias as service
 

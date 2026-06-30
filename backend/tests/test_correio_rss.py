@@ -7,10 +7,10 @@ entidades HTML e tags na descrição).
 from app.integrations.correio_rss import (
     FonteRSS,
     ItemRSS,
-    limpar_html,
-    parse_feed,
     buscar_itens,
     buscar_todos,
+    limpar_html,
+    parse_feed,
 )
 
 SAMPLE = """<?xml version="1.0" encoding="UTF-8"?>

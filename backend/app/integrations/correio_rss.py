@@ -17,10 +17,10 @@ Separação proposital:
 - `buscar_todos(fontes, fetch_fn=...)` agrega TODAS as fontes (uma fora do ar
   não derruba as outras).
 """
-from dataclasses import dataclass
 import html
 import re
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 from urllib.parse import urljoin
 
 CORREIO_BASE_URL = "https://www.correiobraziliense.com.br"

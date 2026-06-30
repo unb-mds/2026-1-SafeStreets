@@ -14,7 +14,7 @@ ocorrência é persistida mesmo assim com `resumo_status="ERRO"` e resumo nulo.
 import re
 import unicodedata
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from app.integrations import correio_rss, nominatim
 from app.integrations.gemini import GeminiClient
@@ -282,10 +282,10 @@ def _parse_data(valor: str | None) -> datetime:
     if valor:
         for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d"):
             try:
-                return datetime.strptime(valor, fmt).replace(tzinfo=timezone.utc)
+                return datetime.strptime(valor, fmt).replace(tzinfo=UTC)
             except ValueError:
                 continue
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 def ingerir(

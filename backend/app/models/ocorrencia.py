@@ -1,9 +1,16 @@
 from sqlalchemy import (
-    Column, Integer, String, Text, Numeric,
-    DateTime, ForeignKey, CheckConstraint
+    CheckConstraint,
+    Column,
+    DateTime,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 from app.core.database import Base
 
 

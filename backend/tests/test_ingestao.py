@@ -13,10 +13,10 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.core.database import Base
-from app.models import LocalPin, Ocorrencia
 from app.integrations.correio_rss import ItemRSS
-from app.integrations.nominatim import Coordenada
 from app.integrations.gemini import GeminiClient
+from app.integrations.nominatim import Coordenada
+from app.models import LocalPin, Ocorrencia
 from app.services import ingestao
 
 

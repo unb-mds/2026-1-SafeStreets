@@ -1,8 +1,9 @@
 import os
 
 from fastapi import APIRouter, Depends, Header, HTTPException
-from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
+from sqlalchemy.orm import Session
+
 from app.core.database import get_db
 from app.services import ingestao
 

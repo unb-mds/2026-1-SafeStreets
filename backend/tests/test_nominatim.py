@@ -5,8 +5,8 @@ Nominatim (lista de objetos com `lat`/`lon` como string).
 """
 from app.integrations.nominatim import (
     Coordenada,
-    parse_resposta,
     geocodificar,
+    parse_resposta,
 )
 
 # Resposta real (recortada) do Nominatim para "Ceilandia, Distrito Federal".

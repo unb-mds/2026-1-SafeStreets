@@ -5,15 +5,15 @@ semeados direto via sessão — **não há POST público**: ocorrência nasce do
 pipeline de ingestão, não de requisição de cliente (CONTEXT.md). Cada cenário
 cria um LocalPin + uma Ocorrência completos (todos os campos NOT NULL).
 """
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.main import app
 from app.core.database import Base, get_db
+from app.main import app
 from app.models import LocalPin, Ocorrencia
 
 engine = create_engine(
@@ -50,7 +50,7 @@ def _seed_ocorrencia(titulo: str = "Furto na 102 Sul", regiao: str = "RA-001") -
             latitude=-15.79,
             longitude=-47.88,
             regiao_administrativa=regiao,
-            data_ocorrencia=datetime(2026, 6, 20, 14, 30, tzinfo=timezone.utc),
+            data_ocorrencia=datetime(2026, 6, 20, 14, 30, tzinfo=UTC),
         )
         db.add(ocorrencia)
         db.commit()

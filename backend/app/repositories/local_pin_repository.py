@@ -1,7 +1,8 @@
-from sqlalchemy.orm import Session
-from app.models.local_pin import LocalPin
-from typing import Optional
 from decimal import Decimal
+
+from sqlalchemy.orm import Session
+
+from app.models.local_pin import LocalPin
 
 
 class LocalPinRepository:
@@ -14,7 +15,7 @@ class LocalPinRepository:
         lat: float,
         lon: float,
         regiao: str,
-        nome: Optional[str] = None,
+        nome: str | None = None,
         tipo: str = "centroide",
     ) -> LocalPin:
         """
@@ -53,6 +54,6 @@ class LocalPinRepository:
             .all()
         )
 
-    def buscar_por_id(self, pin_id: int) -> Optional[LocalPin]:
+    def buscar_por_id(self, pin_id: int) -> LocalPin | None:
         """Retorna um LocalPin pelo id ou None."""
         return self.db.query(LocalPin).filter(LocalPin.id == pin_id).first()

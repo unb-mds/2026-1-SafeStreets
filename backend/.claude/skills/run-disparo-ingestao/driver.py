@@ -21,12 +21,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from fastapi.testclient import TestClient  # noqa: E402
 from sqlalchemy import create_engine  # noqa: E402
+from sqlalchemy.exc import OperationalError  # noqa: E402
 from sqlalchemy.orm import sessionmaker  # noqa: E402
 from sqlalchemy.pool import StaticPool  # noqa: E402
-from sqlalchemy.exc import OperationalError  # noqa: E402
 
-from app.main import app  # noqa: E402
 from app.core.database import Base, get_db  # noqa: E402
+from app.main import app  # noqa: E402
 from app.models import Ocorrencia  # noqa: F401,E402 — registra tabelas
 from app.services import ingestao  # noqa: E402
 from app.services.ingestao import ResultadoIngestao  # noqa: E402
