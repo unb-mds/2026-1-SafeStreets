@@ -19,13 +19,16 @@ interface PainelFiltrosProps {
 }
 
 export default function PainelFiltros({
-  onSelecionarNoticia = () => {},
+  onSelecionarNoticia = () => { },
   noticiaSelecionadaId,
 }: PainelFiltrosProps) {
   const [regiao, setRegiao] = useState(INITIAL_STATE.regiao);
   const [periodo, setPeriodo] = useState(INITIAL_STATE.periodo);
   const [busca, setBusca] = useState(INITIAL_STATE.busca);
   const [expandido, setExpandido] = useState(true);
+
+  // Valor especial que indica "exibir todas as regiões"
+  const TODAS_REGIOES = "todas";
 
   // Notícias e regiões carregadas da API
   const [noticias, setNoticias] = useState<Noticia[]>([]);
@@ -37,7 +40,7 @@ export default function PainelFiltros({
         setNoticias(data);
         setRegioes(getRegioes(data));
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   function handleLimparFiltros() {
@@ -46,8 +49,11 @@ export default function PainelFiltros({
     setBusca(INITIAL_STATE.busca);
   }
 
-  const filtros = { regiao, periodo, busca };
-  const filtroAplicado = algumFiltroAplicado(filtros);
+  // Quando "Todas" está selecionado, passa regiao vazia para filtrarNoticias
+  // (não filtra por região), mas mantém filtroAplicado = true para exibir resultados.
+  const eTodasRegioes = regiao === TODAS_REGIOES;
+  const filtros = { regiao: eTodasRegioes ? "" : regiao, periodo, busca };
+  const filtroAplicado = algumFiltroAplicado(filtros) || eTodasRegioes;
   const resultados = filtroAplicado ? filtrarNoticias(noticias, filtros) : [];
 
   return (
@@ -82,6 +88,7 @@ export default function PainelFiltros({
               onChange={(event) => setRegiao(event.target.value)}
             >
               <option value="">Escolha uma opção</option>
+              <option value="todas">Todas</option>
               {regioes.map((regiaoOpcao) => (
                 <option key={regiaoOpcao} value={regiaoOpcao}>
                   {regiaoOpcao}
