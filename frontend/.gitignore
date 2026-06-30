@@ -30,3 +30,4 @@ next-env.d.ts
 
 # swc cache
 .swc/
+.vercel
