@@ -16,6 +16,9 @@ const noticia: Noticia = {
     "Segundo parágrafo com mais contexto sobre o caso.",
   ],
   fonteUrl: "https://www.ssp.df.gov.br/",
+  risco: "Médio",
+  lat: -15.7942,
+  lng: -47.8822,
 };
 
 describe("NoticiaDetalhe (RF02)", () => {
@@ -79,6 +82,18 @@ describe("NoticiaDetalhe (RF02)", () => {
       expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
         "<script>alert('x')</script>"
       );
+    });
+
+    it("splits paragraphs at each period (.) and groups them into 2-sentence paragraphs, isolating captions and CTAs", () => {
+      const multiSentencas: Noticia = {
+        ...noticia,
+        corpo: ["Primeira sentença. Reprodução Segunda sentença. Terceira. ✅ CTA link."],
+      };
+      render(<NoticiaDetalhe noticia={multiSentencas} />);
+      expect(screen.getByText("Primeira sentença.")).toBeInTheDocument();
+      expect(screen.getByText("Reprodução")).toBeInTheDocument();
+      expect(screen.getByText("Segunda sentença. Terceira.")).toBeInTheDocument();
+      expect(screen.getByText("✅ CTA link.")).toBeInTheDocument();
     });
   });
 });
