@@ -21,14 +21,15 @@ A proposta combina coleta de dados em tempo real com técnicas de inteligência 
   <img src="https://img.shields.io/badge/DOCKER-CONTAINERIZED-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
 </p>
 
-## Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
 ```text
-SafeStreets/
-│
-├── docs/               
-├── frontend/           
-└── backend/
+├── .claude/               # Configurações, prompts ou contextos locais do Claude AI
+├── .github/
+│   └── workflows/         # Arquivos de configuração de CI/CD
+├── backend/               # Código-fonte da API e regras de negócio
+├── docs/                  # Documentação adicional, diagramas ou especificações
+└── frontend/              # Interface do usuário e aplicação cliente
 ...
 ```
 ## 🎨 Desing e Prototipação
