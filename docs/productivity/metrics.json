@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-01T03:03:40.143008Z",
+  "generated_at": "2026-07-01T03:08:24.830634Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
@@ -85,7 +85,7 @@
     },
     {
       "range": "21-40",
-      "count": 169
+      "count": 168
     },
     {
       "range": "41-60",
@@ -97,14 +97,14 @@
     },
     {
       "range": "81+",
-      "count": 77
+      "count": 78
     }
   ],
   "commit_heatmap": [
     {
       "day": 3,
       "hour": 3,
-      "count": 1
+      "count": 3
     },
     {
       "day": 3,
@@ -444,7 +444,7 @@
     {
       "day": 5,
       "hour": 20,
-      "count": 14
+      "count": 12
     }
   ],
   "top_committers": [
@@ -454,7 +454,7 @@
     },
     {
       "username": "IsraelSoares-25",
-      "commits": 41
+      "commits": 40
     },
     {
       "username": "Nic0laslc",
@@ -462,7 +462,7 @@
     },
     {
       "username": "EdsonToppzera",
-      "commits": 34
+      "commits": 35
     },
     {
       "username": "ArthurFeitosa05",
