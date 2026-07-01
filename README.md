@@ -3,9 +3,7 @@
 
 <img src="https://unb-mds.github.io/2026-1-SafeStreets/imagens/logo-escudo.PNG" width="120" alt="SafeStreets Logo"/>
 
-## 🛡️ SafeStreets — Monitor de Segurança Urbana
-link
---
+## [🛡️ SafeStreets — Monitor de Segurança Urbana](https://frontend-iota-nine-81.vercel.app/)
 
 O SafeStreets é uma aplicação voltada ao monitoramento inteligente de riscos urbanos a partir da análise de notícias e dados públicos de segurança. O projeto tem como objetivo fornecer uma visão clara e atualizada sobre ocorrências criminais em diferentes regiões, contribuindo para a conscientização e prevenção.
 
