@@ -4,17 +4,20 @@
 <img src="https://unb-mds.github.io/2026-1-SafeStreets/imagens/logo-escudo.PNG" width="120" alt="SafeStreets Logo"/>
 
 ## 🛡️ SafeStreets — Monitor de Segurança Urbana
+link
+--
 
 O SafeStreets é uma aplicação voltada ao monitoramento inteligente de riscos urbanos a partir da análise de notícias e dados públicos de segurança. O projeto tem como objetivo fornecer uma visão clara e atualizada sobre ocorrências criminais em diferentes regiões, contribuindo para a conscientização e prevenção.
 
-A proposta combina coleta de dados em tempo real com técnicas de inteligência artificial para identificar padrões, classificar tipos de crimes e estimar sua localização aproximada. Com isso, o sistema gera indicadores que permitem acompanhar a evolução da criminalidade em bairros e cidades.
+A proposta combina coleta de dados em tempo real com técnicas de inteligência artificial para identificar o conteúdo relevante e estimar sua localização aproximada. Com isso, o sistema gera indicadores que permitem acompanhar a evolução da criminalidade em bairros e cidades.
 
-Além disso, o SafeNight busca transformar dados em informação útil, possibilitando a criação de uma API que pode ser utilizada por aplicativos de mobilidade, imobiliárias e outras plataformas interessadas em oferecer mais segurança aos usuários.
 ## 📊Tecnologias 
 <p align="left">
+  <img src="https://img.shields.io/badge/PYTHON-BACKEND-3776AB?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/FASTAPI-BACKEND-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
   <img src="https://img.shields.io/badge/POSTGRESQL-DATABASE-336791?style=for-the-badge&logo=postgresql&logoColor=white" />
   <img src="https://img.shields.io/badge/REACT-FRONTEND-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/TYPESCRIPT-FRONTEND-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/DOCKER-CONTAINERIZED-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
 </p>
 
@@ -23,12 +26,10 @@ Além disso, o SafeNight busca transformar dados em informação útil, possibil
 ```text
 SafeStreets/
 │
-├── docs/               # Documentação do projeto
-├── frontend/           # Aplicação React
-├── backend/            # API FastAPI
-├── database/           # Scripts e estrutura SQL
-├── assets/             # Imagens e arquivos estáticos
-└── README.md
+├── docs/               
+├── frontend/           
+└── backend/
+...
 ```
 ## 🎨 Desing e Prototipação
 O projeto possui:
@@ -71,16 +72,15 @@ pip install -r requirements.txt
 
 uvicorn main:app --reload
 ```
-## 🌐 GitHub Pages
+## 🌐 Mkdocs
 
 https://unb-mds.github.io/2026-1-SafeStreets/
 
 ## 🔍 Principais funcionalidades
 * Coleta de notícias e dados de segurança pública
-* Classificação automática de ocorrências
+* Classificação de risco automática de ocorrências
 * Identificação de localização aproximada dos eventos
-* Geração de métricas e indicadores de risco
-* Visualização de tendências de criminalidade
+* Resumo automático das ocorrencias
 
 ## 🎯 Objetivo
 
