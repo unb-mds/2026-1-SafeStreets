@@ -2,6 +2,7 @@ from datetime import date, datetime, time
 
 from sqlalchemy.orm import Session
 
+from app.integrations.gemini import GeminiClient
 from app.models import Ocorrencia
 from app.repositories.ocorrencia_repository import OcorrenciaRepository
 from app.schemas.ocorrencia import OcorrenciaOut
@@ -65,7 +66,29 @@ def listar(
     return [_to_out(o) for o in ocorrencias]
 
 
-def buscar(db: Session, ocorrencia_id: int) -> OcorrenciaOut | None:
+def buscar(
+    db: Session, ocorrencia_id: int, *, gemini: GeminiClient | None = None
+) -> OcorrenciaOut | None:
+    """Busca uma ocorrência e gera o resumo por IA **sob demanda**.
+
+    O resumo é criado na 1ª vez que a ocorrência é aberta e **cacheado** no banco
+    (`resumo_status="COMPLETO"`). Nas próximas aberturas, devolve o cache — sem
+    chamar o Gemini de novo. Só (re)tenta enquanto ainda não estiver COMPLETO.
+    Assim o resumo custa 1 chamada por notícia *efetivamente vista*, e não por
+    notícia ingerida — cabendo no rate limit do tier gratuito.
+    """
     repo = OcorrenciaRepository(db)
     o = repo.buscar_por_id(ocorrencia_id)
-    return _to_out(o) if o else None
+    if not o:
+        return None
+    if o.resumo_status != "COMPLETO":
+        _resumir_sob_demanda(db, o, gemini or GeminiClient())
+    return _to_out(o)
+
+
+def _resumir_sob_demanda(db: Session, o: Ocorrencia, gemini: GeminiClient) -> None:
+    texto = f"{o.titulo_noticia} {o.descricao_detalhada or ''}".strip()
+    resultado = gemini.resumir(texto)   # ADR-001 A: falha -> status ERRO (não quebra)
+    o.resumo_gemini = resultado.resumo
+    o.resumo_status = resultado.status
+    db.commit()

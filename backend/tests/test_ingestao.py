@@ -14,7 +14,6 @@ from sqlalchemy.pool import StaticPool
 
 from app.core.database import Base
 from app.integrations.correio_rss import ItemRSS
-from app.integrations.gemini import GeminiClient
 from app.integrations.nominatim import Coordenada
 from app.models import LocalPin, Ocorrencia
 from app.services import ingestao
@@ -193,8 +192,7 @@ def test_ingerir_filtra_nao_relevantes():
         _item("Obras na Ceilândia", "nova via inaugurada", link="https://cb.com/cidades-df/2.html"),  # df, sem segurança
         _item("Roubo em Taguatinga", "assalto", link="https://cb.com/politica/3.html"),               # segurança, não df
     ]
-    res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo,
-                           gemini=GeminiClient(generate_fn=lambda t: "r"))  # filtro padrão (eh_relevante)
+    res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo)  # filtro padrão (eh_relevante)
     assert res.processadas == 3
     assert res.filtradas == 2
     assert res.persistidas == 1
@@ -203,59 +201,40 @@ def test_ingerir_filtra_nao_relevantes():
 
 # ---- pipeline (filtro bypassado para isolar a persistência) ----
 
-def test_ingerir_persiste_ocorrencia_completa():
+def test_ingerir_persiste_ocorrencia_com_resumo_pendente():
     db = _db()
-    gemini = GeminiClient(generate_fn=lambda texto: "Resumo da ocorrência.")
     itens = [_item("Furto em Taguatinga", "Veículo levado na QNL")]
 
-    res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo, gemini=gemini, filtro=_sem_filtro)
+    res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo, filtro=_sem_filtro)
 
     assert res.processadas == 1
     assert res.persistidas == 1
     o = db.query(Ocorrencia).one()
     assert o.regiao_administrativa == "RA-003"      # Taguatinga
     assert o.locais_pin_id is not None              # FK preenchida
-    assert o.resumo_status == "COMPLETO"
-    assert o.resumo_gemini == "Resumo da ocorrência."
+    # resumo NÃO é gerado na ingestão — nasce PENDENTE (feito sob demanda)
+    assert o.resumo_status == "PENDENTE"
+    assert o.resumo_gemini is None
     assert db.query(LocalPin).count() == 1
 
 
 def test_ingerir_pula_noticia_sem_regiao():
     db = _db()
     itens = [_item("Notícia genérica sem região")]
-    res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo,
-                           gemini=GeminiClient(generate_fn=lambda t: "x"), filtro=_sem_filtro)
+    res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo, filtro=_sem_filtro)
     assert res.sem_regiao == 1
     assert res.persistidas == 0
     assert db.query(Ocorrencia).count() == 0
 
 
-def test_ingerir_gemini_falha_persiste_com_status_erro():
-    """ADR-001 Opção A: Gemini falhou -> persiste mesmo assim, resumo ERRO."""
-    db = _db()
-
-    def gemini_quebra(texto):
-        raise RuntimeError("timeout/quota")
-
-    gemini = GeminiClient(generate_fn=gemini_quebra)
-    res = ingestao.ingerir(db, itens=[_item("Roubo na Ceilândia")], geocodificar=_geocode_fixo,
-                           gemini=gemini, filtro=_sem_filtro)
-
-    assert res.persistidas == 1
-    o = db.query(Ocorrencia).one()
-    assert o.resumo_status == "ERRO"
-    assert o.resumo_gemini is None
-
-
 def test_ingerir_reaproveita_pin_para_mesma_regiao():
     db = _db()
-    gemini = GeminiClient(generate_fn=lambda texto: "r")
     itens = [
         _item("Roubo na Ceilândia A", link="https://x/1"),
         _item("Furto na Ceilândia B", link="https://x/2"),
     ]
 
-    res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo, gemini=gemini, filtro=_sem_filtro)
+    res = ingestao.ingerir(db, itens=itens, geocodificar=_geocode_fixo, filtro=_sem_filtro)
 
     assert res.persistidas == 2
     assert db.query(Ocorrencia).count() == 2
@@ -269,7 +248,6 @@ def test_ingerir_sem_geocode_pula():
         db,
         itens=[_item("Roubo na Ceilândia")],
         geocodificar=lambda local: None,   # geocoding não encontrou
-        gemini=GeminiClient(generate_fn=lambda t: "x"),
         filtro=_sem_filtro,
     )
     assert res.sem_regiao == 1
@@ -279,17 +257,16 @@ def test_ingerir_sem_geocode_pula():
 def test_ingerir_evita_duplicacao_de_noticias():
     """Valida que notícias com a mesma URL não são duplicadas no banco."""
     db = _db()
-    gemini = GeminiClient(generate_fn=lambda t: "r")
-    
+
     # 1. Ingerir o item pela primeira vez (deve persistir)
     item = _item("Roubo no Gama", link="https://x/gama")
-    res1 = ingestao.ingerir(db, itens=[item], geocodificar=_geocode_fixo, gemini=gemini, filtro=_sem_filtro)
+    res1 = ingestao.ingerir(db, itens=[item], geocodificar=_geocode_fixo, filtro=_sem_filtro)
     assert res1.persistidas == 1
     assert res1.duplicadas == 0
     assert db.query(Ocorrencia).count() == 1
 
     # 2. Ingerir o mesmo item de novo (deve ser considerado duplicado e pulado)
-    res2 = ingestao.ingerir(db, itens=[item], geocodificar=_geocode_fixo, gemini=gemini, filtro=_sem_filtro)
+    res2 = ingestao.ingerir(db, itens=[item], geocodificar=_geocode_fixo, filtro=_sem_filtro)
     assert res2.persistidas == 0
     assert res2.duplicadas == 1
     assert db.query(Ocorrencia).count() == 1
