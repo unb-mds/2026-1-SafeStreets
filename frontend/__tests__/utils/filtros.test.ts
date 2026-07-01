@@ -1,9 +1,10 @@
-import { noticias, type Noticia } from "@/utils/noticias";
+import { type Noticia } from "@/utils/noticias";
+import { noticiasFixture as noticias } from "../fixtures/noticias";
 import {
-  REGIOES_ADMINISTRATIVAS,
   PERIODOS,
   algumFiltroAplicado,
   filtrarNoticias,
+  getRegioes,
   type FiltrosBusca,
 } from "@/utils/filtros";
 
@@ -38,29 +39,36 @@ function criarNoticia(overrides: Partial<Noticia>): Noticia {
 }
 
 describe("filtros data", () => {
-  describe("REGIOES_ADMINISTRATIVAS", () => {
-    it("should be a non-empty array of strings", () => {
-      expect(Array.isArray(REGIOES_ADMINISTRATIVAS)).toBe(true);
-      expect(REGIOES_ADMINISTRATIVAS.length).toBeGreaterThan(0);
-      REGIOES_ADMINISTRATIVAS.forEach((regiao) => {
+  describe("getRegioes", () => {
+    it("should return a non-empty array of strings", () => {
+      const regioes = getRegioes(noticias);
+      expect(Array.isArray(regioes)).toBe(true);
+      expect(regioes.length).toBeGreaterThan(0);
+      regioes.forEach((regiao) => {
         expect(typeof regiao).toBe("string");
         expect(regiao.trim().length).toBeGreaterThan(0);
       });
     });
 
     it("should contain known regions referenced in noticias", () => {
-      expect(REGIOES_ADMINISTRATIVAS).toContain("Ceilândia");
-      expect(REGIOES_ADMINISTRATIVAS).toContain("Taguatinga");
+      const regioes = getRegioes(noticias);
+      expect(regioes).toContain("Ceilândia");
+      expect(regioes).toContain("Taguatinga");
     });
 
     it("should not contain duplicate regions (edge: deduplication)", () => {
-      const unique = new Set(REGIOES_ADMINISTRATIVAS);
-      expect(unique.size).toBe(REGIOES_ADMINISTRATIVAS.length);
+      const regioes = getRegioes(noticias);
+      const unique = new Set(regioes);
+      expect(unique.size).toBe(regioes.length);
     });
 
     it("should match exactly the set of regions present in noticias", () => {
       const regioesFromNoticias = new Set(noticias.map((n) => n.regiao));
-      expect(new Set(REGIOES_ADMINISTRATIVAS)).toEqual(regioesFromNoticias);
+      expect(new Set(getRegioes(noticias))).toEqual(regioesFromNoticias);
+    });
+
+    it("returns an empty array for an empty list (edge)", () => {
+      expect(getRegioes([])).toEqual([]);
     });
   });
 

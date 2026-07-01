@@ -2,8 +2,8 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import DetalhesOcorrencia from "@/components/DetalhesOcorrencia/DetalhesOcorrencia";
-import { noticias } from "@/utils/noticias";
 import { gerarResumoIA } from "@/utils/iaResumo";
+import { noticiasFixture } from "../fixtures/noticias";
 
 jest.mock("@/utils/iaResumo", () => ({
   gerarResumoIA: jest.fn(),
@@ -11,7 +11,7 @@ jest.mock("@/utils/iaResumo", () => ({
 
 const mockGerarResumoIA = gerarResumoIA as jest.MockedFunction<typeof gerarResumoIA>;
 
-const noticia = noticias[0];
+const noticia = noticiasFixture[0];
 
 describe("DetalhesOcorrencia", () => {
   beforeEach(() => {

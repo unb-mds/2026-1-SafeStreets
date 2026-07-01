@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import MapaInterativo from "@/components/MapaInterativo/MapaInterativo";
-import { noticias } from "@/utils/noticias";
+import { noticiasFixture } from "../fixtures/noticias";
 
 jest.mock("next/dynamic", () => () => {
   const MapView = require("@/components/MapaInterativo/MapView").default;
@@ -74,7 +74,7 @@ describe("MapaInterativo", () => {
   });
 
   describe("RF10 - pin e card resumo da notícia selecionada", () => {
-    const noticia = noticias[0];
+    const noticia = noticiasFixture[0];
 
     it("renders a marker positioned at the noticia's lat/lng", () => {
       render(<MapaInterativo noticiaSelecionada={noticia} />);
@@ -87,7 +87,7 @@ describe("MapaInterativo", () => {
       const popup = screen.getByTestId("popup");
       expect(popup).toHaveTextContent(noticia.titulo);
       expect(popup).toHaveTextContent(noticia.risco);
-      expect(popup).toHaveTextContent(noticia.ra);
+      expect(popup).toHaveTextContent("RA — I");
     });
   });
 
@@ -99,7 +99,7 @@ describe("MapaInterativo", () => {
   });
 
   describe("RF11 - card de detalhes da ocorrência", () => {
-    const noticia = noticias[0];
+    const noticia = noticiasFixture[0];
 
     it("does not render the details card by default", () => {
       render(<MapaInterativo noticiaSelecionada={noticia} />);

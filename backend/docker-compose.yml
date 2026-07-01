@@ -29,6 +29,7 @@ services:
     container_name: safestreets_api
     environment:
       DATABASE_URL: postgresql://admin:123@db:5432/safestreets
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
     ports:
       - "8000:8000"
     depends_on:
