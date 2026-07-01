@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-01T04:43:20.844530Z",
+  "generated_at": "2026-07-01T05:33:27.814480Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 15,
-      "closed": 17
+      "opened": 16,
+      "closed": 18
     },
     {
       "week": "2026-W26",
@@ -85,22 +85,32 @@
     },
     {
       "range": "21-40",
-      "count": 168
+      "count": 167
     },
     {
       "range": "41-60",
-      "count": 21
+      "count": 19
     },
     {
       "range": "61-80",
-      "count": 17
+      "count": 18
     },
     {
       "range": "81+",
-      "count": 78
+      "count": 80
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 3,
+      "hour": 5,
+      "count": 2
+    },
+    {
+      "day": 3,
+      "hour": 4,
+      "count": 7
+    },
     {
       "day": 3,
       "hour": 3,
@@ -262,11 +272,6 @@
       "count": 4
     },
     {
-      "day": 3,
-      "hour": 4,
-      "count": 4
-    },
-    {
       "day": 1,
       "hour": 17,
       "count": 6
@@ -417,11 +422,6 @@
       "count": 1
     },
     {
-      "day": 3,
-      "hour": 5,
-      "count": 1
-    },
-    {
       "day": 1,
       "hour": 21,
       "count": 8
@@ -444,17 +444,17 @@
     {
       "day": 5,
       "hour": 20,
-      "count": 9
+      "count": 5
     }
   ],
   "top_committers": [
     {
       "username": "jorgevasquez25",
-      "commits": 54
+      "commits": 52
     },
     {
       "username": "IsraelSoares-25",
-      "commits": 41
+      "commits": 44
     },
     {
       "username": "Nic0laslc",
@@ -475,12 +475,12 @@
   ],
   "top_pr_authors": [
     {
-      "username": "EdsonToppzera",
+      "username": "IsraelSoares-25",
       "prs_opened": 14
     },
     {
-      "username": "IsraelSoares-25",
-      "prs_opened": 13
+      "username": "EdsonToppzera",
+      "prs_opened": 14
     },
     {
       "username": "Nic0laslc",
@@ -523,11 +523,11 @@
   ],
   "label_distribution": [
     {
-      "label": "front-end",
-      "count": 63
+      "label": "implementação",
+      "count": 64
     },
     {
-      "label": "implementação",
+      "label": "front-end",
       "count": 63
     },
     {
@@ -536,7 +536,7 @@
     },
     {
       "label": "back-end",
-      "count": 44
+      "count": 45
     },
     {
       "label": "organização",
@@ -552,7 +552,7 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 24
+      "count": 25
     },
     {
       "label": "testes",
