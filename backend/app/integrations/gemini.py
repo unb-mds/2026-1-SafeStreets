@@ -25,7 +25,9 @@ import os
 import time
 from dataclasses import dataclass
 
-GEMINI_MODEL = "gemini-3.5-flash"
+# flash-lite: suficiente para resumo de 1 frase e com cota free maior que os
+# flash "cheios" — importante para caber no tier gratuito na ingestão em lote.
+GEMINI_MODEL = "gemini-2.5-flash-lite"
 
 STATUS_COMPLETO = "COMPLETO"
 STATUS_ERRO = "ERRO"
