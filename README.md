@@ -45,32 +45,6 @@ O projeto possui:
 * Story Mapping
 * Templates de Issues e Pull Requests
 
-## Como Executar o Projeto
-
-* Python 3.11+
-* PostgreSQL
-* Docker (Opcional)
-
-## 🔹 Clonando o repositório
-```text
-git clone https://github.com/unb-mds/2026-1-SafeStreets.git
-```
-## 🔹 Back-end
-```text
-cd backend
-
-python -m venv venv
-
-# Linux/macOS
-source venv/bin/activate
-
-# Windows
-venv\Scripts\activate
-
-pip install -r requirements.txt
-
-uvicorn main:app --reload
-```
 ## 🌐 Mkdocs
 
 https://unb-mds.github.io/2026-1-SafeStreets/
@@ -90,6 +64,68 @@ Auxiliar na compreensão do cenário de segurança urbana, promovendo acesso a i
 * 🗺️[Story Map](https://www.figma.com/board/13SnyvGleeaYsubnOhMeYk/Template-MDS-Squad-1?t=RpJETIb0Vk6BLL3d-0)
 * 🎨[Protótipo de Alta Fidelidade](https://www.figma.com/design/PnCiIkDZprkfS66k8bdyCq/Wireframe?node-id=0-1&t=1NT6dQNROoeGOVYk-1)
 * 🏗️[Arquitetura](https://github.com/unb-mds/2026-1-SafeStreets/tree/main/docs/Arquitetura)
+
+## Como Executar o Projeto
+Antes de começar, certifique-se de ter instalado em sua máquina:
+* **Python 3.11+**
+* **Node.js** (LTS recomendado)
+* **PostgreSQL**
+* **Docker** (Opcional)
+
+---
+
+### 🔹 1. Clonando o repositório
+Abra o terminal e execute:
+```bash
+git clone https://github.com/unb-mds/2026-1-SafeStreets.git
+cd 2026-1-SafeStreets
+```
+
+---
+
+### 🔹 2. Configurando o Back-end (FastAPI)
+Entre na pasta `backend`, crie e ative o ambiente virtual:
+
+```bash
+cd backend
+python -m venv venv
+
+# Para Linux/macOS:
+source venv/bin/activate
+
+# Para Windows:
+venv\Scripts\activate
+```
+
+Instale as dependências necessárias:
+```bash
+pip install -r requirements.txt
+```
+
+Inicie o servidor de desenvolvimento utilizando a aplicação dentro do módulo `app`:
+```bash
+uvicorn app.main:app --reload
+```
+> **Nota:** Rodamos `uvicorn app.main:app` a partir da pasta `/backend` porque o arquivo `main.py` está dentro do diretório `app/` e utiliza caminhos absolutos relativos a ele.
+
+---
+
+### 🔹 3. Configurando o Front-end (Next.js)
+Abra um novo terminal na raiz do projeto, navegue até a pasta `frontend` e instale as dependências:
+
+```bash
+cd frontend
+npm install
+```
+
+Inicie o servidor de desenvolvimento:
+```bash
+npm run dev
+```
+
+Acesse no navegador:
+* Front-end: [http://localhost:3000](http://localhost:3000)
+* Documentação interativa da API (Swagger): [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ## 👥 Equipe
 Squad 01 MDS-01/2026
