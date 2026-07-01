@@ -2,14 +2,15 @@
 
 Pipeline por notícia:
     RSS (correio_rss) → extrair região do texto → geocodificar (nominatim)
-    → buscar_ou_criar LocalPin → resumir (gemini) → persistir Ocorrencia.
+    → buscar_ou_criar LocalPin → persistir Ocorrencia com `resumo_status="PENDENTE"`.
 
-Tudo é injetável para teste sem rede/chave: `itens`, `geocodificar` e `gemini`
-podem ser passados; sem eles, usa as integrações reais. NÃO há classificação
-de tipo de crime (fora do escopo, RF12).
+O **resumo por IA NÃO é gerado aqui**: fica *sob demanda* (gerado ao abrir a
+ocorrência em `GET /ocorrencias/{id}` e cacheado no banco). Isso evita disparar
+dezenas de chamadas ao Gemini em rajada no lote (que estoura o rate limit do
+tier gratuito) — a chamada acontece só quando o usuário realmente vê a notícia.
 
-Comportamento do resumo segue o ADR-001 (Opção A): se o Gemini falhar, a
-ocorrência é persistida mesmo assim com `resumo_status="ERRO"` e resumo nulo.
+`itens`, `geocodificar` e `filtro` são injetáveis para teste sem rede. NÃO há
+classificação de tipo de crime (fora do escopo, RF12).
 """
 import re
 import unicodedata
@@ -17,7 +18,6 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 
 from app.integrations import correio_rss, nominatim
-from app.integrations.gemini import GeminiClient
 from app.models.ocorrencia import Ocorrencia
 from app.repositories.local_pin_repository import LocalPinRepository
 from app.repositories.ocorrencia_repository import OcorrenciaRepository
@@ -293,18 +293,19 @@ def ingerir(
     *,
     itens: list[correio_rss.ItemRSS] | None = None,
     geocodificar=None,
-    gemini: GeminiClient | None = None,
     filtro=None,
 ) -> ResultadoIngestao:
     """Executa o pipeline de ingestão e persiste as ocorrências.
 
-    `itens`, `geocodificar`, `gemini` e `filtro` são injetáveis (testes sem
-    rede/chave). `filtro(item) -> bool` decide o que é relevante; o padrão é
-    `eh_relevante` (editoria cidades-df + termo de segurança).
+    O resumo por IA NÃO é gerado aqui — a ocorrência nasce com
+    `resumo_status="PENDENTE"` e é resumida sob demanda em `GET /ocorrencias/{id}`.
+
+    `itens`, `geocodificar` e `filtro` são injetáveis (testes sem rede).
+    `filtro(item) -> bool` decide o que é relevante; o padrão é `eh_relevante`
+    (editoria cidades-df + termo de segurança).
     """
     itens = itens if itens is not None else correio_rss.buscar_todos()
     geocode = geocodificar or geocodificar_regiao
-    gemini = gemini or GeminiClient()
     aplicar_filtro = filtro if filtro is not None else eh_relevante
 
     pin_repo = LocalPinRepository(db)
@@ -344,8 +345,8 @@ def ingerir(
                 nome=nome_regiao,
             )
 
-            resumo = gemini.resumir(texto)  # ADR-001 A: falha -> status ERRO
-
+            # Resumo fica PENDENTE: gerado sob demanda ao abrir a ocorrência
+            # (GET /ocorrencias/{id}), não no lote — evita rajada no Gemini.
             ocorrencia = Ocorrencia(
                 locais_pin_id=pin.id,
                 titulo_noticia=item.titulo,
@@ -354,8 +355,8 @@ def ingerir(
                 latitude=coord.latitude,
                 longitude=coord.longitude,
                 regiao_administrativa=codigo_ra,
-                resumo_gemini=resumo.resumo,
-                resumo_status=resumo.status,
+                resumo_gemini=None,
+                resumo_status="PENDENTE",
                 data_ocorrencia=_parse_data(item.data_publicacao),
             )
             oc_repo.criar(ocorrencia)

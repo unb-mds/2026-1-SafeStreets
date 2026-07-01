@@ -25,9 +25,11 @@ import os
 import time
 from dataclasses import dataclass
 
-# flash-lite: suficiente para resumo de 1 frase e com cota free maior que os
-# flash "cheios" — importante para caber no tier gratuito na ingestão em lote.
-GEMINI_MODEL = "gemini-2.5-flash-lite"
+# gemini-2.5-flash: rápido e suficiente para resumo de 1 frase. Com o resumo
+# sob demanda o volume é baixo (1 chamada por notícia vista), então cabe no free
+# tier. (O flash-lite foi testado e retornou ERRO com a chave atual — a cota do
+# free tier é por modelo; o flash "cheio" está disponível.)
+GEMINI_MODEL = "gemini-2.5-flash"
 
 STATUS_COMPLETO = "COMPLETO"
 STATUS_ERRO = "ERRO"
