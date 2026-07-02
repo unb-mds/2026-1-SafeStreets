@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-01T05:33:27.814480Z",
+  "generated_at": "2026-07-02T04:10:19.663111Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 16,
+      "opened": 18,
       "closed": 18
     },
     {
@@ -104,7 +104,7 @@
     {
       "day": 3,
       "hour": 5,
-      "count": 2
+      "count": 3
     },
     {
       "day": 3,
@@ -444,7 +444,7 @@
     {
       "day": 5,
       "hour": 20,
-      "count": 5
+      "count": 4
     }
   ],
   "top_committers": [
@@ -476,7 +476,7 @@
   "top_pr_authors": [
     {
       "username": "IsraelSoares-25",
-      "prs_opened": 14
+      "prs_opened": 16
     },
     {
       "username": "EdsonToppzera",
@@ -524,11 +524,11 @@
   "label_distribution": [
     {
       "label": "implementação",
-      "count": 64
+      "count": 66
     },
     {
       "label": "front-end",
-      "count": 63
+      "count": 64
     },
     {
       "label": "documentation",
@@ -536,7 +536,7 @@
     },
     {
       "label": "back-end",
-      "count": 45
+      "count": 47
     },
     {
       "label": "organização",
@@ -552,11 +552,11 @@
     },
     {
       "label": "feat/api🔌",
-      "count": 25
+      "count": 27
     },
     {
       "label": "testes",
-      "count": 21
+      "count": 23
     },
     {
       "label": "estudar",
