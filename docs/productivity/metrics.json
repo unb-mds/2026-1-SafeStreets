@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-03T03:56:49.202547Z",
+  "generated_at": "2026-07-04T03:50:25.851490Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
       "week": "2026-W27",
-      "opened": 18,
+      "opened": 19,
       "closed": 18
     },
     {
@@ -101,6 +101,11 @@
     }
   ],
   "commit_heatmap": [
+    {
+      "day": 5,
+      "hour": 3,
+      "count": 1
+    },
     {
       "day": 4,
       "hour": 4,
@@ -444,7 +449,7 @@
     {
       "day": 5,
       "hour": 20,
-      "count": 3
+      "count": 2
     }
   ],
   "top_committers": [
@@ -476,7 +481,7 @@
   "top_pr_authors": [
     {
       "username": "IsraelSoares-25",
-      "prs_opened": 16
+      "prs_opened": 17
     },
     {
       "username": "EdsonToppzera",
@@ -524,7 +529,7 @@
   "label_distribution": [
     {
       "label": "implementação",
-      "count": 66
+      "count": 67
     },
     {
       "label": "front-end",
@@ -536,7 +541,7 @@
     },
     {
       "label": "back-end",
-      "count": 47
+      "count": 48
     },
     {
       "label": "organização",
@@ -547,12 +552,12 @@
       "count": 30
     },
     {
-      "label": "arquitetura",
+      "label": "feat/api🔌",
       "count": 28
     },
     {
-      "label": "feat/api🔌",
-      "count": 27
+      "label": "arquitetura",
+      "count": 28
     },
     {
       "label": "testes",
