@@ -23,22 +23,22 @@ def _mock_contar(total: int):
 
 
 class TestCalcularRisco:
-    def test_retorna_baixo_para_menos_de_20(self, db_mock):
+    def test_retorna_baixo_para_menos_de_10(self, db_mock):
         with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(0)):
             assert calcular_risco("RA-026", db_mock) == "baixo"
 
-        with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(19)):
+        with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(9)):
             assert calcular_risco("RA-026", db_mock) == "baixo"
 
-    def test_retorna_medio_para_20_a_49(self, db_mock):
-        with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(20)):
+    def test_retorna_medio_para_10_a_14(self, db_mock):
+        with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(10)):
             assert calcular_risco("RA-026", db_mock) == "medio"
 
-        with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(49)):
+        with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(14)):
             assert calcular_risco("RA-026", db_mock) == "medio"
 
-    def test_retorna_alto_para_50_ou_mais(self, db_mock):
-        with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(50)):
+    def test_retorna_alto_para_15_ou_mais(self, db_mock):
+        with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(15)):
             assert calcular_risco("RA-026", db_mock) == "alto"
 
         with patch("app.services.risco_service.OcorrenciaRepository", return_value=_mock_contar(200)):
@@ -46,5 +46,5 @@ class TestCalcularRisco:
 
     def test_limiares_corretos(self):
         """Garante que os valores dos limiares não foram alterados acidentalmente."""
-        assert LIMIARES_RISCO["alto"]  == 50
-        assert LIMIARES_RISCO["medio"] == 20
+        assert LIMIARES_RISCO["alto"]  == 15
+        assert LIMIARES_RISCO["medio"] == 10
