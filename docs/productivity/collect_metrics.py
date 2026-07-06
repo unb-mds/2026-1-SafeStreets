@@ -46,10 +46,6 @@ def main():
 
     # CORREÇÃO DO INDEX ERROR (ISSUES): Loop seguro em vez de slicing [:300] direto
     issues_paginated = repo.get_issues(state="all", sort="created", direction="desc")
-    
-    for i, item in enumerate(issues_paginated):
-        if i >= 300:
-            break # Para ao atingir 300 itens
             
         # CORREÇÃO CRUCIAL: Lendo a propriedade local .labels em vez de forçar um GET request
         for l in item.labels:
@@ -86,10 +82,6 @@ def main():
 
     # CORREÇÃO DO INDEX ERROR (COMMITS): Loop seguro em vez de slicing [:300] direto
     commits_paginated = repo.get_commits()
-    
-    for i, commit in enumerate(commits_paginated):
-        if i >= 300:
-            break # Para ao atingir 300 commits
             
         if commit.author: 
             author_login = commit.author.login
