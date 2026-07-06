@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: # Adicionando isso pra você poder clicar no botão de rodar manual se quiser
+  workflow_run:
+    workflows: ["Gerar Metricas de Produtividade"]
+    types:
+      - completed
 
 permissions:
   contents: read
