@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T04:09:11.648700Z",
+  "generated_at": "2026-07-06T03:44:32.174517Z",
   "repository": "unb-mds/2026-1-SafeStreets",
   "issues_per_week": [
     {
@@ -81,30 +81,40 @@
   "commit_message_histogram": [
     {
       "range": "0-20",
-      "count": 16
+      "count": 36
     },
     {
       "range": "21-40",
-      "count": 169
+      "count": 251
     },
     {
       "range": "41-60",
-      "count": 18
+      "count": 45
     },
     {
       "range": "61-80",
-      "count": 18
+      "count": 30
     },
     {
       "range": "81+",
-      "count": 79
+      "count": 109
     }
   ],
   "commit_heatmap": [
     {
+      "day": 1,
+      "hour": 3,
+      "count": 7
+    },
+    {
+      "day": 0,
+      "hour": 4,
+      "count": 12
+    },
+    {
       "day": 0,
       "hour": 2,
-      "count": 4
+      "count": 5
     },
     {
       "day": 6,
@@ -119,17 +129,17 @@
     {
       "day": 4,
       "hour": 4,
-      "count": 6
+      "count": 7
     },
     {
       "day": 3,
       "hour": 5,
-      "count": 3
+      "count": 8
     },
     {
       "day": 3,
       "hour": 4,
-      "count": 7
+      "count": 10
     },
     {
       "day": 3,
@@ -159,7 +169,7 @@
     {
       "day": 2,
       "hour": 4,
-      "count": 5
+      "count": 6
     },
     {
       "day": 2,
@@ -179,7 +189,7 @@
     {
       "day": 1,
       "hour": 23,
-      "count": 6
+      "count": 7
     },
     {
       "day": 1,
@@ -189,22 +199,17 @@
     {
       "day": 1,
       "hour": 12,
-      "count": 1
+      "count": 2
     },
     {
       "day": 1,
       "hour": 4,
-      "count": 4
-    },
-    {
-      "day": 1,
-      "hour": 3,
       "count": 5
     },
     {
       "day": 1,
       "hour": 2,
-      "count": 3
+      "count": 6
     },
     {
       "day": 0,
@@ -217,11 +222,6 @@
       "count": 2
     },
     {
-      "day": 0,
-      "hour": 4,
-      "count": 10
-    },
-    {
       "day": 6,
       "hour": 4,
       "count": 8
@@ -229,27 +229,27 @@
     {
       "day": 6,
       "hour": 1,
-      "count": 2
+      "count": 9
     },
     {
       "day": 6,
       "hour": 0,
-      "count": 4
+      "count": 6
     },
     {
       "day": 5,
       "hour": 23,
-      "count": 2
+      "count": 8
     },
     {
       "day": 5,
       "hour": 22,
-      "count": 2
+      "count": 6
     },
     {
       "day": 5,
       "hour": 21,
-      "count": 5
+      "count": 11
     },
     {
       "day": 5,
@@ -259,12 +259,12 @@
     {
       "day": 5,
       "hour": 4,
-      "count": 4
+      "count": 5
     },
     {
       "day": 5,
       "hour": 1,
-      "count": 1
+      "count": 3
     },
     {
       "day": 4,
@@ -289,7 +289,7 @@
     {
       "day": 0,
       "hour": 23,
-      "count": 3
+      "count": 5
     },
     {
       "day": 0,
@@ -304,7 +304,7 @@
     {
       "day": 4,
       "hour": 19,
-      "count": 2
+      "count": 5
     },
     {
       "day": 3,
@@ -364,12 +364,12 @@
     {
       "day": 6,
       "hour": 20,
-      "count": 3
+      "count": 5
     },
     {
       "day": 6,
       "hour": 18,
-      "count": 15
+      "count": 18
     },
     {
       "day": 4,
@@ -379,7 +379,7 @@
     {
       "day": 4,
       "hour": 21,
-      "count": 3
+      "count": 5
     },
     {
       "day": 4,
@@ -394,7 +394,7 @@
     {
       "day": 4,
       "hour": 16,
-      "count": 1
+      "count": 3
     },
     {
       "day": 4,
@@ -414,7 +414,7 @@
     {
       "day": 6,
       "hour": 19,
-      "count": 1
+      "count": 15
     },
     {
       "day": 5,
@@ -424,7 +424,7 @@
     {
       "day": 5,
       "hour": 18,
-      "count": 1
+      "count": 5
     },
     {
       "day": 1,
@@ -439,38 +439,148 @@
     {
       "day": 6,
       "hour": 17,
-      "count": 1
+      "count": 4
     },
     {
       "day": 6,
       "hour": 2,
+      "count": 9
+    },
+    {
+      "day": 5,
+      "hour": 20,
+      "count": 16
+    },
+    {
+      "day": 5,
+      "hour": 17,
+      "count": 1
+    },
+    {
+      "day": 5,
+      "hour": 14,
+      "count": 2
+    },
+    {
+      "day": 5,
+      "hour": 13,
+      "count": 6
+    },
+    {
+      "day": 4,
+      "hour": 23,
+      "count": 11
+    },
+    {
+      "day": 4,
+      "hour": 18,
+      "count": 5
+    },
+    {
+      "day": 4,
+      "hour": 0,
+      "count": 4
+    },
+    {
+      "day": 3,
+      "hour": 15,
+      "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 22,
+      "count": 2
+    },
+    {
+      "day": 6,
+      "hour": 13,
+      "count": 4
+    },
+    {
+      "day": 6,
+      "hour": 12,
+      "count": 2
+    },
+    {
+      "day": 1,
+      "hour": 1,
+      "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 16,
+      "count": 4
+    },
+    {
+      "day": 3,
+      "hour": 1,
+      "count": 4
+    },
+    {
+      "day": 3,
+      "hour": 0,
       "count": 8
+    },
+    {
+      "day": 0,
+      "hour": 13,
+      "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 15,
+      "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 5,
+      "count": 1
+    },
+    {
+      "day": 0,
+      "hour": 1,
+      "count": 1
+    },
+    {
+      "day": 6,
+      "hour": 23,
+      "count": 3
+    },
+    {
+      "day": 0,
+      "hour": 3,
+      "count": 1
+    },
+    {
+      "day": 3,
+      "hour": 18,
+      "count": 7
     }
   ],
   "top_committers": [
     {
-      "username": "jorgevasquez25",
-      "commits": 50
+      "username": "IsraelSoares-25",
+      "commits": 87
     },
     {
-      "username": "IsraelSoares-25",
-      "commits": 44
+      "username": "jorgevasquez25",
+      "commits": 66
     },
     {
       "username": "Nic0laslc",
-      "commits": 36
+      "commits": 51
     },
     {
       "username": "EdsonToppzera",
-      "commits": 34
-    },
-    {
-      "username": "ArthurFeitosa05",
-      "commits": 7
+      "commits": 50
     },
     {
       "username": "matheusqsa",
-      "commits": 5
+      "commits": 31
+    },
+    {
+      "username": "ArthurFeitosa05",
+      "commits": 16
     }
   ],
   "top_pr_authors": [
