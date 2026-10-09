@@ -6,6 +6,7 @@ from app.integrations.gemini import GeminiClient
 from app.models import Ocorrencia
 from app.repositories.ocorrencia_repository import OcorrenciaRepository
 from app.schemas.ocorrencia import OcorrenciaOut
+from app.services.risco_service import calcular_risco
 
 # Mapeamento de risco do banco (minúsculo) para o frontend (capitalizado)
 _RISCO_MAP: dict[str, str] = {
@@ -15,7 +16,7 @@ _RISCO_MAP: dict[str, str] = {
 }
 
 
-def _to_out(o: Ocorrencia) -> OcorrenciaOut:
+def _to_out(o: Ocorrencia, risco_nivel: str) -> OcorrenciaOut:
     # Formata data como "DD/MM/YYYY" para exibição direta no frontend
     data_str: str | None = None
     if o.data_ocorrencia:
@@ -33,7 +34,7 @@ def _to_out(o: Ocorrencia) -> OcorrenciaOut:
         longitude=float(o.longitude),
         ra=o.regiao_administrativa,
         regiao=regiao_nome,
-        risco=_RISCO_MAP.get(o.risco_nivel or "", None),
+        risco=_RISCO_MAP.get(risco_nivel, None),
         resumo=o.resumo_gemini,
         resumo_status=o.resumo_status,
         data=data_str,
@@ -63,7 +64,16 @@ def listar(
             else datetime.max
         )
         ocorrencias = repo.buscar_por_regiao_e_periodo(regiao, inicio, fim)
-    return [_to_out(o) for o in ocorrencias]
+    # Risco é por RA (contagem de ocorrências na RA). Calcula uma vez por RA e
+    # reaproveita — evita um COUNT por ocorrência (N+1).
+    risco_por_ra: dict[str, str] = {}
+
+    def _risco(ra: str) -> str:
+        if ra not in risco_por_ra:
+            risco_por_ra[ra] = calcular_risco(ra, db)
+        return risco_por_ra[ra]
+
+    return [_to_out(o, _risco(o.regiao_administrativa)) for o in ocorrencias]
 
 
 def buscar(
@@ -83,7 +93,7 @@ def buscar(
         return None
     if o.resumo_status != "COMPLETO":
         _resumir_sob_demanda(db, o, gemini or GeminiClient())
-    return _to_out(o)
+    return _to_out(o, calcular_risco(o.regiao_administrativa, db))
 
 
 def _resumir_sob_demanda(db: Session, o: Ocorrencia, gemini: GeminiClient) -> None:
