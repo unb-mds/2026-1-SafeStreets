@@ -31,3 +31,9 @@ next-env.d.ts
 # swc cache
 .swc/
 .vercel
+
+# playwright (E2E) — artefatos gerados, não versionar
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
