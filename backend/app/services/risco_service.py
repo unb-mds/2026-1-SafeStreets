@@ -2,11 +2,13 @@ from sqlalchemy.orm import Session
 
 from app.repositories.ocorrencia_repository import OcorrenciaRepository
 
-# Limiares de contagem de ocorrências por Região Administrativa
+# Limiares de contagem de ocorrências por Região Administrativa. Ajustados ao
+# volume real da base (dezenas de ocorrências no total, poucas por RA) — os
+# valores antigos (50/20) eram altos demais e deixavam TODAS as RAs em "baixo".
 LIMIARES_RISCO = {
-    "alto":  50,   # >= 50 ocorrências → alto
-    "medio": 20,   # >= 20 ocorrências → médio
-                   # <  20 ocorrências → baixo
+    "alto":  15,   # >= 15 ocorrências na RA → alto
+    "medio": 10,    # >= 10 ocorrências na RA → médio
+                   # <  10 ocorrências na RA → baixo
 }
 
 
