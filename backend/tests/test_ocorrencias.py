@@ -124,3 +124,40 @@ def test_buscar_com_gemini_falho_marca_erro_sem_quebrar():
         assert out.resumo is None
     finally:
         db.close()
+
+
+# ---- risco calculado no read por contagem na RA (limiares: >=10 médio, >=15 alto) ----
+
+def _gemini_fake() -> GeminiClient:
+    # buscar() dispara o resumo sob demanda; injeta um fake p/ não tocar a rede.
+    return GeminiClient(generate_fn=lambda texto: "resumo")
+
+
+def test_risco_baixo_quando_ra_tem_poucas_ocorrencias():
+    novo_id = _seed_ocorrencia(titulo="Furto isolado", regiao="RA-096")
+    db = TestingSession()
+    try:
+        out = service.buscar(db, novo_id, gemini=_gemini_fake())
+        assert out.risco == "Baixo"   # 1 ocorrência na RA < limiar médio (5)
+    finally:
+        db.close()
+
+
+def test_risco_medio_quando_ra_atinge_10_ocorrencias():
+    ids = [_seed_ocorrencia(titulo=f"Furto {i}", regiao="RA-097") for i in range(10)]
+    db = TestingSession()
+    try:
+        out = service.buscar(db, ids[0], gemini=_gemini_fake())
+        assert out.risco == "Médio"   # 10 ocorrências na RA >= limiar médio (10)
+    finally:
+        db.close()
+
+
+def test_risco_alto_quando_ra_atinge_15_ocorrencias():
+    ids = [_seed_ocorrencia(titulo=f"Roubo {i}", regiao="RA-098") for i in range(15)]
+    db = TestingSession()
+    try:
+        out = service.buscar(db, ids[0], gemini=_gemini_fake())
+        assert out.risco == "Alto"    # 15 ocorrências na RA >= limiar alto (15)
+    finally:
+        db.close()
